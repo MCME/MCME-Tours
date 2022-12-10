@@ -1,0 +1,5 @@
+name: '${project.artifactId}'
+version: '${project.version}'
+main: com.mcmiddleearth.mcmetours.MCMETours
+description: new Tour Plugin for MCME with Bungee Support
+
