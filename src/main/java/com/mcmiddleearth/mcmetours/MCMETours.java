@@ -6,6 +6,14 @@ import net.md_5.bungee.api.plugin.Plugin;
 
 public final class MCMETours extends Plugin {
 
+    /*
+    TODO:
+     get bungee network running
+      https://www.spigotmc.org/wiki/bungeecord/
+      https://papermc.io/downloads#Waterfall
+     make first tests with bungee "hello world" plugin
+     */
+
     ProxyServer server;
 
     @Override
