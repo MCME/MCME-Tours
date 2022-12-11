@@ -2,9 +2,15 @@ name: '${project.artifactId}'
 version: '${project.version}'
 main: com.mcmiddleearth.mcmetours.MCMETours
 description: new Tour Plugin for MCME with Bungee Support
+api-version: 1.18
+softdepend: [MCME-Connect]
 
 commands:
   test:
     description: test-command
     usage: /test
 
+permissions:
+  tours.*:
+    description: Gives access to all commands
+    default: op

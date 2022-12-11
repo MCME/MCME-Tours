@@ -14,6 +14,33 @@ public final class MCMETours extends Plugin {
       https://papermc.io/downloads#Waterfall
      make first tests with bungee "hello world" plugin  x
      rewrite old tours plugin into bungee
+      Commands:
+       tour request
+       tour join
+       tour leave
+       tour help
+       tour start
+       tour end
+       tour hat
+       tour kick
+       tour refreshments
+       tour list
+       tour chat
+       tour kick
+       ttpa
+       ttp
+      OnTabComplete
+      Tour-Chat (Chat-Listener)
+      Tour Start Message
+      Permissions
+      Message when tour runs and player joins
+      NewPlayerPassevent (?) -> passed new player world
+      DiscordMessage for tour
+      more Functionalities -> ask Guides
+       Thoughts from me:
+        Info command or something what the tour is about
+        deactivate guidebook for more immersive tours
+
      */
 
     ProxyServer server;
