@@ -64,6 +64,10 @@
             <id>my-local-repo2</id>
             <url>file://${pom.basedir}/DiscordSRV-Build-1.26.0.jar</url>
         </repository>
+        <repository>
+            <id>my-local-repo3</id>
+            <url>file://${pom.basedir}/PluginUtils-1.4.3.jar</url>
+        </repository>
     </repositories>
 
     <dependencies>
@@ -82,10 +86,17 @@
         </dependency>
         <dependency>
             <groupId>com.discordsrv</groupId>
-            <artifactId>Discordsrv</artifactId>
+            <artifactId>DiscordSRV</artifactId>
             <scope>system</scope>
             <systemPath>${pom.basedir}/DiscordSRV-Build-1.26.0.jar</systemPath>
             <version>1.26.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.mcmiddleearth</groupId>
+            <artifactId>PluginUtils</artifactId>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/PluginUtils-1.4.3.jar</systemPath>
+            <version>1.4.3</version>
         </dependency>
     </dependencies>
 </project>
