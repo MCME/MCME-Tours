@@ -15,6 +15,7 @@ public class RequestTourCommand extends AbsctractTourCommand {
         super();
     }
 
+    /*
     public void sendRequest(ProxiedPlayer sender){
         for(ProxiedPlayer player : ProxyServer.getInstance().getPlayers()){
             if(PluginData.hasPermission(sender,Permission.HOST)){
@@ -22,4 +23,6 @@ public class RequestTourCommand extends AbsctractTourCommand {
             }
         }
     }
+
+     */
 }

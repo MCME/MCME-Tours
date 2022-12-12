@@ -1,6 +1,10 @@
 package com.mcmiddleearth.mcmetours.data;
 
+import com.mcmiddleearth.command.McmeCommandSender;
+import com.mcmiddleearth.mcmetours.command.TourCommandSender;
 import com.mcmiddleearth.mcmetours.tour.Tour;
+import net.md_5.bungee.api.ChatColor;
+import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 
 import java.util.ArrayList;
@@ -29,8 +33,10 @@ public class PluginData {
         return messageUtil;
     }
 
-    public static boolean hasPermission(ProxiedPlayer player, Permission perm) {
-        return player.hasPermission(perm.getPermissionNode());
+    public static boolean hasPermission(TourCommandSender player, Permission perm) {
+        ProxiedPlayer Proxyplayer = (ProxiedPlayer) player.getCommandSender();
+        Proxyplayer.sendMessage(new ComponentBuilder("Test5").color(ChatColor.BLUE).create());
+        return Proxyplayer.hasPermission(perm.getPermissionNode());
     }
     /*
     public static AbstractGame getGame(Player player) {
