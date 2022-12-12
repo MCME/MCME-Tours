@@ -6,9 +6,15 @@ api-version: 1.18
 softdepend: [MCME-Connect]
 
 commands:
-  test:
-    description: test-command
-    usage: /test
+  tour:
+    description: command
+    usage: /tour
+  ttp:
+    description: command
+    usage: /ttp
+  ttpa:
+    description: command
+    usage: /ttpa
 
 permissions:
   tours.*:

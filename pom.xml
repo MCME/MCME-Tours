@@ -36,6 +36,9 @@
                 <executions>
                     <execution>
                         <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
                         <configuration>
                             <createDependencyReducedPom>false</createDependencyReducedPom>
                         </configuration>
@@ -64,10 +67,25 @@
             <id>my-local-repo2</id>
             <url>file://${pom.basedir}/DiscordSRV-Build-1.26.0.jar</url>
         </repository>
+        <!--
         <repository>
             <id>my-local-repo3</id>
             <url>file://${pom.basedir}/PluginUtils-1.4.3.jar</url>
         </repository>
+               <repository>
+                   <id>minecraft-libraries</id>
+                   <name>Minecraft Libraries</name>
+                   <url>https://libraries.minecraft.net</url>
+               </repository>
+
+               <repository>
+                   <id>my-local-repo4</id>
+                   <url>file://${pom.basedir}/MCME-CommandParser-1.0.jar</url>
+               </repository>
+
+             -->
+
+
     </repositories>
 
     <dependencies>
@@ -93,10 +111,31 @@
         </dependency>
         <dependency>
             <groupId>com.mcmiddleearth</groupId>
+            <artifactId>MCME-CommandParser</artifactId>
+            <version>1.0</version>
+        </dependency>
+
+        <!--
+        <dependency>
+            <groupId>com.mcmiddleearth</groupId>
+            <artifactId>MCME-CommandParser</artifactId>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/MCME-CommandParser-1.0.jar</systemPath>
+            <version>1.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.mcmiddleearth</groupId>
             <artifactId>PluginUtils</artifactId>
             <scope>system</scope>
             <systemPath>${pom.basedir}/PluginUtils-1.4.3.jar</systemPath>
             <version>1.4.3</version>
         </dependency>
+        <dependency>
+            <groupId>com.mojang</groupId>
+            <artifactId>brigadier</artifactId>
+            <version>1.0.17</version>
+        </dependency>
+                 -->
     </dependencies>
 </project>
