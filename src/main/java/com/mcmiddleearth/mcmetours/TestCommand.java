@@ -1,4 +1,4 @@
-package com.mcmiddleearth.mcmetours.command;
+package com.mcmiddleearth.mcmetours;
 
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.CommandSender;

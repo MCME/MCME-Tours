@@ -26,7 +26,7 @@ public class TourCommandSender implements McmeCommandSender {
 
     @Override
     public void sendMessage(BaseComponent[] baseComponents) {
-        sender.sendMessage(new ComponentBuilder("[Tours] ").color(ChatColor.AQUA).append(baseComponents[0]).create());
+        sender.sendMessage(baseComponents);
     }
 
     public static TourCommandSender getOrCreateMcmePlayer(ProxiedPlayer player){

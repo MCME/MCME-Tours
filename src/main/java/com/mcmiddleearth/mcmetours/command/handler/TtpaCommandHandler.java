@@ -44,7 +44,7 @@ public class TtpaCommandHandler extends AbstractCommandHandler{
 
                  */
     private int sendInfoMessage(McmeCommandSender sender, String text){
-        sender.sendMessage(new ComponentBuilder(text).create());
+        PluginData.getMessageUtil().sendInfoMessage(sender,text);
         return 0;
     }
 }
