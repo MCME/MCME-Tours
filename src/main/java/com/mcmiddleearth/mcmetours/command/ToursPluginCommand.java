@@ -3,6 +3,8 @@ package com.mcmiddleearth.mcmetours.command;
 import com.google.common.base.Joiner;
 import com.mcmiddleearth.command.AbstractCommandHandler;
 import com.mcmiddleearth.command.McmeCommandSender;
+import com.mcmiddleearth.command.SimpleTabCompleteRequest;
+import com.mcmiddleearth.command.TabCompleteRequest;
 import com.mcmiddleearth.mcmetours.MCMETours;
 import com.mcmiddleearth.mcmetours.data.PluginData;
 import com.mojang.brigadier.CommandDispatcher;
@@ -33,6 +35,8 @@ public class ToursPluginCommand extends Command implements TabExecutor {
 
     @Override
     public Iterable<String> onTabComplete(CommandSender sender, String[] args) {
-        return null;
+        TabCompleteRequest request = new SimpleTabCompleteRequest(MCMETours.wrapCommandSender(sender),String.format("/%s %s", "", Joiner.on(' ').join(args)));
+        //onTabComplete(request);
+        return request.getSuggestions();
     }
 }

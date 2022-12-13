@@ -20,12 +20,56 @@ public class PluginData {
 
     }
 
-    public static Tour getTour(ProxiedPlayer player){
+    public static Tour getTour(TourCommandSender sender){
+        ProxiedPlayer player = (ProxiedPlayer) sender.getCommandSender();
         for(Tour tour: tours){
             if(tour.getPlayers().contains(player))
                 return tour;
         }
         return null;
+    }
+
+    public static Tour getTour(String name){
+        for(Tour tour: tours){
+            if(tour.getHost().getName().equalsIgnoreCase(name))
+                return tour;
+        }
+        return null;
+    }
+
+    public static boolean tourRunning(){
+        if(tours.size() >= 1){
+            return true;
+        }
+        return false;
+    }
+
+    public static void addTour(Tour tour){
+        tours.add(tour);
+    }
+
+    public static void removeTour(Tour tour){
+        tours.remove(tour);
+    }
+
+    public static boolean isInGame(TourCommandSender sender){
+        ProxiedPlayer player = (ProxiedPlayer) sender.getCommandSender();
+        for(Tour tour: tours){
+            if(tour.getPlayers().contains(player)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static boolean isHost(TourCommandSender sender){
+        ProxiedPlayer player = (ProxiedPlayer) sender.getCommandSender();
+        for(Tour tour: tours){
+            if(tour.getHost() == player){
+                return true;
+            }
+        }
+        return false;
     }
 
 
@@ -35,7 +79,7 @@ public class PluginData {
 
     public static boolean hasPermission(TourCommandSender player, Permission perm) {
         ProxiedPlayer Proxyplayer = (ProxiedPlayer) player.getCommandSender();
-        Proxyplayer.sendMessage(new ComponentBuilder("Test5").color(ChatColor.BLUE).create());
+        //Proxyplayer.sendMessage(new ComponentBuilder("Test5").color(ChatColor.BLUE).create());
         return Proxyplayer.hasPermission(perm.getPermissionNode());
     }
     /*

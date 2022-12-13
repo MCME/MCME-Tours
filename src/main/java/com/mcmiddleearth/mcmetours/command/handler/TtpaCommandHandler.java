@@ -6,6 +6,7 @@ import com.mcmiddleearth.command.builder.HelpfulLiteralBuilder;
 import com.mcmiddleearth.mcmetours.command.TourCommandSender;
 import com.mcmiddleearth.mcmetours.data.Permission;
 import com.mcmiddleearth.mcmetours.data.PluginData;
+import com.mcmiddleearth.mcmetours.tour.Tour;
 import com.mojang.brigadier.CommandDispatcher;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.CommandSender;
@@ -17,11 +18,8 @@ import net.md_5.bungee.api.plugin.TabExecutor;
 
 public class TtpaCommandHandler extends AbstractCommandHandler{
 
-    String name;
-
     public TtpaCommandHandler(String name){
         super(name);
-        this.name = name;
     }
 
     @Override
@@ -30,21 +28,15 @@ public class TtpaCommandHandler extends AbstractCommandHandler{
                 .withHelpText("TestText1")
                 .withTooltip("TestText2")
                 .requires(sender -> PluginData.hasPermission((TourCommandSender) sender, Permission.HOST))
-                .executes(context -> sendInfoMessage(context.getSource(),"TestInfo"));
+                .executes(context -> teleportAll(context.getSource()));
         return helpfulLiteralBuilder;
     }
 
-
-                /*
-                .withHelpText("TestText1")
-                .withTooltip("TestText2")
-                .requires(sender -> PluginData.hasPermission((ProxiedPlayer) sender, Permission.HOST))
-                .executes(context -> sendInfoMessage(context.getSource(),"TestInfo"));
-                //.requires(sender -> ) Tour is running
-
-                 */
-    private int sendInfoMessage(McmeCommandSender sender, String text){
-        PluginData.getMessageUtil().sendInfoMessage(sender,text);
+    private int teleportAll(McmeCommandSender sender){
+        Tour tour = PluginData.getTour((TourCommandSender) sender);
+        if(tour != null){
+            tour.teleportAll();
+        }
         return 0;
     }
 }

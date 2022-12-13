@@ -10,13 +10,6 @@ import net.md_5.bungee.api.connection.ProxiedPlayer;
 
 public class MessageUtil {
 
-    public static final ChatColor INFO = ChatColor.AQUA;
-    public static final ChatColor ERROR = ChatColor.RED;
-    public static final ChatColor ERROR_STRESSED = ChatColor.DARK_RED;
-    public static final ChatColor STRESSED = ChatColor.GREEN;
-    public static final ChatColor HIGHLIGHT = ChatColor.GOLD;
-    public static final ChatColor HIGHLIGHT_STRESSED = ChatColor.YELLOW;
-
     private final String PREFIX = "[MCME-Tours] ";
 
 
@@ -25,12 +18,12 @@ public class MessageUtil {
     }
 
     public void sendInfoMessage(CommandSender sender, String message){
-        sender.sendMessage(new ComponentBuilder(PREFIX+message).color(INFO).create());
+        sender.sendMessage(new ComponentBuilder(PREFIX+message).color(Style.INFO).create());
     }
 
     public void sendBroadcastMessage(String message){
         for(ProxiedPlayer player: ProxyServer.getInstance().getPlayers()){
-
+            player.sendMessage(new ComponentBuilder(PREFIX+message).color(Style.INFO).create());
         }
     }
 
@@ -39,12 +32,7 @@ public class MessageUtil {
     }
 
     public void sendInfoMessage(McmeCommandSender sender, String message){
-        sender.sendMessage(new ComponentBuilder(PREFIX+message).color(INFO).create());
+        sender.sendMessage(new ComponentBuilder(PREFIX+message).color(Style.INFO).create());
     }
-
-
-    public ChatColor getInfo(){return INFO;}
-
-    public ChatColor getError(){return ERROR;}
 
 }
