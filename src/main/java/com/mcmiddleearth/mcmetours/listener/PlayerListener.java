@@ -22,7 +22,7 @@ public class PlayerListener implements Listener {
 
     @EventHandler(priority = EventPriority.NORMAL)
     public void playerLeave(PlayerDisconnectEvent event){
-        if(PluginData.isInGame(new TourCommandSender(event.getPlayer()))){
+        if(PluginData.isInTour(new TourCommandSender(event.getPlayer()))){
             Tour tour = PluginData.getTour(new TourCommandSender(event.getPlayer()));
             tour.removePlayer(event.getPlayer());
         }

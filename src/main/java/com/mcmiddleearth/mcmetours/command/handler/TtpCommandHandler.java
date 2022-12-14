@@ -26,13 +26,13 @@ public class TtpCommandHandler extends AbstractCommandHandler {
     @Override
     protected HelpfulLiteralBuilder createCommandTree(HelpfulLiteralBuilder helpfulLiteralBuilder) {
         helpfulLiteralBuilder
-                .withHelpText("")
+                .withHelpText("teleports to Host")
                 .withTooltip("")
-                .requires(sender -> PluginData.hasPermission((TourCommandSender) sender, Permission.USER))
+                .requires(sender -> PluginData.hasPermission((TourCommandSender) sender, Permission.USER) && PluginData.isInTour((TourCommandSender) sender))
                 .executes(context -> teleportToHost(context.getSource(),null))
-                .then(HelpfulRequiredArgumentBuilder.argument("player", new CommandPlayerArgument()))
-                .requires(sender -> PluginData.hasPermission((TourCommandSender) sender, Permission.HOST))
-                .executes(context -> teleportToHost(context.getSource(),context.getArgument("player",String.class)));
+                .then(HelpfulRequiredArgumentBuilder.argument("player",new CommandPlayerArgument())
+                .requires(sender -> (PluginData.hasPermission((TourCommandSender) sender, Permission.HOST) ))
+                        .executes(context -> teleportToHost(context.getSource(),context.getArgument("player",String.class))));
         return helpfulLiteralBuilder;
     }
 

@@ -27,7 +27,7 @@ public class TtpaCommandHandler extends AbstractCommandHandler{
         helpfulLiteralBuilder
                 .withHelpText("TestText1")
                 .withTooltip("TestText2")
-                .requires(sender -> PluginData.hasPermission((TourCommandSender) sender, Permission.HOST))
+                .requires(sender -> (PluginData.hasPermission((TourCommandSender) sender, Permission.HOST) && PluginData.isHost((TourCommandSender) sender)))
                 .executes(context -> teleportAll(context.getSource()));
         return helpfulLiteralBuilder;
     }

@@ -1,9 +1,9 @@
 package com.mcmiddleearth.mcmetours.data;
 
-import com.mcmiddleearth.command.McmeCommandSender;
 import com.mcmiddleearth.mcmetours.command.TourCommandSender;
 import com.mcmiddleearth.mcmetours.tour.Tour;
-import net.md_5.bungee.api.ChatColor;
+import net.md_5.bungee.api.ProxyServer;
+import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 
@@ -37,6 +37,14 @@ public class PluginData {
         return null;
     }
 
+    public static Tour getTour(ProxiedPlayer player){
+        for(Tour tour: tours){
+            if(tour.getPlayers().contains(player))
+                return tour;
+        }
+        return null;
+    }
+
     public static boolean tourRunning(){
         if(tours.size() >= 1){
             return true;
@@ -52,8 +60,18 @@ public class PluginData {
         tours.remove(tour);
     }
 
-    public static boolean isInGame(TourCommandSender sender){
+    public static boolean isInTour(TourCommandSender sender){
         ProxiedPlayer player = (ProxiedPlayer) sender.getCommandSender();
+        for(Tour tour: tours){
+            if(tour.getPlayers().contains(player)){
+                return true;
+            }
+        }
+        //PluginData.getMessageUtil().sendErrorMessage(sender,"You are currently not in a tour.");
+        return false;
+    }
+
+    public static boolean isInTour(ProxiedPlayer player){
         for(Tour tour: tours){
             if(tour.getPlayers().contains(player)){
                 return true;
@@ -69,9 +87,13 @@ public class PluginData {
                 return true;
             }
         }
+        //PluginData.getMessageUtil().sendErrorMessage(sender,"You are not the host of this tour.");
         return false;
     }
 
+    public static void clearTours(){
+        tours.clear();
+    }
 
     public static MessageUtil getMessageUtil() {
         return messageUtil;
@@ -82,17 +104,4 @@ public class PluginData {
         //Proxyplayer.sendMessage(new ComponentBuilder("Test5").color(ChatColor.BLUE).create());
         return Proxyplayer.hasPermission(perm.getPermissionNode());
     }
-    /*
-    public static AbstractGame getGame(Player player) {
-        for(AbstractGame game : games) {
-            if(PlayerUtil.isSame(game.getManager(),player)) {
-                return game;
-            }
-            if(game.getPlayers().contains(player.getUniqueId())) {
-                return game;
-            }
-        }
-        return null;
-    }
-     */
 }

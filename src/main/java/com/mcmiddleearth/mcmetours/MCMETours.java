@@ -6,6 +6,7 @@ import com.mcmiddleearth.mcmetours.command.ToursPluginCommand;
 import com.mcmiddleearth.mcmetours.command.handler.TourCommandHandler;
 import com.mcmiddleearth.mcmetours.command.handler.TtpCommandHandler;
 import com.mcmiddleearth.mcmetours.command.handler.TtpaCommandHandler;
+import com.mcmiddleearth.mcmetours.data.PluginData;
 import com.mcmiddleearth.mcmetours.listener.ChatListener;
 import com.mcmiddleearth.mcmetours.listener.PlayerListener;
 import com.mcmiddleearth.mcmetours.listener.TestListener;
@@ -30,32 +31,34 @@ public final class MCMETours extends Plugin {
       command-Builder with MCME Brigadier https://github.com/MCME/MCME-Entities/blob/master/src/main/java/com/mcmiddleearth/entities/command/VirtualCommand.java
        and https://github.com/MCME/MCME-CommandParser
       Commands:
-       tour request
-       tour join
-       tour leave
+       tour request x
+       tour join    x
+       tour leave   x
        tour help
-       tour start
-       tour end
+       tour start   x
+       tour end     x
        tour hat
-       tour kick
+       tour kick    x
        tour refreshments
-       tour list
-       tour chat
-       ttpa
-       ttp
+       tour list    x
+       tour chat    x
+       ttpa         x
+       ttp          x
       OnTabComplete
-      all Permissions to Permission.java
-      Tour-Chat (Chat-Listener)
-      Tour Start Message
-      Permissions
-      Message when tour runs and player joins
-      NewPlayerPassevent (?) -> passed new player world
+      all Permissions to Permission.java    x
+      Tour-Chat (Chat-Listener)     x
+      Tour Start Message            x
+      Permissions                   x
+      Message when tour runs and player joins       x
       DiscordMessage for tour
       more Functionalities -> ask Guides
        Thoughts from me:
         Info command or something what the tour is about
         deactivate guidebook for more immersive tours
         Player ban from tour
+        tour broadcast for discord
+        normal chat deactivated when in tour chat???
+        when in tour chat and you do /g it allows you to chat normal
      */
 
     private static MCMETours instance;
@@ -83,7 +86,7 @@ public final class MCMETours extends Plugin {
 
     @Override
     public void onDisable() {
-        // Plugin shutdown logic
+        PluginData.clearTours();
     }
 
     public static McmeCommandSender wrapCommandSender(CommandSender sender){

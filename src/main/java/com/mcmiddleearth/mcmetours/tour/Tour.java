@@ -1,15 +1,17 @@
 package com.mcmiddleearth.mcmetours.tour;
 
 import com.mcmiddleearth.connect.bungee.Handler.TpHandler;
+import com.mcmiddleearth.mcmetours.data.ChatRanks;
+import com.mcmiddleearth.mcmetours.data.Permission;
 import com.mcmiddleearth.mcmetours.data.PluginData;
 import com.mcmiddleearth.mcmetours.data.Style;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.ProxyServer;
+import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class Tour {
 
@@ -39,17 +41,15 @@ public class Tour {
         }
         players.remove(player);
         tourChat.remove(player);
-
-        // First test if this creates a error
-        if(player.isConnected()){
-
-        }
         notifyTour(player.getName()+" left the tour.");
         PluginData.getMessageUtil().sendInfoMessage(player, "You left the tour.");
     }
 
     public void endTour(){
-
+        notifyTour("The tour has ended.");
+        players.clear();
+        tourChat.clear();
+        PluginData.removeTour(this);
     }
 
     public void TeleportToHost(ProxiedPlayer player){
@@ -61,6 +61,7 @@ public class Tour {
         if(players.contains(player)){
             TpHandler.handle(player.getName(),host.getServer().getInfo().getName(),host.getName());
             PluginData.getMessageUtil().sendInfoMessage(player,host.getName()+" teleported you to them.");
+            PluginData.getMessageUtil().sendInfoMessage(host,"You teleported "+player.getName()+" to yourself.");
         }else{
             PluginData.getMessageUtil().sendErrorMessage(host,"This player is not part of the tour.");
         }
@@ -86,8 +87,24 @@ public class Tour {
         }
     }
 
-    public void kickPlayer(ProxiedPlayer player){
+    public void tourChat(ProxiedPlayer player, String message){
+        String ChatMessage;
+        for(ProxiedPlayer receiver : tourChat){
+            if(player == host){
+                ChatMessage = ChatRanks.HOST.getChatPrefix() + player.getName() + ChatColor.WHITE + ": "  + message;
+            }else if(player.hasPermission(Permission.HOST.getPermissionNode())){
+                ChatMessage = ChatRanks.BADGEHOLDER.getChatPrefix() + player.getName() + ChatColor.WHITE + ": " + message;
+            }else{
+                ChatMessage = ChatRanks.PARTICIPANT.getChatPrefix() + player.getName() + ChatColor.WHITE + ": " + message;
+            }
+            receiver.sendMessage(new ComponentBuilder(ChatMessage).create());
+        }
+    }
 
+    public void kickPlayer(ProxiedPlayer player){
+        removePlayer(player);
+        PluginData.getMessageUtil().sendErrorMessage(player,"You were kicked from the tour. Think about it!");
+        PluginData.getMessageUtil().sendInfoMessage(host,"You kicked " + player.getName() + " from the tour.");
     }
 
     public void giveRefreshments(){
@@ -98,28 +115,19 @@ public class Tour {
         //might not be possible
     }
 
-    public String tourList(){
-        String list = "";
-
-        return list;
+    public void tourList(){
+        Set<String> list;
+        list = players.stream().map(ProxiedPlayer::getName).collect(Collectors.toSet());
+        PluginData.getMessageUtil().sendInfoMessage(host,ChatColor.WHITE+list.toString());
     }
 
     private void notifyTour(String text){
-
+        for(ProxiedPlayer player: players){
+            PluginData.getMessageUtil().sendInfoMessage(player,text);
+        }
     }
 
     public ProxiedPlayer getHost() {return host;}
     public List<ProxiedPlayer> getPlayers() { return players;}
     public List<ProxiedPlayer> getTourChat() { return tourChat;}
-
-
-    /*
-     protected AbstractGame getGame(Player player) {
-        AbstractGame game = PluginData.getGame(player);
-        if(game==null) {
-            sendNotInGameErrorMessage(player);
-        }
-        return game;
-    }
-     */
 }

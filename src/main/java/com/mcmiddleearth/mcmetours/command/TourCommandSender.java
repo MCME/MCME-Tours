@@ -29,6 +29,10 @@ public class TourCommandSender implements McmeCommandSender {
         sender.sendMessage(baseComponents);
     }
 
+    public static String getName(TourCommandSender sender){
+        return sender.getCommandSender().getName();
+    }
+
     public static TourCommandSender getOrCreateMcmePlayer(ProxiedPlayer player){
         TourCommandSender result = players.get(player.getUniqueId());
         if(result == null){

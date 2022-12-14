@@ -14,7 +14,7 @@ public class MessageUtil {
 
 
     public void sendErrorMessage(CommandSender sender, String message){
-
+        sender.sendMessage(new ComponentBuilder(PREFIX+message).color(Style.ERROR).create());
     }
 
     public void sendInfoMessage(CommandSender sender, String message){
@@ -28,7 +28,7 @@ public class MessageUtil {
     }
 
     public void sendErrorMessage(McmeCommandSender sender, String message){
-
+        sender.sendMessage(new ComponentBuilder(PREFIX+message).color(Style.ERROR).create());
     }
 
     public void sendInfoMessage(McmeCommandSender sender, String message){
