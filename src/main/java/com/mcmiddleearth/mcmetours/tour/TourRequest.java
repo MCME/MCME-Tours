@@ -7,6 +7,9 @@ import com.mcmiddleearth.mcmetours.data.PluginData;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 
+/**
+ * @author Jubo
+ */
 public class TourRequest {
 
     public TourRequest(McmeCommandSender sender){

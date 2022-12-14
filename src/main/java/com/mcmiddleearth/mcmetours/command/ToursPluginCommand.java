@@ -17,6 +17,9 @@ import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.plugin.Command;
 import net.md_5.bungee.api.plugin.TabExecutor;
 
+/**
+ * @author Jubo
+ */
 public class ToursPluginCommand extends Command implements TabExecutor {
 
 

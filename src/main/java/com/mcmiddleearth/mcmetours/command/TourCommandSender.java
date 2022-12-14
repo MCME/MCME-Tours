@@ -10,6 +10,9 @@ import net.md_5.bungee.api.connection.ProxiedPlayer;
 import java.util.HashMap;
 import java.util.UUID;
 
+/**
+ * @author Jubo
+ */
 public class TourCommandSender implements McmeCommandSender {
 
     CommandSender sender;

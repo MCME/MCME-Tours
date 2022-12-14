@@ -9,16 +9,17 @@ import com.mcmiddleearth.mcmetours.command.handler.TtpaCommandHandler;
 import com.mcmiddleearth.mcmetours.data.PluginData;
 import com.mcmiddleearth.mcmetours.listener.ChatListener;
 import com.mcmiddleearth.mcmetours.listener.PlayerListener;
-import com.mcmiddleearth.mcmetours.listener.TestListener;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Plugin;
-import net.md_5.bungee.protocol.packet.Chat;
 
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * @author Jubo
+ */
 public final class MCMETours extends Plugin {
 
     /*
@@ -67,8 +68,8 @@ public final class MCMETours extends Plugin {
 
     @Override
     public void onEnable() {
+        instance = this;
         server = ProxyServer.getInstance();
-        server.getPluginManager().registerListener(this,new TestListener());
         server.getPluginManager().registerListener(this,new ChatListener());
         server.getPluginManager().registerListener(this,new PlayerListener());
 

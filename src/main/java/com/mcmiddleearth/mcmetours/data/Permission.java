@@ -1,5 +1,8 @@
 package com.mcmiddleearth.mcmetours.data;
 
+/**
+ * @author Jubo
+ */
 public enum Permission {
 
     ADMIN   ("Tours.admin"),

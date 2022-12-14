@@ -13,6 +13,9 @@ import net.md_5.bungee.api.connection.ProxiedPlayer;
 import java.util.*;
 import java.util.stream.Collectors;
 
+/**
+ * @author Jubo
+ */
 public class Tour {
 
     private ProxiedPlayer host;
@@ -102,16 +105,16 @@ public class Tour {
     }
 
     public void kickPlayer(ProxiedPlayer player){
-        removePlayer(player);
-        PluginData.getMessageUtil().sendErrorMessage(player,"You were kicked from the tour. Think about it!");
-        PluginData.getMessageUtil().sendInfoMessage(host,"You kicked " + player.getName() + " from the tour.");
+        if(player != host){
+            removePlayer(player);
+            PluginData.getMessageUtil().sendErrorMessage(player,"You were kicked from the tour. Think about it!");
+            PluginData.getMessageUtil().sendInfoMessage(host,"You kicked " + player.getName() + " from the tour.");
+        }else{
+            PluginData.getMessageUtil().sendErrorMessage(player,"You can´t kick yourself idiot.");
+        }
     }
 
     public void giveRefreshments(){
-        //might not be possible
-    }
-
-    public void tourHat(){
         //might not be possible
     }
 

@@ -2,6 +2,9 @@ package com.mcmiddleearth.mcmetours.data;
 
 import net.md_5.bungee.api.ChatColor;
 
+/**
+ * @author Jubo
+ */
 public class Style {
 
     public static final ChatColor INFO = ChatColor.AQUA;

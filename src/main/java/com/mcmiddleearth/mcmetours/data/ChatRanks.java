@@ -2,10 +2,13 @@ package com.mcmiddleearth.mcmetours.data;
 
 import net.md_5.bungee.api.ChatColor;
 
+/**
+ * @author Jubo
+ */
 public enum ChatRanks {
 
     HOST (ChatColor.DARK_AQUA+"<Tour Host> "),
-    PARTICIPANT (ChatColor.WHITE+"<Participant> "),
+    PARTICIPANT (ChatColor.GRAY+"<Participant> "),
     BADGEHOLDER (ChatColor.BLUE+"<Participant> ");
 
     private final String chatPrefix;

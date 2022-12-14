@@ -14,6 +14,9 @@ import net.md_5.bungee.api.connection.ProxiedPlayer;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
+/**
+ * @author Jubo
+ */
 public class CommandHostArgument extends AbstractPlayerArgumentType {
     @Override
     public String parse(StringReader reader) throws CommandSyntaxException {

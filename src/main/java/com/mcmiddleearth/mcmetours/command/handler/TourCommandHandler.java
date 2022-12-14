@@ -15,6 +15,9 @@ import com.mcmiddleearth.mcmetours.tour.TourRequest;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 
+/**
+ * @author Jubo
+ */
 public class TourCommandHandler extends AbstractCommandHandler {
 
     public TourCommandHandler(String name){
@@ -60,8 +63,8 @@ public class TourCommandHandler extends AbstractCommandHandler {
                 .then(HelpfulLiteralBuilder.literal("kick")
                                 .withHelpText("")
                                 .withTooltip("")
+                        .requires(sender -> (PluginData.hasPermission((TourCommandSender) sender, Permission.HOST) && PluginData.isHost((TourCommandSender) sender)))
                                     .then(HelpfulRequiredArgumentBuilder.argument("player",new CommandPlayerArgument())
-                                    .requires(sender -> (PluginData.hasPermission((TourCommandSender) sender, Permission.HOST) && PluginData.isHost((TourCommandSender) sender)))
                                         .executes(context -> doCommand(context.getSource(),"kick",context.getArgument("player",String.class)))))
                 .then(HelpfulLiteralBuilder.literal("refreshments")
                                 .withHelpText("")

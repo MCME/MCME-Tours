@@ -13,6 +13,9 @@ import net.md_5.bungee.api.connection.ProxiedPlayer;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
+/**
+ * @author Jubo
+ */
 public class CommandPlayerArgument extends AbstractPlayerArgumentType {
 
     @Override
