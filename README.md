@@ -4,14 +4,14 @@
 Tour management plugin.<br/>
 <i>Allows a Tour-Badge holder or a guide to create a temporary group that other players can join.<br/>
 The hosts then have access to teleportation commands that can only be used on members of that group.<br/></i>
+This is a bungee plugin, so it allows cross-server tours.
 <br/>
 
 Author: Jubo
 
 ## <b>Permissions</b>
 All users with '<b>Tours.user</b>' permission node can:
-- '<b>/tour</b>' to find info on tours.
-- '<b>/tour help</b>' to find info on Tours commands.
+- '<b>/tour help</b>' to find info on Tour-commands.
 - '<b>/tour join \<tourname\></b>' to join a currently running tour.
 - '<b>/tour leave</b>' to leave the currently running tour.
 - '<b>/tour request</b>' sends an alert to any Rangers online that use is looking for a tour.
