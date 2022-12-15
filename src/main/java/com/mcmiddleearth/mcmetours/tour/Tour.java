@@ -5,8 +5,8 @@ import com.mcmiddleearth.mcmetours.data.ChatRanks;
 import com.mcmiddleearth.mcmetours.data.Permission;
 import com.mcmiddleearth.mcmetours.data.PluginData;
 import com.mcmiddleearth.mcmetours.data.Style;
+import com.mcmiddleearth.mcmetours.discord.TourDiscordHandler;
 import net.md_5.bungee.api.ChatColor;
-import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 
@@ -21,11 +21,13 @@ public class Tour {
     private ProxiedPlayer host;
     private List<ProxiedPlayer> players = new ArrayList<>();
     private List<ProxiedPlayer> tourChat = new ArrayList<>();
+    private final TourDiscordHandler discordHandler;
 
     public Tour(ProxiedPlayer host){
         this.host = host;
         players.add(host);
         tourChat.add(host);
+        discordHandler = new TourDiscordHandler(host);
         PluginData.getMessageUtil().sendBroadcastMessage(host.getName()+" is hosting a tour. Do "+Style.STRESSED+"/tour join "+ host.getName()+Style.INFO+ " to join the tour");
     }
 
