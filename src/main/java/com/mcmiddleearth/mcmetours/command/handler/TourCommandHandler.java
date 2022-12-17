@@ -92,7 +92,19 @@ public class TourCommandHandler extends AbstractCommandHandler {
                                 .withHelpText("")
                                 .withTooltip("")
                                 .requires(sender -> (PluginData.hasPermission((TourCommandSender) sender, Permission.HOST) && PluginData.isHost((TourCommandSender) sender)))
-                                        .executes(context -> doCommand(context.getSource(),"broadcast",null)));
+                                        .executes(context -> doCommand(context.getSource(),"broadcast",null)))
+                .then(HelpfulLiteralBuilder.literal("host")
+                        .withHelpText("")
+                        .withTooltip("")
+                        .requires(sender -> (PluginData.hasPermission((TourCommandSender) sender, Permission.HOST) && PluginData.isHost((TourCommandSender) sender)))
+                        .then(HelpfulRequiredArgumentBuilder.argument("player",new CommandPlayerArgument()))
+                        .executes(context -> doCommand(context.getSource(),"host",context.getArgument("player",String.class))))
+                .then(HelpfulLiteralBuilder.literal("cohost")
+                        .withHelpText("")
+                        .withTooltip("")
+                        .requires(sender -> (PluginData.hasPermission((TourCommandSender) sender, Permission.HOST) && PluginData.isHost((TourCommandSender) sender)))
+                        .then(HelpfulRequiredArgumentBuilder.argument("player",new CommandPlayerArgument()))
+                        .executes(context -> doCommand(context.getSource(),"cohost",context.getArgument("player",String.class))));
         return helpfulLiteralBuilder;
     }
 
@@ -145,6 +157,14 @@ public class TourCommandHandler extends AbstractCommandHandler {
             case "broadcast":
                 tour = PluginData.getTour((TourCommandSender) sender);
                 tour.sendDiscordAnnouncement();
+                break;
+            case "host":
+                tour = PluginData.getTour((TourCommandSender) sender);
+                tour.setHost(ProxyServer.getInstance().getPlayer(arg));
+                break;
+            case "cohost":
+                tour = PluginData.getTour((TourCommandSender) sender);
+                tour.setCoHost(ProxyServer.getInstance().getPlayer(arg));
                 break;
         }
         return 0;
