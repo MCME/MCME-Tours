@@ -109,7 +109,7 @@ public class TourCommandHandler extends AbstractCommandHandler {
                 tour.endTour();
                 break;
             case "hat":
-                new TourHat(sender);
+                TourHat.handle(player.getName(), player.getServer().getInfo().getName());
                 break;
             case "kick":
                 tour = PluginData.getTour((TourCommandSender) sender);

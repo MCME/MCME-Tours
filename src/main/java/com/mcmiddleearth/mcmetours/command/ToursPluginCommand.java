@@ -49,7 +49,7 @@ public class ToursPluginCommand extends Command implements TabExecutor {
         String test = request.getCursor().substring(1);
         sender.sendMessage(new ComponentBuilder(test).create());
 
-        //handler.onTabComplete(request);
+        handler.onTabComplete(request);
         return request.getSuggestions();
     }
 }
