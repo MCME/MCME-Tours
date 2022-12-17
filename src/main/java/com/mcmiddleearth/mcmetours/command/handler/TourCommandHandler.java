@@ -94,17 +94,17 @@ public class TourCommandHandler extends AbstractCommandHandler {
                                 .requires(sender -> (PluginData.hasPermission((TourCommandSender) sender, Permission.HOST) && PluginData.isHost((TourCommandSender) sender)))
                                         .executes(context -> doCommand(context.getSource(),"broadcast",null)))
                 .then(HelpfulLiteralBuilder.literal("host")
-                        .withHelpText("")
-                        .withTooltip("")
-                        .requires(sender -> (PluginData.hasPermission((TourCommandSender) sender, Permission.HOST) && PluginData.isHost((TourCommandSender) sender)))
-                        .then(HelpfulRequiredArgumentBuilder.argument("player",new CommandPlayerArgument()))
-                        .executes(context -> doCommand(context.getSource(),"host",context.getArgument("player",String.class))))
+                                .withHelpText("")
+                                .withTooltip("")
+                                .requires(sender -> (PluginData.hasPermission((TourCommandSender) sender, Permission.HOST) && PluginData.isHost((TourCommandSender) sender)))
+                                    .then(HelpfulRequiredArgumentBuilder.argument("player",new CommandPlayerArgument()))
+                                        .executes(context -> doCommand(context.getSource(),"host",context.getArgument("player",String.class))))
                 .then(HelpfulLiteralBuilder.literal("cohost")
-                        .withHelpText("")
-                        .withTooltip("")
-                        .requires(sender -> (PluginData.hasPermission((TourCommandSender) sender, Permission.HOST) && PluginData.isHost((TourCommandSender) sender)))
-                        .then(HelpfulRequiredArgumentBuilder.argument("player",new CommandPlayerArgument()))
-                        .executes(context -> doCommand(context.getSource(),"cohost",context.getArgument("player",String.class))));
+                                .withHelpText("")
+                                .withTooltip("")
+                                .requires(sender -> (PluginData.hasPermission((TourCommandSender) sender, Permission.HOST) && PluginData.isHost((TourCommandSender) sender)))
+                                    .then(HelpfulRequiredArgumentBuilder.argument("player",new CommandPlayerArgument()))
+                                        .executes(context -> doCommand(context.getSource(),"cohost",context.getArgument("player",String.class))));
         return helpfulLiteralBuilder;
     }
 

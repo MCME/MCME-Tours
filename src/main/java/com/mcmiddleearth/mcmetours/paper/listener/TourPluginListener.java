@@ -3,6 +3,7 @@ package com.mcmiddleearth.mcmetours.paper.listener;
 import com.google.common.io.ByteArrayDataInput;
 import com.google.common.io.ByteStreams;
 import com.mcmiddleearth.mcmetours.paper.Channel;
+import com.mcmiddleearth.mcmetours.paper.command.TourHatPaper;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.messaging.PluginMessageListener;
@@ -22,7 +23,13 @@ public class TourPluginListener implements PluginMessageListener {
 
         if(subchannel.equals(Channel.HAT)){
             String playerData = in.readUTF();
-            Bukkit.getPlayer(playerData).sendMessage("THIS IS A FUCKING TEST");
+            TourHatPaper.TourHat(playerData);
+        }else if(subchannel.equals(Channel.REFRESHMENTS)){
+
+        }else if(subchannel.equals(Channel.GLOW)){
+
+        }else if(subchannel.equals(Channel.DISCORD)){
+
         }
     }
 }

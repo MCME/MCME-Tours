@@ -46,8 +46,8 @@ public class ToursPluginCommand extends Command implements TabExecutor {
     @Override
     public Iterable<String> onTabComplete(CommandSender sender, String[] args) {
         TabCompleteRequest request = new SimpleTabCompleteRequest(MCMETours.wrapCommandSender(sender),String.format("/%s %s",name,String.join(" ",args)));
-        String test = request.getCursor().substring(1);
-        sender.sendMessage(new ComponentBuilder(test).create());
+        //String test = request.getCursor().substring(1);
+        //sender.sendMessage(new ComponentBuilder(test).create());
 
         handler.onTabComplete(request);
         return request.getSuggestions();
