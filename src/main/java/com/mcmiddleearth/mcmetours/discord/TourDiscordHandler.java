@@ -13,8 +13,13 @@ public class TourDiscordHandler {
         sender = host;
     }
 
-    public void AnnnounceTour(){
+    public void AnnnounceTour(String info){
         String message = "";
+        if(info != null){
+
+        }else{
+
+        }
 
         handle(sender,DiscordChannel.ALERTS.getDiscordChannel(),message);
     }

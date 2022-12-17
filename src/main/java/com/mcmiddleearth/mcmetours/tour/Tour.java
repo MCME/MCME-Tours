@@ -23,6 +23,7 @@ public class Tour {
     private List<ProxiedPlayer> tourChat = new ArrayList<>();
     private final TourDiscordHandler discordHandler;
     private List<ProxiedPlayer> coHost = new ArrayList<>();
+    private String info = null;
 
     public Tour(ProxiedPlayer host){
         this.host = host;
@@ -146,6 +147,14 @@ public class Tour {
         for(ProxiedPlayer player: players){
             PluginData.getMessageUtil().sendInfoMessage(player,text);
         }
+    }
+
+    public void setInfoText(String info){
+        this.info = info;
+    }
+
+    public void sendDiscordAnnouncement(){
+        discordHandler.AnnnounceTour(info);
     }
 
     public List<ProxiedPlayer> getCoHost(){return coHost;}
