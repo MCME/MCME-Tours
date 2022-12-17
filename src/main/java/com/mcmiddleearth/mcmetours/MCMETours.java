@@ -24,42 +24,12 @@ public final class MCMETours extends Plugin {
 
     /*
     TODO:
-     get bungee network running x
-      https://www.spigotmc.org/wiki/bungeecord/
-      https://papermc.io/downloads#Waterfall
-     make first tests with bungee "hello world" plugin  x
-     rewrite old tours plugin into bungee
-      command-Builder with MCME Brigadier https://github.com/MCME/MCME-Entities/blob/master/src/main/java/com/mcmiddleearth/entities/command/VirtualCommand.java
-       and https://github.com/MCME/MCME-CommandParser
       Commands:
-       tour request x
-       tour join    x
-       tour leave   x
-       tour help
-       tour start   x
-       tour end     x
+       tour help, working with /tour but need to write the texts
        tour hat
-       tour kick    x
        tour refreshments
-       tour list    x
-       tour chat    x
-       ttpa         x
-       ttp          x
       OnTabComplete
-      all Permissions to Permission.java    x
-      Tour-Chat (Chat-Listener)     x
-      Tour Start Message            x
-      Permissions                   x
-      Message when tour runs and player joins       x
       DiscordMessage for tour
-      more Functionalities -> ask Guides    x
-       Thoughts from me:
-        Info command or something what the tour is about
-        deactivate guidebook for more immersive tours
-        Player ban from tour
-        tour broadcast for discord
-        normal chat deactivated when in tour chat???
-        when in tour chat and you do /g it allows you to chat normal
       Suggestions to implement:
         info command like /tour info and then you can see that somehow
         /tour announce or broadcast for discord
@@ -68,6 +38,7 @@ public final class MCMETours extends Plugin {
           maybe even co-hosts to set multiple hosts less perms -> still needs a "mother host"
         glow effect for host and co-hosts
         might only allow one tour at once to make messages easier like PlayerJoinEvent
+      Bukkit Part for refreshments and hat and probably glow
      */
 
     private static MCMETours instance;
