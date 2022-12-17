@@ -1,0 +1,32 @@
+name: '${project.artifactId}'
+main: com.mcmiddleearth.mcmetours.paper.ToursPaperPlugin
+version: '${project.version}'
+author: Jubo
+api-version: 1.18
+
+permissions:
+  Tours.user:
+    default: op
+    children:
+      Tours.cmd.user: true
+  Tours.ranger:
+    default: op
+    children:
+      Tours.cmd.ranger: true
+      Tours.notify.newplayer: true
+      Tours.notify.request: true
+  Tours.cmd.user:
+    description: User permissions.
+    default: true
+  Tours.cmd.ranger:
+    description: Ranger permissions.
+    default: op
+  Tours.notify.newplayer:
+    description: User permissions.
+    default: op
+  Tours.notify.request:
+    description: User permissions.
+    default: op
+  Tours.admin:
+    description: Admin permissions.
+    default: op
