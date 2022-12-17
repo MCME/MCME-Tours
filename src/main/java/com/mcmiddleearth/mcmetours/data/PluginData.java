@@ -83,6 +83,16 @@ public class PluginData {
         return false;
     }
 
+    public static boolean isCoHost(TourCommandSender sender){
+        ProxiedPlayer player = (ProxiedPlayer) sender.getCommandSender();
+        for(Tour tour : tours){
+            if(tour.getCoHost().contains(player)){
+                return true;
+            }
+        }
+        return false;
+    }
+
     public static boolean isHost(TourCommandSender sender){
         ProxiedPlayer player = (ProxiedPlayer) sender.getCommandSender();
         for(Tour tour: tours){

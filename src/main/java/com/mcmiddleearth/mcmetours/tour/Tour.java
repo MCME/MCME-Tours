@@ -22,11 +22,14 @@ public class Tour {
     private List<ProxiedPlayer> players = new ArrayList<>();
     private List<ProxiedPlayer> tourChat = new ArrayList<>();
     private final TourDiscordHandler discordHandler;
+    private List<ProxiedPlayer> coHost = new ArrayList<>();
 
     public Tour(ProxiedPlayer host){
         this.host = host;
         players.add(host);
         tourChat.add(host);
+        setGlow(host);
+        coHost.add(host);
         discordHandler = new TourDiscordHandler(host);
         PluginData.getMessageUtil().sendBroadcastMessage(host.getName()+" is hosting a tour. Do "+Style.STRESSED+"/tour join "+ host.getName()+Style.INFO+ " to join the tour");
     }
@@ -95,7 +98,7 @@ public class Tour {
     public void tourChat(ProxiedPlayer player, String message){
         String ChatMessage;
         for(ProxiedPlayer receiver : tourChat){
-            if(player == host){
+            if(coHost.contains(player)){
                 ChatMessage = ChatRanks.HOST.getChatPrefix() + player.getName() + ChatColor.WHITE + ": "  + message;
             }else if(player.hasPermission(Permission.HOST.getPermissionNode())){
                 ChatMessage = ChatRanks.BADGEHOLDER.getChatPrefix() + player.getName() + ChatColor.WHITE + ": " + message;
@@ -117,7 +120,20 @@ public class Tour {
     }
 
     public void giveRefreshments(){
-        //might not be possible
+        //Bukkit Part missing
+    }
+
+    private void setGlow(ProxiedPlayer player){
+        //Bukkit Part missing
+    }
+
+    public void setHost(ProxiedPlayer host){
+        this.host = host;
+    }
+
+    public void setCoHost(ProxiedPlayer coHost){
+        setGlow(coHost);
+        this.coHost.add(coHost);
     }
 
     public void tourList(){
@@ -132,6 +148,7 @@ public class Tour {
         }
     }
 
+    public List<ProxiedPlayer> getCoHost(){return coHost;}
     public ProxiedPlayer getHost() {return host;}
     public List<ProxiedPlayer> getPlayers() { return players;}
     public List<ProxiedPlayer> getTourChat() { return tourChat;}
