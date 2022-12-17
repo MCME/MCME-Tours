@@ -5,6 +5,7 @@ import com.mcmiddleearth.command.McmeCommandSender;
 import com.mcmiddleearth.command.builder.HelpfulLiteralBuilder;
 import com.mcmiddleearth.command.builder.HelpfulRequiredArgumentBuilder;
 import com.mcmiddleearth.mcmetours.command.TourCommandSender;
+import com.mcmiddleearth.mcmetours.command.ToursPluginCommand;
 import com.mcmiddleearth.mcmetours.command.arguments.CommandHostArgument;
 import com.mcmiddleearth.mcmetours.command.arguments.CommandPlayerArgument;
 import com.mcmiddleearth.mcmetours.data.Permission;

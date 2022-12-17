@@ -17,16 +17,20 @@ import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.plugin.Command;
 import net.md_5.bungee.api.plugin.TabExecutor;
 
+import javax.annotation.Nullable;
+
 /**
  * @author Jubo
  */
 public class ToursPluginCommand extends Command implements TabExecutor {
 
 
-    AbstractCommandHandler handler;
+    private AbstractCommandHandler handler;
+    private String name;
 
-    public ToursPluginCommand(AbstractCommandHandler handler, String name) {
+    public ToursPluginCommand(AbstractCommandHandler handler,String name) {
         super(name);
+        this.name = name;
         this.handler = handler;
     }
 
@@ -36,10 +40,16 @@ public class ToursPluginCommand extends Command implements TabExecutor {
         handler.execute(wrappedSender,args);
     }
 
+
+    // java.lang.NullPointerException: Cannot invoke "java.lang.Iterable.iterator()" because the return value of "net.md_5.bungee.api.plugin.TabExecutor.onTabComplete(net.md_5.bungee.api.CommandSender, String[])" is null
+
     @Override
     public Iterable<String> onTabComplete(CommandSender sender, String[] args) {
-        TabCompleteRequest request = new SimpleTabCompleteRequest(MCMETours.wrapCommandSender(sender),String.format("/%s %s", "", Joiner.on(' ').join(args)));
-        //onTabComplete(request);
+        TabCompleteRequest request = new SimpleTabCompleteRequest(MCMETours.wrapCommandSender(sender),String.format("/%s %s",name,String.join(" ",args)));
+        String test = request.getCursor().substring(1);
+        sender.sendMessage(new ComponentBuilder(test).create());
+
+        //handler.onTabComplete(request);
         return request.getSuggestions();
     }
 }

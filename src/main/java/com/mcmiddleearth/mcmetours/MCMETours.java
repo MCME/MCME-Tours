@@ -52,7 +52,7 @@ public final class MCMETours extends Plugin {
       Permissions                   x
       Message when tour runs and player joins       x
       DiscordMessage for tour
-      more Functionalities -> ask Guides
+      more Functionalities -> ask Guides    x
        Thoughts from me:
         Info command or something what the tour is about
         deactivate guidebook for more immersive tours
@@ -60,11 +60,18 @@ public final class MCMETours extends Plugin {
         tour broadcast for discord
         normal chat deactivated when in tour chat???
         when in tour chat and you do /g it allows you to chat normal
+      Suggestions to implement:
+        info command like /tour info and then you can see that somehow
+        /tour announce or broadcast for discord
+        discord message for /tour request
+        /tour host to set a new host
+          maybe even co-hosts to set multiple hosts less perms -> still needs a "mother host"
+        glow effect for host and co-hosts
+        might only allow one tour at once to make messages easier like PlayerJoinEvent
      */
 
     private static MCMETours instance;
     private static ProxyServer server;
-    private final Set<ToursPluginCommand> commands = new HashSet<>();
 
     @Override
     public void onEnable() {
