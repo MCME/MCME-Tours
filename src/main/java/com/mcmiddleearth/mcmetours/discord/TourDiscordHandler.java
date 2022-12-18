@@ -52,12 +52,11 @@ public class TourDiscordHandler {
     }
 
     // Placeholder for later MCME-Connect implementation
-    private boolean handle(ProxiedPlayer sender, String channel, String message){
+    private void handle(ProxiedPlayer sender, String channel, String message){
         ByteArrayDataOutput out = ByteStreams.newDataOutput();
         out.writeUTF(Channel.DISCORD);
         out.writeUTF(channel);
         out.writeUTF(message);
         ProxyServer.getInstance().getServerInfo(sender.getServer().getInfo().getName()).sendData(Channel.MAIN,out.toByteArray(),true);
-        return true;
     }
 }

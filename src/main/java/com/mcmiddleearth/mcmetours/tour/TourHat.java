@@ -10,11 +10,10 @@ import net.md_5.bungee.api.ProxyServer;
  */
 public class TourHat {
 
-    public static boolean handle(String sender, String server){
+    public static void handle(String sender, String server){
         ByteArrayDataOutput out = ByteStreams.newDataOutput();
         out.writeUTF(Channel.HAT);
         out.writeUTF(sender);
         ProxyServer.getInstance().getServerInfo(server).sendData(Channel.MAIN,out.toByteArray(),true);
-        return true;
     }
 }

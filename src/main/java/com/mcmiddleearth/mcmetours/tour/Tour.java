@@ -27,16 +27,16 @@ public class Tour {
     private final TourDiscordHandler discordHandler;
     private List<ProxiedPlayer> coHost = new ArrayList<>();
     private String info = null;
-    private boolean glow;
+    private boolean glow = false;
 
     public Tour(ProxiedPlayer host){
         this.host = host;
-        glow = true;
         players.add(host);
         tourChat.add(host);
-        glowHandle(host,glow);
         coHost.add(host);
         discordHandler = new TourDiscordHandler(host);
+        PluginData.getMessageUtil().sendInfoMessage(host,"You started a tour. To put up a description do "+Style.STRESSED+"/tour info <description>"+Style.INFO+".");
+        PluginData.getMessageUtil().sendInfoMessage(host,"To announce the tour ingame and in discord do "+Style.STRESSED+"/tour announce"+Style.INFO+".");
     }
 
     public void addPlayer(ProxiedPlayer player){
@@ -161,11 +161,13 @@ public class Tour {
     public void setHost(ProxiedPlayer host){
         this.host = host;
         discordHandler.setSender(host);
+        notifyTour(host.getName()+" is the new host of the tour.");
     }
 
     public void setCoHost(ProxiedPlayer coHost){
         glowHandle(coHost,glow);
         this.coHost.add(coHost);
+        notifyTour(coHost.getName()+" is now a co host of the tour.");
     }
 
     public void tourList(){
@@ -192,24 +194,22 @@ public class Tour {
         discordHandler.AnnnounceTour(info);
     }
 
-    private boolean glowHandle(ProxiedPlayer sender, boolean bool){
+    private void glowHandle(ProxiedPlayer sender, boolean bool){
         ByteArrayDataOutput out = ByteStreams.newDataOutput();
         out.writeUTF(Channel.GLOW);
         out.writeUTF(sender.getName());
         out.writeUTF(Boolean.toString(bool));
         ProxyServer.getInstance().getServerInfo(sender.getServer().getInfo().getName()).sendData(Channel.MAIN, out.toByteArray(),true);
-        return true;
     }
 
-    private boolean refreshmentsHandle(ProxiedPlayer sender){
+    private void refreshmentsHandle(ProxiedPlayer sender){
         ByteArrayDataOutput out = ByteStreams.newDataOutput();
         out.writeUTF(Channel.REFRESHMENTS);
         out.writeUTF(sender.getName());
         ProxyServer.getInstance().getServerInfo(sender.getServer().getInfo().getName()).sendData(Channel.MAIN,out.toByteArray(),true);
-        return true;
     }
 
-    private boolean teleportHandle(ProxiedPlayer sender, ProxiedPlayer target){
+    private void teleportHandle(ProxiedPlayer sender, ProxiedPlayer target){
         if(!sender.getServer().getInfo().equals(target.getServer().getInfo())){
             sender.connect(target.getServer().getInfo());
         }
@@ -218,7 +218,6 @@ public class Tour {
         out.writeUTF(sender.getName());
         out.writeUTF(target.getName());
         ProxyServer.getInstance().getServerInfo(target.getServer().getInfo().getName()).sendData(Channel.MAIN, out.toByteArray(),true);
-        return true;
     }
 
     public List<ProxiedPlayer> getCoHost(){return coHost;}
