@@ -24,12 +24,12 @@ Users with the '<b>Tours.ranger</b>' permission node can:
 - '<b>/tour hat</b>' allows the tour guide to wear their currently held block as a hat.
 - '<b>/ttp \<player\></b>' teleports \<player\> to user. \<player\> must be part of tour group.
 - '<b>/ttpa</b>' teleports all players in tour group to user.
-- '<b>/tour kick</b>' kicks a player
+- '<b>/tour kick \<player\></b>' kicks a player
 - '<b>/tour announce</b>' announces the tour ingame and in discord
-- '<b>/tour info</b>' sets a description for the tour announcement
-- '<b>/tour host</b>' sets a new host for the tour
-- '<b>/tour cohost</b>' sets co-hosts for the tour (less perms than host)
-- '<b>/tour glow</b>' lets the host and their co-hosts glow
+- '<b>/tour info \<message\></b>' sets a description for the tour announcement
+- '<b>/tour host \<player\></b>' sets a new host for the tour
+- '<b>/tour cohost \<player\></b>' sets co-hosts for the tour (less perms than host)
+- '<b>/tour glow</b>' lets the host and their co-hosts glow and can switch it off
 
 ## <b>License</b>
 
