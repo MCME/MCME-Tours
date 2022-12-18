@@ -6,6 +6,7 @@ import com.mcmiddleearth.command.builder.HelpfulLiteralBuilder;
 import com.mcmiddleearth.command.builder.HelpfulRequiredArgumentBuilder;
 import com.mcmiddleearth.mcmetours.command.TourCommandSender;
 import com.mcmiddleearth.mcmetours.command.arguments.CommandHostArgument;
+import com.mcmiddleearth.mcmetours.command.arguments.CommandPermissionArgument;
 import com.mcmiddleearth.mcmetours.command.arguments.CommandPlayerArgument;
 import com.mcmiddleearth.mcmetours.command.arguments.CommandStringArgument;
 import com.mcmiddleearth.mcmetours.data.Permission;
@@ -87,16 +88,16 @@ public class TourCommandHandler extends AbstractCommandHandler {
                                 .requires(sender -> (PluginData.hasPermission((TourCommandSender) sender, Permission.HOST) && PluginData.isHost((TourCommandSender) sender)))
                                     .then(HelpfulRequiredArgumentBuilder.argument("string",new CommandStringArgument()))
                                         .executes(context -> doCommand(context.getSource(),"info",context.getArgument("string",String.class))))
-                .then(HelpfulLiteralBuilder.literal("broadcast")
+                .then(HelpfulLiteralBuilder.literal("announce")
                                 .withHelpText("")
                                 .withTooltip("")
                                 .requires(sender -> (PluginData.hasPermission((TourCommandSender) sender, Permission.HOST) && PluginData.isHost((TourCommandSender) sender)))
-                                        .executes(context -> doCommand(context.getSource(),"broadcast",null)))
+                                        .executes(context -> doCommand(context.getSource(),"announce",null)))
                 .then(HelpfulLiteralBuilder.literal("host")
                                 .withHelpText("")
                                 .withTooltip("")
                                 .requires(sender -> (PluginData.hasPermission((TourCommandSender) sender, Permission.HOST) && PluginData.isHost((TourCommandSender) sender)))
-                                    .then(HelpfulRequiredArgumentBuilder.argument("playerHost",new CommandPlayerArgument())
+                                    .then(HelpfulRequiredArgumentBuilder.argument("playerHost",new CommandPermissionArgument())
                                         .executes(context -> doCommand(context.getSource(),"host",context.getArgument("playerHost",String.class)))))
                 .then(HelpfulLiteralBuilder.literal("cohost")
                                 .withHelpText("")
@@ -158,7 +159,7 @@ public class TourCommandHandler extends AbstractCommandHandler {
                 tour = PluginData.getTour((TourCommandSender) sender);
                 tour.setInfoText(arg);
                 break;
-            case "broadcast":
+            case "announce":
                 tour = PluginData.getTour((TourCommandSender) sender);
                 tour.sendDAnnouncement();
                 break;

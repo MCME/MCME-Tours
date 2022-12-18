@@ -26,12 +26,13 @@ public final class MCMETours extends Plugin {
     TODO:
       Commands:
        tour help, working with /tour but need to write the texts
-       tour hat
-       tour refreshments
-      OnTabComplete
-      DiscordMessage for tour
+       tour hat     x
+       tour refreshments        x
+      OnTabComplete     x
+      DiscordMessage for tour   x
+        needs to be tested
       Suggestions to implement:
-        info command like /tour info and then you can see that somehow
+        info command like /tour info and then you can see that somehow  -> over Discord     x
         /tour announce or broadcast for discord
         discord message for /tour request
         /tour host to set a new host
@@ -46,7 +47,6 @@ public final class MCMETours extends Plugin {
 
     private static MCMETours instance;
     private static ProxyServer server;
-    private static int connectDelay = 200;
 
     @Override
     public void onEnable() {
@@ -78,9 +78,5 @@ public final class MCMETours extends Plugin {
 
     public static MCMETours getInstance(){
         return instance;
-    }
-
-    public static int getConnectDelay(){
-        return connectDelay;
     }
 }

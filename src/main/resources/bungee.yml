@@ -3,17 +3,17 @@ version: '${project.version}'
 main: com.mcmiddleearth.mcmetours.MCMETours
 description: new Tour Plugin for MCME with Bungee Support
 api-version: 1.18
-softdepend: [MCME-Connect]
+
 
 commands:
   tour:
-    description: command
+    description: All commands to run a tour
     usage: /tour
   ttp:
-    description: command
+    description: Use can teleport to host
     usage: /ttp
   ttpa:
-    description: command
+    description: host can teleport whole tour to them
     usage: /ttpa
 
 permissions:
@@ -24,6 +24,7 @@ permissions:
   Tours.ranger:
     default: op
     children:
+      Tours.user: true
       Tours.cmd.ranger: true
       Tours.notify.newplayer: true
       Tours.notify.request: true
@@ -42,3 +43,6 @@ permissions:
   Tours.admin:
     description: Admin permissions.
     default: op
+    children:
+      Tours.user: true
+      Tours.ranger: true

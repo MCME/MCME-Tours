@@ -60,10 +60,6 @@
             <url>https://oss.sonatype.org/content/groups/public/</url>
         </repository>
         <repository>
-            <id>my-local-repo</id>
-            <url>file://${pom.basedir}/MCME-Connect-1.5.5.jar</url>
-        </repository>
-        <repository>
             <id>my-local-repo2</id>
             <url>file://${pom.basedir}/DiscordSRV-Build-1.26.0.jar</url>
         </repository>
@@ -72,6 +68,10 @@
             <url>https://papermc.io/repo/repository/maven-public/</url>
         </repository>
         <!--
+        <repository>
+            <id>my-local-repo</id>
+            <url>file://${pom.basedir}/MCME-Connect-1.5.5.jar</url>
+        </repository>
         <repository>
             <id>my-local-repo3</id>
             <url>file://${pom.basedir}/PluginUtils-1.4.3.jar</url>
@@ -106,13 +106,6 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.mcmiddleearth</groupId>
-            <artifactId>MCME-Connect</artifactId>
-            <scope>system</scope>
-            <systemPath>${pom.basedir}/MCME-Connect-1.5.5.jar</systemPath>
-            <version>1.5.5</version>
-        </dependency>
-        <dependency>
             <groupId>com.discordsrv</groupId>
             <artifactId>DiscordSRV</artifactId>
             <scope>system</scope>
@@ -126,6 +119,13 @@
         </dependency>
 
         <!--
+        <dependency>
+            <groupId>com.mcmiddleearth</groupId>
+            <artifactId>MCME-Connect</artifactId>
+            <scope>system</scope>
+            <systemPath>${pom.basedir}/MCME-Connect-1.5.5.jar</systemPath>
+            <version>1.5.5</version>
+        </dependency>
         <dependency>
             <groupId>com.mcmiddleearth</groupId>
             <artifactId>MCME-CommandParser</artifactId>

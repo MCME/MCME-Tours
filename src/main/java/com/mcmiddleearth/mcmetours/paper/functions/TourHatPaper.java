@@ -3,6 +3,9 @@ package com.mcmiddleearth.mcmetours.paper.functions;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
+/**
+ * @author Jubo
+ */
 public class TourHatPaper {
 
     public static void TourHat(String playerName){

@@ -137,16 +137,16 @@ public class Tour {
     public void giveRefreshments(){
         for(ProxiedPlayer player: players){
             refreshmentsHandle(player);
-            PluginData.getMessageUtil().sendInfoMessage(player,"You were given refreshments");
+            PluginData.getMessageUtil().sendInfoMessage(player,"You were given refreshments.");
         }
     }
 
     public void switchGlow(){
         if(!glow){
             glow = true;
-            PluginData.getMessageUtil().sendInfoMessage(host,"You switchet the glow effect on");
+            PluginData.getMessageUtil().sendInfoMessage(host,"You switchet the glow effect on.");
         }else{
-            PluginData.getMessageUtil().sendInfoMessage(host,"You switchet the glow effect off");
+            PluginData.getMessageUtil().sendInfoMessage(host,"You switchet the glow effect off.");
             glow = false;
         }
         for(ProxiedPlayer player: coHost){
@@ -185,7 +185,10 @@ public class Tour {
     }
 
     public void sendDAnnouncement(){
-        PluginData.getMessageUtil().sendBroadcastMessage(host.getName()+" is hosting a tour. Do "+Style.STRESSED+"/tour join "+ host.getName()+Style.INFO+ " to join the tour");
+        if(info == null)
+            PluginData.getMessageUtil().sendBroadcastMessage(host.getName()+" is hosting a tour. Do "+Style.STRESSED+"/tour join "+ host.getName()+Style.INFO+ " to join the tour.");
+        else
+            PluginData.getMessageUtil().sendBroadcastMessage(host.getName()+" is hosting a tour. Do "+Style.STRESSED+"/tour join "+ host.getName()+Style.INFO+ " to join the tour. About: "+info);
         discordHandler.AnnnounceTour(info);
     }
 

@@ -3,6 +3,7 @@ main: com.mcmiddleearth.mcmetours.paper.ToursPaperPlugin
 version: '${project.version}'
 author: Jubo
 api-version: 1.18
+softdepend: [DiscordSRV]
 
 permissions:
   Tours.user:

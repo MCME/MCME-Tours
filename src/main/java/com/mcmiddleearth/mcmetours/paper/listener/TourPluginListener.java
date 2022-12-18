@@ -12,7 +12,9 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Consumer;
 import org.jetbrains.annotations.NotNull;
 
-
+/**
+ * @author Jubo
+ */
 public class TourPluginListener implements PluginMessageListener {
 
     public TourPluginListener(){}

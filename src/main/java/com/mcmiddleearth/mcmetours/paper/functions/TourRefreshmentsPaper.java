@@ -5,6 +5,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+/**
+ * @author Jubo
+ */
 public class TourRefreshmentsPaper {
 
     public static void giveRefreshments(Player player){

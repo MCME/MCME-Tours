@@ -5,6 +5,9 @@ import github.scarsz.discordsrv.DiscordSRV;
 import github.scarsz.discordsrv.dependencies.jda.api.entities.TextChannel;
 import github.scarsz.discordsrv.util.DiscordUtil;
 
+/**
+ * @author Jubo
+ */
 public class TourDiscordPaper {
 
     public static void sendDiscord(String channel, String message){

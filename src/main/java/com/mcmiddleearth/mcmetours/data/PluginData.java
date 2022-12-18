@@ -112,6 +112,16 @@ public class PluginData {
         return host;
     }
 
+    public static List<String> getHostPerms(){
+        List<String> hosts = new ArrayList<>();
+        for(ProxiedPlayer player: ProxyServer.getInstance().getPlayers()){
+            if(player.hasPermission(Permission.HOST.getPermissionNode())){
+                hosts.add(player.getName());
+            }
+        }
+        return hosts;
+    }
+
     public static void clearTours(){
         tours.clear();
     }

@@ -1,5 +1,8 @@
 package com.mcmiddleearth.mcmetours.paper;
 
+/**
+ * @author Jubo
+ */
 public class Channel {
 
     public static final String MAIN = "mcme:tours";
