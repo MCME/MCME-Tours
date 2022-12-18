@@ -104,6 +104,14 @@ public class PluginData {
         return false;
     }
 
+    public static List<String> getTours(){
+        List<String> host = new ArrayList<>();
+        for(Tour tour: tours){
+            host.add(tour.getHost().getName());
+        }
+        return host;
+    }
+
     public static void clearTours(){
         tours.clear();
     }

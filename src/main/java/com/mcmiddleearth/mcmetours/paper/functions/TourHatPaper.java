@@ -1,4 +1,4 @@
-package com.mcmiddleearth.mcmetours.paper.command;
+package com.mcmiddleearth.mcmetours.paper.functions;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;

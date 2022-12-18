@@ -2,14 +2,8 @@ package com.mcmiddleearth.mcmetours.tour;
 
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
-import com.mcmiddleearth.command.McmeCommandSender;
-import com.mcmiddleearth.mcmetours.command.TourCommandSender;
-import com.mcmiddleearth.mcmetours.data.PluginData;
 import com.mcmiddleearth.mcmetours.paper.Channel;
-import com.mcmiddleearth.mcmetours.paper.command.TourHatPaper;
-import net.md_5.bungee.api.Callback;
 import net.md_5.bungee.api.ProxyServer;
-import net.md_5.bungee.api.connection.ProxiedPlayer;
 
 /**
  * @author Jubo

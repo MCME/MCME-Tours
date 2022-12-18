@@ -5,6 +5,7 @@ import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 
 import java.util.Collection;
+import java.util.Collections;
 
 public class CommandStringArgument extends AbstractPlayerArgumentType {
 
@@ -15,6 +16,6 @@ public class CommandStringArgument extends AbstractPlayerArgumentType {
 
     @Override
     protected Collection<String> getPlayerSuggestions() {
-        return null;
+        return Collections.singleton("String");
     }
 }

@@ -2,8 +2,11 @@ package com.mcmiddleearth.mcmetours.tour;
 
 import com.mcmiddleearth.command.McmeCommandSender;
 import com.mcmiddleearth.mcmetours.command.TourCommandSender;
+import com.mcmiddleearth.mcmetours.command.handler.TourCommandHandler;
 import com.mcmiddleearth.mcmetours.data.Permission;
 import com.mcmiddleearth.mcmetours.data.PluginData;
+import com.mcmiddleearth.mcmetours.discord.TourDiscordHandler;
+import com.mcmiddleearth.mcmetours.paper.functions.TourDiscordPaper;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 
@@ -32,6 +35,7 @@ public class TourRequest {
             PluginData.getMessageUtil().sendInfoMessage(sender, "A guide was informed about your request.");
         }else{
             PluginData.getMessageUtil().sendErrorMessage(sender,"There are currently no guides online.");
+            new TourDiscordHandler((ProxiedPlayer) ((TourCommandSender)sender).getCommandSender()).requestTour();
         }
     }
 }

@@ -6,7 +6,6 @@ package com.mcmiddleearth.mcmetours.discord;
 public enum DiscordChannel {
 
     ALERTS ("#\uD83D\uDCE2-alerts"),
-    SERVERCHAT ("#serverchat"),
     GUIDECHAT ("guidechat");
 
     private final String discordChannel;

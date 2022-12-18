@@ -30,7 +30,8 @@ public class CommandHostArgument extends AbstractPlayerArgumentType {
 
     @Override
     protected Collection<String> getPlayerSuggestions() {
-        return ProxyServer.getInstance().getPlayers().stream().map(ProxiedPlayer::getName).collect(Collectors.toSet());
+        return PluginData.getTours().stream().collect(Collectors.toSet());
+        //return ProxyServer.getInstance().getPlayers().stream().map(ProxiedPlayer::getName).collect(Collectors.toSet());
     }
 
 

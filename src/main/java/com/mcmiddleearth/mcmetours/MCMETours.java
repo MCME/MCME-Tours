@@ -39,10 +39,14 @@ public final class MCMETours extends Plugin {
         glow effect for host and co-hosts
         might only allow one tour at once to make messages easier like PlayerJoinEvent
       Bukkit Part for refreshments and hat and probably glow
+      For Tour join: only show with Arguments who really has a tour     x
+      Invalid synntax for cohost and host command   x
+      Cleanup when host leaves? should tour end directly or what???
      */
 
     private static MCMETours instance;
     private static ProxyServer server;
+    private static int connectDelay = 200;
 
     @Override
     public void onEnable() {
@@ -74,5 +78,9 @@ public final class MCMETours extends Plugin {
 
     public static MCMETours getInstance(){
         return instance;
+    }
+
+    public static int getConnectDelay(){
+        return connectDelay;
     }
 }

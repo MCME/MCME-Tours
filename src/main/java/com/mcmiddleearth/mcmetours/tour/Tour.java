@@ -1,12 +1,15 @@
 package com.mcmiddleearth.mcmetours.tour;
 
-import com.mcmiddleearth.connect.bungee.Handler.TpHandler;
+import com.google.common.io.ByteArrayDataOutput;
+import com.google.common.io.ByteStreams;
 import com.mcmiddleearth.mcmetours.data.ChatRanks;
 import com.mcmiddleearth.mcmetours.data.Permission;
 import com.mcmiddleearth.mcmetours.data.PluginData;
 import com.mcmiddleearth.mcmetours.data.Style;
 import com.mcmiddleearth.mcmetours.discord.TourDiscordHandler;
+import com.mcmiddleearth.mcmetours.paper.Channel;
 import net.md_5.bungee.api.ChatColor;
+import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 
@@ -24,21 +27,23 @@ public class Tour {
     private final TourDiscordHandler discordHandler;
     private List<ProxiedPlayer> coHost = new ArrayList<>();
     private String info = null;
+    private boolean glow;
 
     public Tour(ProxiedPlayer host){
         this.host = host;
+        glow = true;
         players.add(host);
         tourChat.add(host);
-        setGlow(host);
+        glowHandle(host,glow);
         coHost.add(host);
         discordHandler = new TourDiscordHandler(host);
-        PluginData.getMessageUtil().sendBroadcastMessage(host.getName()+" is hosting a tour. Do "+Style.STRESSED+"/tour join "+ host.getName()+Style.INFO+ " to join the tour");
     }
 
     public void addPlayer(ProxiedPlayer player){
         players.add(player);
         tourChat.add(player);
-        TpHandler.handle(player.getName(),host.getServer().getInfo().getName(),host.getName());
+        //TpHandler.handle(player.getName(),host.getServer().getInfo().getName(),host.getName());
+        teleportHandle(player,host);
         notifyTour("Everyboy welcome "+Style.HIGHLIGHT+player.getName()+Style.INFO+" to the tour!");
         PluginData.getMessageUtil().sendInfoMessage(player,"Welcome to the tour. For the best experience, join "+ Style.HIGHLIGHT_STRESSED+host.getName()+Style.INFO+" in Discord!");
     }
@@ -50,6 +55,7 @@ public class Tour {
         }
         players.remove(player);
         tourChat.remove(player);
+        glowHandle(player,false);
         notifyTour(player.getName()+" left the tour.");
         PluginData.getMessageUtil().sendInfoMessage(player, "You left the tour.");
     }
@@ -59,16 +65,23 @@ public class Tour {
         players.clear();
         tourChat.clear();
         PluginData.removeTour(this);
+        for(ProxiedPlayer player : coHost){
+            glowHandle(player,false);
+        }
+        discordHandler.endTour();
+        coHost.clear();
     }
 
     public void TeleportToHost(ProxiedPlayer player){
-        TpHandler.handle(player.getName(),host.getServer().getInfo().getName(),host.getName());
+        //TpHandler.handle(player.getName(),host.getServer().getInfo().getName(),host.getName());
+        teleportHandle(player,host);
         PluginData.getMessageUtil().sendInfoMessage(player,"You were teleport to "+host.getName()+".");
     }
 
     public void teleportPlayer(ProxiedPlayer player){
         if(players.contains(player)){
-            TpHandler.handle(player.getName(),host.getServer().getInfo().getName(),host.getName());
+            //TpHandler.handle(player.getName(),host.getServer().getInfo().getName(),host.getName());
+            teleportHandle(player,host);
             PluginData.getMessageUtil().sendInfoMessage(player,host.getName()+" teleported you to them.");
             PluginData.getMessageUtil().sendInfoMessage(host,"You teleported "+player.getName()+" to yourself.");
         }else{
@@ -79,7 +92,8 @@ public class Tour {
     public void teleportAll(){
         for(ProxiedPlayer player: players){
             if(player != host){
-                TpHandler.handle(player.getName(),host.getServer().getInfo().getName(),host.getName());
+                //TpHandler.handle(player.getName(),host.getServer().getInfo().getName(),host.getName());
+                teleportHandle(player,host);
                 PluginData.getMessageUtil().sendInfoMessage(player,host.getName()+" teleported you to them.");
             }
         }
@@ -121,19 +135,36 @@ public class Tour {
     }
 
     public void giveRefreshments(){
-        //Bukkit Part missing
+        for(ProxiedPlayer player: players){
+            refreshmentsHandle(player);
+            PluginData.getMessageUtil().sendInfoMessage(player,"You were given refreshments");
+        }
     }
 
-    private void setGlow(ProxiedPlayer player){
-        //Bukkit Part missing
+    public void switchGlow(){
+        if(!glow){
+            glow = true;
+            PluginData.getMessageUtil().sendInfoMessage(host,"You switchet the glow effect on");
+        }else{
+            PluginData.getMessageUtil().sendInfoMessage(host,"You switchet the glow effect off");
+            glow = false;
+        }
+        for(ProxiedPlayer player: coHost){
+            glowHandle(player,glow);
+        }
+    }
+
+    public void setGlow(ProxiedPlayer player){
+        glowHandle(player,glow);
     }
 
     public void setHost(ProxiedPlayer host){
         this.host = host;
+        discordHandler.setSender(host);
     }
 
     public void setCoHost(ProxiedPlayer coHost){
-        setGlow(coHost);
+        glowHandle(coHost,glow);
         this.coHost.add(coHost);
     }
 
@@ -153,8 +184,38 @@ public class Tour {
         this.info = info;
     }
 
-    public void sendDiscordAnnouncement(){
+    public void sendDAnnouncement(){
+        PluginData.getMessageUtil().sendBroadcastMessage(host.getName()+" is hosting a tour. Do "+Style.STRESSED+"/tour join "+ host.getName()+Style.INFO+ " to join the tour");
         discordHandler.AnnnounceTour(info);
+    }
+
+    private boolean glowHandle(ProxiedPlayer sender, boolean bool){
+        ByteArrayDataOutput out = ByteStreams.newDataOutput();
+        out.writeUTF(Channel.GLOW);
+        out.writeUTF(sender.getName());
+        out.writeUTF(Boolean.toString(bool));
+        ProxyServer.getInstance().getServerInfo(sender.getServer().getInfo().getName()).sendData(Channel.MAIN, out.toByteArray(),true);
+        return true;
+    }
+
+    private boolean refreshmentsHandle(ProxiedPlayer sender){
+        ByteArrayDataOutput out = ByteStreams.newDataOutput();
+        out.writeUTF(Channel.REFRESHMENTS);
+        out.writeUTF(sender.getName());
+        ProxyServer.getInstance().getServerInfo(sender.getServer().getInfo().getName()).sendData(Channel.MAIN,out.toByteArray(),true);
+        return true;
+    }
+
+    private boolean teleportHandle(ProxiedPlayer sender, ProxiedPlayer target){
+        if(!sender.getServer().getInfo().equals(target.getServer().getInfo())){
+            sender.connect(target.getServer().getInfo());
+        }
+        ByteArrayDataOutput out = ByteStreams.newDataOutput();
+        out.writeUTF(Channel.TP);
+        out.writeUTF(sender.getName());
+        out.writeUTF(target.getName());
+        ProxyServer.getInstance().getServerInfo(target.getServer().getInfo().getName()).sendData(Channel.MAIN, out.toByteArray(),true);
+        return true;
     }
 
     public List<ProxiedPlayer> getCoHost(){return coHost;}
