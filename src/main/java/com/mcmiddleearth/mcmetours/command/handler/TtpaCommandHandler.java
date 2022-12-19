@@ -20,10 +20,10 @@ public class TtpaCommandHandler extends AbstractCommandHandler{
     @Override
     protected HelpfulLiteralBuilder createCommandTree(HelpfulLiteralBuilder helpfulLiteralBuilder) {
         helpfulLiteralBuilder
-                .withHelpText("TestText1")
-                .withTooltip("TestText2")
+                .withHelpText("")
+                .withTooltip("")
                 .requires(sender -> (PluginData.hasPermission((TourCommandSender) sender, Permission.HOST) && PluginData.isCoHost((TourCommandSender) sender)))
-                .executes(context -> teleportAll(context.getSource()));
+                    .executes(context -> teleportAll(context.getSource()));
         return helpfulLiteralBuilder;
     }
 

@@ -114,7 +114,7 @@ public class Tour {
 
     public void tourChat(ProxiedPlayer player, String message){
         String ChatMessage;
-        for(ProxiedPlayer receiver : tourChat){
+        for(ProxiedPlayer receiver : players){
             if(coHost.contains(player)){
                 ChatMessage = ChatRanks.HOST.getChatPrefix() + player.getName() + ChatColor.WHITE + ": "  + message;
             }else if(player.hasPermission(Permission.HOST.getPermissionNode())){

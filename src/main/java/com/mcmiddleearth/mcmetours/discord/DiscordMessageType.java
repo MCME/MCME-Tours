@@ -1,5 +1,8 @@
 package com.mcmiddleearth.mcmetours.discord;
 
+/**
+ * @author Jubo
+ */
 public class DiscordMessageType {
 
     public static final String ANNOUNCEMENT= "announcement";

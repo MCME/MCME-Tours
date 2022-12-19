@@ -21,4 +21,3 @@ public enum ChatRanks {
         return chatPrefix;
     }
 }
-
