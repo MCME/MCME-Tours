@@ -13,16 +13,22 @@ import org.bukkit.Bukkit;
  */
 public class TourDiscordPaper {
 
-    public static void AnnounceTour(String senderName, String tourName, boolean info, String tourInfo){
+    public static void AnnounceTour(String senderName, String tourName, String discordRoles ,boolean info, String tourInfo){
         String message;
         Guild guild = DiscordSRV.getPlugin().getMainGuild();
-        String discTag = DiscordUtil.convertMentionsFromNames("@Tourist",guild);
-        message = ":MCME: ***"+ discTag + ", "+senderName
+        String[] discordRoleSplit = discordRoles.split(",");
+        StringBuilder tag = new StringBuilder();
+        String discTag;
+        for(String discordRole : discordRoleSplit){
+            discTag = DiscordUtil.convertMentionsFromNames("@"+discordRole,guild);
+            tag.append(discTag).append(", ");
+        }
+        message = ":MCME: ***"+ tag +senderName
                 +" is hosting a new tour*** :MCME:"
                 +"\n To join the tour type in game chat: "
                 + "```css\n/tour join " + tourName + "```";
         if(info)
-            message = message + "__**Tour Description:**__ "+info;
+            message = message + "__**Tour Description:**__ "+tourInfo;
         sendDiscord(DiscordChannel.ALERTS.getDiscordChannel(), message);
     }
 

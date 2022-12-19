@@ -43,7 +43,7 @@ public class TourPluginListener implements PluginMessageListener {
         }else if(subchannel.equals(Channel.DISCORD)){
             String messageType = in.readUTF();
             if(messageType.equals(DiscordMessageType.ANNOUNCEMENT)){
-                TourDiscordPaper.AnnounceTour(in.readUTF(),in.readUTF(),in.readBoolean(),in.readUTF());
+                TourDiscordPaper.AnnounceTour(in.readUTF(),in.readUTF(),in.readUTF(),in.readBoolean(),in.readUTF());
             }else if(messageType.equals(DiscordMessageType.END)){
                 TourDiscordPaper.EndTour(in.readUTF());
             }else if(messageType.equals(DiscordMessageType.REQUEST)){

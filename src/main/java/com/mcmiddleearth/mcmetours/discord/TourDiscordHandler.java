@@ -23,12 +23,13 @@ public class TourDiscordHandler {
         this.name = name;
     }
 
-    public void AnnnounceTour(String info){
+    public void AnnnounceTour(String info,String discordrole){
         ByteArrayDataOutput out = ByteStreams.newDataOutput();
         out.writeUTF(Channel.DISCORD);
         out.writeUTF(DiscordMessageType.ANNOUNCEMENT);
         out.writeUTF(sender.getName());
         out.writeUTF(name);
+        out.writeUTF(discordrole);
         if(info == null){
             out.writeBoolean(false);
             out.writeUTF("");

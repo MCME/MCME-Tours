@@ -29,6 +29,7 @@ public class Tour {
     private String info = null;
     private boolean glow = false;
     private final String name;
+    private boolean announced = false;
 
     public Tour(ProxiedPlayer host, String name){
         this.host = host;
@@ -38,7 +39,7 @@ public class Tour {
         this.name = name;
         discordHandler = new TourDiscordHandler(host,name);
         PluginData.getMessageUtil().sendInfoMessage(host,"You started a tour. To put up a description do "+Style.STRESSED+"/tour info <description>"+Style.INFO+".");
-        PluginData.getMessageUtil().sendInfoMessage(host,"To announce the tour ingame and in discord do "+Style.STRESSED+"/tour announce"+Style.INFO+".");
+        PluginData.getMessageUtil().sendInfoMessage(host,"To announce the tour ingame and in discord do "+Style.STRESSED+"/tour announce <role>"+Style.INFO+".");
     }
 
     public void addPlayer(ProxiedPlayer player){
@@ -189,13 +190,17 @@ public class Tour {
         PluginData.getMessageUtil().sendInfoMessage(host,"You set the description to: "+info);
     }
 
-    public void sendDAnnouncement(){
-        if(info == null)
-            PluginData.getMessageUtil().sendBroadcastMessage(host.getName()+" is hosting a tour. Do "+Style.STRESSED+"/tour join "+ name+Style.INFO+ " to join the tour. Do "
-                    +Style.HIGHLIGHT_STRESSED+"/discord"+Style.INFO+" to more information.");
-        else
-            PluginData.getMessageUtil().sendBroadcastMessage(host.getName()+" is hosting a tour. Do "+Style.STRESSED+"/tour join "+ name+Style.INFO+ " to join the tour. About: "+info);
-        discordHandler.AnnnounceTour(info);
+    public void sendDAnnouncement(String discordrole){
+        if(!announced){
+            if(info == null)
+                PluginData.getMessageUtil().sendBroadcastMessage(host.getName()+" is hosting a tour. Do "+Style.STRESSED+"/tour join "+ name+Style.INFO+ " to join the tour. Do "
+                        +Style.HIGHLIGHT_STRESSED+"/discord"+Style.INFO+" to more information.");
+            else
+                PluginData.getMessageUtil().sendBroadcastMessage(host.getName()+" is hosting a tour. Do "+Style.STRESSED+"/tour join "+ name+Style.INFO+ " to join the tour. About: "+info);
+            discordHandler.AnnnounceTour(info,discordrole);
+            announced = true;
+        } else
+            PluginData.getMessageUtil().sendErrorMessage(host,"The tour was already announced.");
     }
 
     private void glowHandle(ProxiedPlayer sender, boolean bool){
