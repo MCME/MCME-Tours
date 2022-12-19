@@ -1,7 +1,8 @@
 name: '${project.artifactId}'
 version: '${project.version}'
 main: com.mcmiddleearth.mcmetours.MCMETours
-description: new Tour Plugin for MCME with Bungee Support
+description: Tour Plugin for MCME with Bungee Support
+author: Jubo
 api-version: 1.18
 
 

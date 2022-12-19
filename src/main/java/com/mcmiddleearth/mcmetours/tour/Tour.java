@@ -28,7 +28,7 @@ public class Tour {
     private List<ProxiedPlayer> coHost = new ArrayList<>();
     private String info = null;
     private boolean glow = false;
-    private String name;
+    private final String name;
 
     public Tour(ProxiedPlayer host, String name){
         this.host = host;
@@ -146,9 +146,9 @@ public class Tour {
     public void switchGlow(){
         if(!glow){
             glow = true;
-            PluginData.getMessageUtil().sendInfoMessage(host,"You switchet the glow effect on.");
+            PluginData.getMessageUtil().sendInfoMessage(host,"You switched the glow effect on.");
         }else{
-            PluginData.getMessageUtil().sendInfoMessage(host,"You switchet the glow effect off.");
+            PluginData.getMessageUtil().sendInfoMessage(host,"You switched the glow effect off.");
             glow = false;
         }
         for(ProxiedPlayer player: coHost){
@@ -186,7 +186,7 @@ public class Tour {
 
     public void setInfoText(String info){
         this.info = info;
-        PluginData.getMessageUtil().sendInfoMessage(host,"You set the info text to: "+info);
+        PluginData.getMessageUtil().sendInfoMessage(host,"You set the description to: "+info);
     }
 
     public void sendDAnnouncement(){
@@ -214,8 +214,9 @@ public class Tour {
     }
 
     private void teleportHandle(ProxiedPlayer sender, ProxiedPlayer target){
-        if(sender.hasPermission("mcmeconnect.world."+target.getServer().getInfo().getName())){
+        if(!sender.hasPermission("mcmeconnect.world."+target.getServer().getInfo().getName())){
             PluginData.getMessageUtil().sendErrorMessage(target,sender.getName()+" doesn´t have the permission to enter this world.");
+            PluginData.getMessageUtil().sendErrorMessage(sender, "You don´t have the permission to enter this world.");
             return;
         }
         if(!sender.getServer().getInfo().equals(target.getServer().getInfo())){
