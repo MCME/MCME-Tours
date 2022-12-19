@@ -1,6 +1,6 @@
 package com.mcmiddleearth.mcmetours.listener;
 
-import com.mcmiddleearth.mcmetours.data.PluginData;
+import com.mcmiddleearth.mcmetours.util.PluginData;
 import com.mcmiddleearth.mcmetours.tour.Tour;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.event.ChatEvent;

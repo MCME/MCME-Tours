@@ -2,11 +2,9 @@ package com.mcmiddleearth.mcmetours.tour;
 
 import com.mcmiddleearth.command.McmeCommandSender;
 import com.mcmiddleearth.mcmetours.command.TourCommandSender;
-import com.mcmiddleearth.mcmetours.command.handler.TourCommandHandler;
-import com.mcmiddleearth.mcmetours.data.Permission;
-import com.mcmiddleearth.mcmetours.data.PluginData;
+import com.mcmiddleearth.mcmetours.util.Permission;
+import com.mcmiddleearth.mcmetours.util.PluginData;
 import com.mcmiddleearth.mcmetours.discord.TourDiscordHandler;
-import com.mcmiddleearth.mcmetours.paper.functions.TourDiscordPaper;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 
@@ -15,11 +13,7 @@ import net.md_5.bungee.api.connection.ProxiedPlayer;
  */
 public class TourRequest {
 
-    public TourRequest(McmeCommandSender sender){
-        informHosts(sender);
-    }
-
-    private void informHosts(McmeCommandSender sender){
+    public static void informHosts(McmeCommandSender sender, String message){
         boolean success = false;
         if(PluginData.tourRunning()){
             PluginData.getMessageUtil().sendInfoMessage(sender,"There is currently a tour running.");
@@ -27,7 +21,11 @@ public class TourRequest {
         }
         for(ProxiedPlayer player: ProxyServer.getInstance().getPlayers()){
             if(player.hasPermission(Permission.HOST.getPermissionNode())){
-                PluginData.getMessageUtil().sendInfoMessage(player,TourCommandSender.getName((TourCommandSender) sender)+" has requested a tour!");
+                if(message == null){
+                    PluginData.getMessageUtil().sendInfoMessage(player,TourCommandSender.getName((TourCommandSender) sender)+" has requested a tour!");
+                }else {
+                    PluginData.getMessageUtil().sendInfoMessage(player,TourCommandSender.getName((TourCommandSender) sender)+" has requested a tour! About: "+message);
+                }
                 success = true;
             }
         }
@@ -35,7 +33,7 @@ public class TourRequest {
             PluginData.getMessageUtil().sendInfoMessage(sender, "A guide was informed about your request.");
         }else{
             PluginData.getMessageUtil().sendErrorMessage(sender,"There are currently no guides online.");
-            new TourDiscordHandler((ProxiedPlayer) ((TourCommandSender)sender).getCommandSender()).requestTour();
         }
+        new TourDiscordHandler((ProxiedPlayer) ((TourCommandSender)sender).getCommandSender(),null).requestTour(message);
     }
 }

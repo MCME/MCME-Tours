@@ -1,4 +1,4 @@
-package com.mcmiddleearth.mcmetours.data;
+package com.mcmiddleearth.mcmetours.util;
 
 import net.md_5.bungee.api.ChatColor;
 
@@ -13,4 +13,9 @@ public class Style {
     public static final ChatColor STRESSED = ChatColor.GREEN;
     public static final ChatColor HIGHLIGHT = ChatColor.GOLD;
     public static final ChatColor HIGHLIGHT_STRESSED = ChatColor.YELLOW;
+    public static final ChatColor BOLD = ChatColor.BOLD;
+    public static final ChatColor CURSIVE = ChatColor.ITALIC;
+    public static final ChatColor EMPHASIZE = ChatColor.UNDERLINE;
+    public static final ChatColor CROSSOUT = ChatColor.STRIKETHROUGH;
+    public static final ChatColor TEST = ChatColor.MAGIC;
 }

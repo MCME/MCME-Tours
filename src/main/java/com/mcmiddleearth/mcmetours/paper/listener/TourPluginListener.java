@@ -2,6 +2,7 @@ package com.mcmiddleearth.mcmetours.paper.listener;
 
 import com.google.common.io.ByteArrayDataInput;
 import com.google.common.io.ByteStreams;
+import com.mcmiddleearth.mcmetours.discord.DiscordMessageType;
 import com.mcmiddleearth.mcmetours.paper.Channel;
 import com.mcmiddleearth.mcmetours.paper.ToursPaperPlugin;
 import com.mcmiddleearth.mcmetours.paper.functions.*;
@@ -35,14 +36,19 @@ public class TourPluginListener implements PluginMessageListener {
             TourRefreshmentsPaper.giveRefreshments(Bukkit.getPlayer(playerData));
         }else if(subchannel.equals(Channel.GLOW)){
             String playerData = in.readUTF();
-            String boolData = in.readUTF();
+            Boolean bool = in.readBoolean();
             runAfterArrival(playerData,source -> {
-                TourGlowPaper.setGlow(playerData,boolData);
+                TourGlowPaper.setGlow(playerData,bool);
             });
         }else if(subchannel.equals(Channel.DISCORD)){
-            String discordChannel = in.readUTF();
-            String discordMessage = in.readUTF();
-            TourDiscordPaper.sendDiscord(discordChannel,discordMessage);
+            String messageType = in.readUTF();
+            if(messageType.equals(DiscordMessageType.ANNOUNCEMENT)){
+                TourDiscordPaper.AnnounceTour(in.readUTF(),in.readUTF(),in.readBoolean(),in.readUTF());
+            }else if(messageType.equals(DiscordMessageType.END)){
+                TourDiscordPaper.EndTour(in.readUTF());
+            }else if(messageType.equals(DiscordMessageType.REQUEST)){
+                TourDiscordPaper.RequestTour(in.readBoolean(),in.readUTF(),in.readUTF());
+            }
         }else if(subchannel.equals(Channel.TP)){
             String sender = in.readUTF();
             String target = in.readUTF();

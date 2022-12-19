@@ -15,7 +15,7 @@ import java.util.UUID;
  */
 public class TourCommandSender implements McmeCommandSender {
 
-    CommandSender sender;
+    private final CommandSender sender;
 
     public static HashMap<UUID, TourCommandSender> players = new HashMap<>();
 
@@ -43,5 +43,9 @@ public class TourCommandSender implements McmeCommandSender {
             players.put(player.getUniqueId(),result);
         }
         return result;
+    }
+
+    public static void removeMcmePlayer(ProxiedPlayer player){
+        players.remove(player.getUniqueId());
     }
 }

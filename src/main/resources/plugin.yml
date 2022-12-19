@@ -6,28 +6,16 @@ api-version: 1.18
 softdepend: [DiscordSRV]
 
 permissions:
-  Tours.user:
-    default: op
-    children:
-      Tours.cmd.user: true
-  Tours.ranger:
-    default: op
-    children:
-      Tours.cmd.ranger: true
-      Tours.notify.newplayer: true
-      Tours.notify.request: true
-  Tours.cmd.user:
-    description: User permissions.
-    default: true
-  Tours.cmd.ranger:
-    description: Ranger permissions.
-    default: op
-  Tours.notify.newplayer:
-    description: User permissions.
-    default: op
-  Tours.notify.request:
-    description: User permissions.
-    default: op
   Tours.admin:
-    description: Admin permissions.
+    description: Admin permissions
+    default: op
+    children:
+      Tours.ranger: true
+  Tours.ranger:
+    description: Tour Host permission
+    default: op
+    children:
+      Tours.user: true
+  Tours.user:
+    description: allows to participate in tours
     default: op

@@ -3,6 +3,9 @@ package com.mcmiddleearth.mcmetours.discord;
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
 import com.mcmiddleearth.mcmetours.paper.Channel;
+import github.scarsz.discordsrv.DiscordSRV;
+import github.scarsz.discordsrv.dependencies.jda.api.entities.Guild;
+import github.scarsz.discordsrv.util.DiscordUtil;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 
@@ -11,39 +14,54 @@ import net.md_5.bungee.api.connection.ProxiedPlayer;
  */
 public class TourDiscordHandler {
 
-    ProxiedPlayer sender;
+    private ProxiedPlayer sender;
+    private String name;
 
-    public TourDiscordHandler(ProxiedPlayer host){
+
+    public TourDiscordHandler(ProxiedPlayer host, String name){
         sender = host;
+        this.name = name;
     }
 
     public void AnnnounceTour(String info){
-        String message = ":MCME: ***@Tourist:"+sender.getName()
-                +" is hosting a new tour*** :MCME:"
-                +"\n To join the tour type in game chat: "
-                + "```css\n/tour join " + sender.getName() + "```";
-        if(info != null){
-            message = message + "__**Tour-Info:**__ "+info;
+        ByteArrayDataOutput out = ByteStreams.newDataOutput();
+        out.writeUTF(Channel.DISCORD);
+        out.writeUTF(DiscordMessageType.ANNOUNCEMENT);
+        out.writeUTF(sender.getName());
+        out.writeUTF(name);
+        if(info == null){
+            out.writeBoolean(false);
+            out.writeUTF("");
         }
-        handle(sender,DiscordChannel.ALERTS.getDiscordChannel(),message);
+        else{
+            out.writeBoolean(true);
+            out.writeUTF(info);
+        }
+        handle(sender,out);
     }
-
-    /*
-    public void sendTourServerChat(){
-        String message = "!\n :ringmcme: **" + sender.getName() + "** is starting a tour! :ringmcme:" +
-                "\nTo join the tour type this in game chat: ```css\n/tour join " + sender.getName() + "```";
-        handle(sender,DiscordChannel.SERVERCHAT.getDiscordChannel(),message);
-    }
-     */
 
     public void endTour(){
-        String message = ":MCME: __**Info:**__ "+ sender.getName()+"´s tour has ended.";
-        handle(sender,DiscordChannel.ALERTS.getDiscordChannel(),message);
+        ByteArrayDataOutput out = ByteStreams.newDataOutput();
+        out.writeUTF(Channel.DISCORD);
+        out.writeUTF(DiscordMessageType.END);
+        out.writeUTF(sender.getName());
+        handle(sender,out);
     }
 
-    public void requestTour(){
-        String message = sender.getName()+" has requested a tour. There are currently no badge-holders online to help them.";
-        handle(sender,DiscordChannel.GUIDECHAT.getDiscordChannel(),message);
+    public void requestTour(String messageRequest){
+        ByteArrayDataOutput out = ByteStreams.newDataOutput();
+        out.writeUTF(Channel.DISCORD);
+        out.writeUTF(DiscordMessageType.REQUEST);
+        if(messageRequest == null){
+            out.writeBoolean(false);
+            out.writeUTF("");
+        }
+        else{
+            out.writeBoolean(true);
+            out.writeUTF(messageRequest);
+        }
+        out.writeUTF(sender.getName());
+        handle(sender,out);
     }
 
     // Will be used when host can be set (not yet decided if implemented) (otherwise will be forgotten)
@@ -52,11 +70,7 @@ public class TourDiscordHandler {
     }
 
     // Placeholder for later MCME-Connect implementation
-    private void handle(ProxiedPlayer sender, String channel, String message){
-        ByteArrayDataOutput out = ByteStreams.newDataOutput();
-        out.writeUTF(Channel.DISCORD);
-        out.writeUTF(channel);
-        out.writeUTF(message);
+    private void handle(ProxiedPlayer sender, ByteArrayDataOutput out){
         ProxyServer.getInstance().getServerInfo(sender.getServer().getInfo().getName()).sendData(Channel.MAIN,out.toByteArray(),true);
     }
 }

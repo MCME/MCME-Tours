@@ -2,7 +2,7 @@ package com.mcmiddleearth.mcmetours.command.arguments;
 
 import com.mcmiddleearth.command.argument.AbstractPlayerArgumentType;
 import com.mcmiddleearth.mcmetours.command.TourCommandSender;
-import com.mcmiddleearth.mcmetours.data.PluginData;
+import com.mcmiddleearth.mcmetours.util.PluginData;
 import com.mojang.brigadier.LiteralMessage;
 import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;

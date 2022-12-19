@@ -2,10 +2,10 @@ package com.mcmiddleearth.mcmetours.tour;
 
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
-import com.mcmiddleearth.mcmetours.data.ChatRanks;
-import com.mcmiddleearth.mcmetours.data.Permission;
-import com.mcmiddleearth.mcmetours.data.PluginData;
-import com.mcmiddleearth.mcmetours.data.Style;
+import com.mcmiddleearth.mcmetours.util.ChatRanks;
+import com.mcmiddleearth.mcmetours.util.Permission;
+import com.mcmiddleearth.mcmetours.util.PluginData;
+import com.mcmiddleearth.mcmetours.util.Style;
 import com.mcmiddleearth.mcmetours.discord.TourDiscordHandler;
 import com.mcmiddleearth.mcmetours.paper.Channel;
 import net.md_5.bungee.api.ChatColor;
@@ -28,13 +28,15 @@ public class Tour {
     private List<ProxiedPlayer> coHost = new ArrayList<>();
     private String info = null;
     private boolean glow = false;
+    private String name;
 
-    public Tour(ProxiedPlayer host){
+    public Tour(ProxiedPlayer host, String name){
         this.host = host;
         players.add(host);
         tourChat.add(host);
         coHost.add(host);
-        discordHandler = new TourDiscordHandler(host);
+        this.name = name;
+        discordHandler = new TourDiscordHandler(host,name);
         PluginData.getMessageUtil().sendInfoMessage(host,"You started a tour. To put up a description do "+Style.STRESSED+"/tour info <description>"+Style.INFO+".");
         PluginData.getMessageUtil().sendInfoMessage(host,"To announce the tour ingame and in discord do "+Style.STRESSED+"/tour announce"+Style.INFO+".");
     }
@@ -184,13 +186,15 @@ public class Tour {
 
     public void setInfoText(String info){
         this.info = info;
+        PluginData.getMessageUtil().sendInfoMessage(host,"You set the info text to: "+info);
     }
 
     public void sendDAnnouncement(){
         if(info == null)
-            PluginData.getMessageUtil().sendBroadcastMessage(host.getName()+" is hosting a tour. Do "+Style.STRESSED+"/tour join "+ host.getName()+Style.INFO+ " to join the tour.");
+            PluginData.getMessageUtil().sendBroadcastMessage(host.getName()+" is hosting a tour. Do "+Style.STRESSED+"/tour join "+ name+Style.INFO+ " to join the tour. Do "
+                    +Style.HIGHLIGHT_STRESSED+"/discord"+Style.INFO+" to more information.");
         else
-            PluginData.getMessageUtil().sendBroadcastMessage(host.getName()+" is hosting a tour. Do "+Style.STRESSED+"/tour join "+ host.getName()+Style.INFO+ " to join the tour. About: "+info);
+            PluginData.getMessageUtil().sendBroadcastMessage(host.getName()+" is hosting a tour. Do "+Style.STRESSED+"/tour join "+ name+Style.INFO+ " to join the tour. About: "+info);
         discordHandler.AnnnounceTour(info);
     }
 
@@ -198,7 +202,7 @@ public class Tour {
         ByteArrayDataOutput out = ByteStreams.newDataOutput();
         out.writeUTF(Channel.GLOW);
         out.writeUTF(sender.getName());
-        out.writeUTF(Boolean.toString(bool));
+        out.writeBoolean(bool);
         ProxyServer.getInstance().getServerInfo(sender.getServer().getInfo().getName()).sendData(Channel.MAIN, out.toByteArray(),true);
     }
 
@@ -220,6 +224,7 @@ public class Tour {
         ProxyServer.getInstance().getServerInfo(target.getServer().getInfo().getName()).sendData(Channel.MAIN, out.toByteArray(),true);
     }
 
+    public String getName() {return name;}
     public List<ProxiedPlayer> getCoHost(){return coHost;}
     public ProxiedPlayer getHost() {return host;}
     public List<ProxiedPlayer> getPlayers() { return players;}

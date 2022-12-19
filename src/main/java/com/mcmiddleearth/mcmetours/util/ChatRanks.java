@@ -1,4 +1,4 @@
-package com.mcmiddleearth.mcmetours.data;
+package com.mcmiddleearth.mcmetours.util;
 
 import net.md_5.bungee.api.ChatColor;
 

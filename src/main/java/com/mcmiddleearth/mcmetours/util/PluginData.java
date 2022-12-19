@@ -1,10 +1,8 @@
-package com.mcmiddleearth.mcmetours.data;
+package com.mcmiddleearth.mcmetours.util;
 
 import com.mcmiddleearth.mcmetours.command.TourCommandSender;
 import com.mcmiddleearth.mcmetours.tour.Tour;
 import net.md_5.bungee.api.ProxyServer;
-import net.md_5.bungee.api.chat.BaseComponent;
-import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 
 import java.util.ArrayList;
@@ -16,12 +14,7 @@ import java.util.List;
 public class PluginData {
 
     private static List<Tour> tours = new ArrayList<>();
-
     private final static MessageUtil messageUtil = new MessageUtil();
-
-    PluginData(){
-
-    }
 
     public static Tour getTour(TourCommandSender sender){
         ProxiedPlayer player = (ProxiedPlayer) sender.getCommandSender();
@@ -34,7 +27,7 @@ public class PluginData {
 
     public static Tour getTour(String name){
         for(Tour tour: tours){
-            if(tour.getHost().getName().equalsIgnoreCase(name))
+            if(tour.getName().equalsIgnoreCase(name))
                 return tour;
         }
         return null;
@@ -107,7 +100,7 @@ public class PluginData {
     public static List<String> getTours(){
         List<String> host = new ArrayList<>();
         for(Tour tour: tours){
-            host.add(tour.getHost().getName());
+            host.add(tour.getName());
         }
         return host;
     }

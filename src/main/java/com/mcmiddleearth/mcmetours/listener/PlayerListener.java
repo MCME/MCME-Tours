@@ -1,8 +1,9 @@
 package com.mcmiddleearth.mcmetours.listener;
 
 import com.mcmiddleearth.mcmetours.command.TourCommandSender;
-import com.mcmiddleearth.mcmetours.data.PluginData;
+import com.mcmiddleearth.mcmetours.util.PluginData;
 import com.mcmiddleearth.mcmetours.tour.Tour;
+import com.mcmiddleearth.mcmetours.util.Style;
 import net.md_5.bungee.api.event.PlayerDisconnectEvent;
 import net.md_5.bungee.api.event.PostLoginEvent;
 import net.md_5.bungee.api.event.ServerSwitchEvent;
@@ -18,13 +19,11 @@ public class PlayerListener implements Listener {
     @EventHandler(priority = EventPriority.NORMAL)
     public void playerJoin(PostLoginEvent event){
         if(PluginData.tourRunning()){
-            PluginData.getMessageUtil().sendInfoMessage(event.getPlayer(),"A tour is currently running.");
-        }else{
-            PluginData.getMessageUtil().sendInfoMessage(event.getPlayer(),"No tour is currently running.");
+            PluginData.getMessageUtil().sendInfoMessage(event.getPlayer(),"A tour is currently running. Do "+Style.HIGHLIGHT+"/tour join "+ Style.INFO+" to see the running tours.");
         }
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.NORMAL)
     public void playerSwitchServer(ServerSwitchEvent event){
         if(PluginData.isCoHost(new TourCommandSender(event.getPlayer()))){
             Tour tour = PluginData.getTour(event.getPlayer());
@@ -37,6 +36,7 @@ public class PlayerListener implements Listener {
         if(PluginData.isInTour(new TourCommandSender(event.getPlayer()))){
             Tour tour = PluginData.getTour(new TourCommandSender(event.getPlayer()));
             tour.removePlayer(event.getPlayer());
+            TourCommandSender.removeMcmePlayer(event.getPlayer());
         }
     }
 }

@@ -8,9 +8,8 @@ import org.bukkit.entity.Player;
  */
 public class TourGlowPaper {
 
-    public static void setGlow(String playerData, String boolData){
+    public static void setGlow(String playerData, Boolean bool){
         Player player = Bukkit.getPlayer(playerData);
-        //player.sendMessage("Test Glow");
-        player.setGlowing(Boolean.parseBoolean(boolData));
+        player.setGlowing(bool);
     }
 }

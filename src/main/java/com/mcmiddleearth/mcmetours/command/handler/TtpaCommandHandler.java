@@ -4,17 +4,9 @@ import com.mcmiddleearth.command.AbstractCommandHandler;
 import com.mcmiddleearth.command.McmeCommandSender;
 import com.mcmiddleearth.command.builder.HelpfulLiteralBuilder;
 import com.mcmiddleearth.mcmetours.command.TourCommandSender;
-import com.mcmiddleearth.mcmetours.data.Permission;
-import com.mcmiddleearth.mcmetours.data.PluginData;
+import com.mcmiddleearth.mcmetours.util.Permission;
+import com.mcmiddleearth.mcmetours.util.PluginData;
 import com.mcmiddleearth.mcmetours.tour.Tour;
-import com.mojang.brigadier.CommandDispatcher;
-import net.md_5.bungee.api.ChatColor;
-import net.md_5.bungee.api.CommandSender;
-import net.md_5.bungee.api.ProxyServer;
-import net.md_5.bungee.api.chat.BaseComponent;
-import net.md_5.bungee.api.chat.ComponentBuilder;
-import net.md_5.bungee.api.connection.ProxiedPlayer;
-import net.md_5.bungee.api.plugin.TabExecutor;
 
 /**
  * @author Jubo

@@ -6,16 +6,11 @@ import com.mcmiddleearth.command.builder.HelpfulLiteralBuilder;
 import com.mcmiddleearth.command.builder.HelpfulRequiredArgumentBuilder;
 import com.mcmiddleearth.mcmetours.command.TourCommandSender;
 import com.mcmiddleearth.mcmetours.command.arguments.CommandPlayerArgument;
-import com.mcmiddleearth.mcmetours.data.Permission;
-import com.mcmiddleearth.mcmetours.data.PluginData;
+import com.mcmiddleearth.mcmetours.util.Permission;
+import com.mcmiddleearth.mcmetours.util.PluginData;
 import com.mcmiddleearth.mcmetours.tour.Tour;
-import com.mojang.brigadier.CommandDispatcher;
-import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.ProxyServer;
-import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
-import net.md_5.bungee.api.plugin.Command;
-import net.md_5.bungee.api.plugin.TabExecutor;
 
 /**
  * @author Jubo
@@ -32,10 +27,10 @@ public class TtpCommandHandler extends AbstractCommandHandler {
                 .withHelpText("teleports to Host")
                 .withTooltip("")
                 .requires(sender -> PluginData.hasPermission((TourCommandSender) sender, Permission.USER) && PluginData.isInTour((TourCommandSender) sender))
-                .executes(context -> teleportToHost(context.getSource(),null))
-                .then(HelpfulRequiredArgumentBuilder.argument("player",new CommandPlayerArgument())
-                .requires(sender -> (PluginData.hasPermission((TourCommandSender) sender, Permission.HOST) ))
-                        .executes(context -> teleportToHost(context.getSource(),context.getArgument("player",String.class))));
+                    .executes(context -> teleportToHost(context.getSource(),null))
+                        .then(HelpfulRequiredArgumentBuilder.argument("player",new CommandPlayerArgument())
+                            .requires(sender -> (PluginData.hasPermission((TourCommandSender) sender, Permission.HOST) ))
+                                .executes(context -> teleportToHost(context.getSource(),context.getArgument("player",String.class))));
         return helpfulLiteralBuilder;
     }
 

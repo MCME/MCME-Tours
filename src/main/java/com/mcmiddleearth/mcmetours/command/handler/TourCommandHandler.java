@@ -5,17 +5,19 @@ import com.mcmiddleearth.command.McmeCommandSender;
 import com.mcmiddleearth.command.builder.HelpfulLiteralBuilder;
 import com.mcmiddleearth.command.builder.HelpfulRequiredArgumentBuilder;
 import com.mcmiddleearth.mcmetours.command.TourCommandSender;
-import com.mcmiddleearth.mcmetours.command.arguments.CommandHostArgument;
+import com.mcmiddleearth.mcmetours.command.arguments.CommandTournameArgument;
 import com.mcmiddleearth.mcmetours.command.arguments.CommandPermissionArgument;
 import com.mcmiddleearth.mcmetours.command.arguments.CommandPlayerArgument;
-import com.mcmiddleearth.mcmetours.command.arguments.CommandStringArgument;
-import com.mcmiddleearth.mcmetours.data.Permission;
-import com.mcmiddleearth.mcmetours.data.PluginData;
+import com.mcmiddleearth.mcmetours.util.Permission;
+import com.mcmiddleearth.mcmetours.util.PluginData;
 import com.mcmiddleearth.mcmetours.tour.Tour;
 import com.mcmiddleearth.mcmetours.tour.TourHat;
 import com.mcmiddleearth.mcmetours.tour.TourRequest;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
+
+import static com.mojang.brigadier.arguments.StringArgumentType.greedyString;
+import static com.mojang.brigadier.arguments.StringArgumentType.word;
 
 /**
  * @author Jubo
@@ -31,15 +33,17 @@ public class TourCommandHandler extends AbstractCommandHandler {
         helpfulLiteralBuilder
                 .requires(sender -> (sender instanceof TourCommandSender))
                 .then(HelpfulLiteralBuilder.literal("request")
-                                .withHelpText("Request Help")
-                                .withTooltip("Request Tool")
-                                .requires(sender -> PluginData.hasPermission((TourCommandSender) sender, Permission.USER))
-                                    .executes(context -> doCommand(context.getSource(),"request", null)))
+                                .withHelpText("")
+                                .withTooltip("")
+                                .requires(sender -> (PluginData.hasPermission((TourCommandSender) sender, Permission.USER) && !PluginData.isInTour((TourCommandSender) sender)))
+                                    .executes(context -> doCommand(context.getSource(),"request", null))
+                                        .then(HelpfulRequiredArgumentBuilder.argument("requestText",greedyString())
+                                            .executes(context -> doCommand(context.getSource(),"request",context.getArgument("requestText",String.class)))))
                 .then(HelpfulLiteralBuilder.literal("join")
                                 .withHelpText("")
                                 .withTooltip("")
-                                .then(HelpfulRequiredArgumentBuilder.argument("hostname",new CommandHostArgument())
-                                        .requires(sender -> (PluginData.hasPermission((TourCommandSender) sender, Permission.USER) && PluginData.tourRunning()))
+                                .then(HelpfulRequiredArgumentBuilder.argument("hostname",new CommandTournameArgument())
+                                        .requires(sender -> (PluginData.hasPermission((TourCommandSender) sender, Permission.USER) && PluginData.tourRunning() && !PluginData.isInTour((TourCommandSender) sender)))
                                                 .executes(context -> doCommand(context.getSource(),"join",context.getArgument("hostname",String.class)))))
                 .then(HelpfulLiteralBuilder.literal("leave")
                                 .withHelpText("")
@@ -49,8 +53,9 @@ public class TourCommandHandler extends AbstractCommandHandler {
                 .then(HelpfulLiteralBuilder.literal("start")
                                 .withHelpText("")
                                 .withTooltip("")
-                                .requires(sender -> PluginData.hasPermission((TourCommandSender) sender, Permission.HOST))
-                                    .executes(context -> doCommand(context.getSource(),"start",null)))
+                                .requires(sender -> (PluginData.hasPermission((TourCommandSender) sender, Permission.HOST) && !PluginData.isInTour((TourCommandSender) sender)))
+                                    .then(HelpfulRequiredArgumentBuilder.argument("tourName",word())
+                                        .executes(context -> doCommand(context.getSource(),"start",context.getArgument("tourName",String.class)))))
                 .then(HelpfulLiteralBuilder.literal("end")
                                 .withHelpText("")
                                 .withTooltip("")
@@ -64,13 +69,13 @@ public class TourCommandHandler extends AbstractCommandHandler {
                 .then(HelpfulLiteralBuilder.literal("kick")
                                 .withHelpText("")
                                 .withTooltip("")
-                        .requires(sender -> (PluginData.hasPermission((TourCommandSender) sender, Permission.HOST) && PluginData.isHost((TourCommandSender) sender)))
-                                    .then(HelpfulRequiredArgumentBuilder.argument("playerKick",new CommandPlayerArgument())
-                                        .executes(context -> doCommand(context.getSource(),"kick",context.getArgument("playerKick",String.class)))))
+                                    .requires(sender -> (PluginData.hasPermission((TourCommandSender) sender, Permission.HOST) && PluginData.isHost((TourCommandSender) sender)))
+                                        .then(HelpfulRequiredArgumentBuilder.argument("playerKick",new CommandPlayerArgument())
+                                            .executes(context -> doCommand(context.getSource(),"kick",context.getArgument("playerKick",String.class)))))
                 .then(HelpfulLiteralBuilder.literal("refreshments")
                                 .withHelpText("")
                                 .withTooltip("")
-                                .requires(sender -> (PluginData.hasPermission((TourCommandSender) sender, Permission.HOST) && PluginData.isHost((TourCommandSender) sender)))
+                                .requires(sender -> (PluginData.hasPermission((TourCommandSender) sender, Permission.HOST) && PluginData.isCoHost((TourCommandSender) sender)))
                                     .executes(context -> doCommand(context.getSource(),"refreshments",null)))
                 .then(HelpfulLiteralBuilder.literal("list")
                                 .withHelpText("")
@@ -86,8 +91,8 @@ public class TourCommandHandler extends AbstractCommandHandler {
                                 .withHelpText("")
                                 .withTooltip("")
                                 .requires(sender -> (PluginData.hasPermission((TourCommandSender) sender, Permission.HOST) && PluginData.isHost((TourCommandSender) sender)))
-                                    .then(HelpfulRequiredArgumentBuilder.argument("string",new CommandStringArgument()))
-                                        .executes(context -> doCommand(context.getSource(),"info",context.getArgument("string",String.class))))
+                                    .then(HelpfulRequiredArgumentBuilder.argument("string",greedyString())
+                                        .executes(context -> doCommand(context.getSource(),"info",context.getArgument("string",String.class)))))
                 .then(HelpfulLiteralBuilder.literal("announce")
                                 .withHelpText("")
                                 .withTooltip("")
@@ -106,10 +111,10 @@ public class TourCommandHandler extends AbstractCommandHandler {
                                     .then(HelpfulRequiredArgumentBuilder.argument("playerCoHost",new CommandPlayerArgument())
                                         .executes(context -> doCommand(context.getSource(),"cohost",context.getArgument("playerCoHost",String.class)))))
                 .then(HelpfulLiteralBuilder.literal("glow")
-                        .withHelpText("")
-                        .withTooltip("")
-                        .requires(sender -> (PluginData.hasPermission((TourCommandSender) sender, Permission.HOST) && PluginData.isHost((TourCommandSender) sender)))
-                        .executes(context -> doCommand(context.getSource(),"glow",null)));
+                                .withHelpText("")
+                                .withTooltip("")
+                                    .requires(sender -> (PluginData.hasPermission((TourCommandSender) sender, Permission.HOST) && PluginData.isHost((TourCommandSender) sender)))
+                                        .executes(context -> doCommand(context.getSource(),"glow",null)));
         return helpfulLiteralBuilder;
     }
 
@@ -118,7 +123,7 @@ public class TourCommandHandler extends AbstractCommandHandler {
         ProxiedPlayer player = (ProxiedPlayer) ((TourCommandSender)sender).getCommandSender();
         switch (command) {
             case "request":
-                new TourRequest(sender);
+                TourRequest.informHosts(sender,arg);
                 break;
             case "join":
                 tour = PluginData.getTour(arg);
@@ -129,7 +134,7 @@ public class TourCommandHandler extends AbstractCommandHandler {
                 tour.removePlayer((ProxiedPlayer) ((TourCommandSender) sender).getCommandSender());
                 break;
             case "start":
-                tour = new Tour(player);
+                tour = new Tour(player,arg);
                 PluginData.addTour(tour);
                 break;
             case "end":
