@@ -214,6 +214,10 @@ public class Tour {
     }
 
     private void teleportHandle(ProxiedPlayer sender, ProxiedPlayer target){
+        if(sender.hasPermission("mcmeconnect.world."+target.getServer().getInfo().getName())){
+            PluginData.getMessageUtil().sendErrorMessage(target,sender.getName()+" doesn´t have the permission to enter this world.");
+            return;
+        }
         if(!sender.getServer().getInfo().equals(target.getServer().getInfo())){
             sender.connect(target.getServer().getInfo());
         }

@@ -46,7 +46,7 @@ public final class MCMETours extends Plugin {
        /tour request <what is requested>    x
        /tour check (maybe) ??       kinda    x
        when joining /discord message        x
-       Permission for world tp (adventurers arent allowed in FB)
+       Permission for world tp (adventurers arent allowed in FB)        x
        correct discord channels
      */
 
