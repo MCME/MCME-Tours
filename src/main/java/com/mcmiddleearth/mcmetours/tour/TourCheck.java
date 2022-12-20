@@ -4,6 +4,9 @@ import com.mcmiddleearth.command.McmeCommandSender;
 import com.mcmiddleearth.mcmetours.util.PluginData;
 import com.mcmiddleearth.mcmetours.util.Style;
 
+/**
+ * @author Jubo
+ */
 public class TourCheck {
 
     public static void sendInfos(McmeCommandSender sender){

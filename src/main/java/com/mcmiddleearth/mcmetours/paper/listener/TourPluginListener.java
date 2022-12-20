@@ -28,33 +28,46 @@ public class TourPluginListener implements PluginMessageListener {
         ByteArrayDataInput in = ByteStreams.newDataInput(message);
         String subchannel = in.readUTF();
 
-        if(subchannel.equals(Channel.HAT)){
-            String playerData = in.readUTF();
-            TourHatPaper.TourHat(playerData);
-        }else if(subchannel.equals(Channel.REFRESHMENTS)){
-            String playerData = in.readUTF();
-            TourRefreshmentsPaper.giveRefreshments(Bukkit.getPlayer(playerData));
-        }else if(subchannel.equals(Channel.GLOW)){
-            String playerData = in.readUTF();
-            Boolean bool = in.readBoolean();
-            runAfterArrival(playerData,source -> {
-                TourGlowPaper.setGlow(playerData,bool);
-            });
-        }else if(subchannel.equals(Channel.DISCORD)){
-            String messageType = in.readUTF();
-            if(messageType.equals(DiscordMessageType.ANNOUNCEMENT)){
-                TourDiscordPaper.AnnounceTour(in.readUTF(),in.readUTF(),in.readUTF(),in.readBoolean(),in.readUTF());
-            }else if(messageType.equals(DiscordMessageType.END)){
-                TourDiscordPaper.EndTour(in.readUTF());
-            }else if(messageType.equals(DiscordMessageType.REQUEST)){
-                TourDiscordPaper.RequestTour(in.readBoolean(),in.readUTF(),in.readUTF());
+        switch (subchannel) {
+            case Channel.HAT: {
+                String playerData = in.readUTF();
+                TourHatPaper.TourHat(playerData);
+                break;
             }
-        }else if(subchannel.equals(Channel.TP)){
-            String sender = in.readUTF();
-            String target = in.readUTF();
-            runAfterArrival(sender,source -> {
-                TourTeleportPaper.teleportPlayer(source,Bukkit.getPlayer(target));
-            });
+            case Channel.REFRESHMENTS: {
+                String playerData = in.readUTF();
+                TourRefreshmentsPaper.giveRefreshments(Bukkit.getPlayer(playerData));
+                break;
+            }
+            case Channel.GLOW: {
+                String playerData = in.readUTF();
+                Boolean bool = in.readBoolean();
+                runAfterArrival(playerData, source -> {
+                    TourGlowPaper.setGlow(playerData, bool);
+                });
+                break;
+            }
+            case Channel.DISCORD:
+                String messageType = in.readUTF();
+                switch (messageType) {
+                    case DiscordMessageType.ANNOUNCEMENT:
+                        TourDiscordPaper.AnnounceTour(in.readUTF(), in.readUTF(), in.readUTF(), in.readBoolean(), in.readUTF());
+                        break;
+                    case DiscordMessageType.END:
+                        TourDiscordPaper.EndTour(in.readUTF());
+                        break;
+                    case DiscordMessageType.REQUEST:
+                        TourDiscordPaper.RequestTour(in.readBoolean(), in.readUTF(), in.readUTF());
+                        break;
+                }
+                break;
+            case Channel.TP:
+                String sender = in.readUTF();
+                String target = in.readUTF();
+                runAfterArrival(sender, source -> {
+                    TourTeleportPaper.teleportPlayer(source, Bukkit.getPlayer(target));
+                });
+                break;
         }
     }
 
