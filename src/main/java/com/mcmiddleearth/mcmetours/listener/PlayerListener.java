@@ -19,7 +19,7 @@ public class PlayerListener implements Listener {
     @EventHandler(priority = EventPriority.NORMAL)
     public void playerJoin(PostLoginEvent event){
         if(PluginData.tourRunning()){
-            PluginData.getMessageUtil().sendInfoMessage(event.getPlayer(),"A tour is currently running. Do "+Style.HIGHLIGHT+"/tour join "+ Style.INFO+" to see the running tours.");
+            PluginData.getMessageUtil().sendInfoMessage(event.getPlayer(),"A tour is currently running. Do "+Style.HIGHLIGHT+"/tour check "+ Style.INFO+" for more information.");
         }
     }
 

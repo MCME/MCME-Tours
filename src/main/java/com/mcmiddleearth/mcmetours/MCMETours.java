@@ -39,7 +39,7 @@ public final class MCMETours extends Plugin {
       For Tour join: only show with Arguments who really has a tour     x
       Invalid synntax for cohost and host command   x
       Cleanup when host leaves? should tour end directly or what???
-      tour check
+      tour check        x
       tour start <name> insteead of playername as name  x
       New Suggestions:
        name a tour (something specific) x
@@ -48,6 +48,8 @@ public final class MCMETours extends Plugin {
        when joining /discord message        x
        Permission for world tp (adventurers arent allowed in FB)        x
        correct discord channels
+       tour check command       x
+        shows running tours and which guides/badgeholders are online        x
      */
 
     private static MCMETours instance;

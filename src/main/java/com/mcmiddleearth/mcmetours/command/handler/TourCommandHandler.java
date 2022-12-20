@@ -8,6 +8,7 @@ import com.mcmiddleearth.mcmetours.command.TourCommandSender;
 import com.mcmiddleearth.mcmetours.command.arguments.CommandTournameArgument;
 import com.mcmiddleearth.mcmetours.command.arguments.CommandPermissionArgument;
 import com.mcmiddleearth.mcmetours.command.arguments.CommandPlayerArgument;
+import com.mcmiddleearth.mcmetours.tour.TourCheck;
 import com.mcmiddleearth.mcmetours.util.Permission;
 import com.mcmiddleearth.mcmetours.util.PluginData;
 import com.mcmiddleearth.mcmetours.tour.Tour;
@@ -115,7 +116,12 @@ public class TourCommandHandler extends AbstractCommandHandler {
                                 .withHelpText("")
                                 .withTooltip("")
                                 .requires(sender -> (PluginData.hasPermission((TourCommandSender) sender, Permission.HOST) && PluginData.isHost((TourCommandSender) sender)))
-                                        .executes(context -> doCommand(context.getSource(),"glow",null)));
+                                    .executes(context -> doCommand(context.getSource(),"glow",null)))
+                .then(HelpfulLiteralBuilder.literal("check")
+                                .withHelpText("")
+                                .withTooltip("")
+                                .requires(sender -> PluginData.hasPermission((TourCommandSender) sender,Permission.USER))
+                                    .executes(context -> doCommand(context.getSource(),"check",null)));
         return helpfulLiteralBuilder;
     }
 
@@ -180,6 +186,10 @@ public class TourCommandHandler extends AbstractCommandHandler {
             case "glow":
                 tour = PluginData.getTour((TourCommandSender) sender);
                 tour.switchGlow();
+                break;
+            case "check":
+                TourCheck.sendInfos(sender);
+                break;
         }
         return 0;
     }
