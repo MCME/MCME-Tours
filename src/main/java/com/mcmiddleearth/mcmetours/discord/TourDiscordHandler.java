@@ -15,7 +15,7 @@ import net.md_5.bungee.api.connection.ProxiedPlayer;
 public class TourDiscordHandler {
 
     private ProxiedPlayer sender;
-    private String name;
+    private final String name;
 
 
     public TourDiscordHandler(ProxiedPlayer host, String name){

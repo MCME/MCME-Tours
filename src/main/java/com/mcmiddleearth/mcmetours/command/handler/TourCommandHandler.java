@@ -40,6 +40,11 @@ public class TourCommandHandler extends AbstractCommandHandler {
                                     .executes(context -> doCommand(context.getSource(),"request", null))
                                         .then(HelpfulRequiredArgumentBuilder.argument("request",greedyString())
                                             .executes(context -> doCommand(context.getSource(),"request",context.getArgument("request",String.class)))))
+                .then(HelpfulLiteralBuilder.literal("check")
+                                .withHelpText("")
+                                .withTooltip("")
+                                .requires(sender -> PluginData.hasPermission((TourCommandSender) sender,Permission.USER))
+                                    .executes(context -> doCommand(context.getSource(),"check",null)))
                 .then(HelpfulLiteralBuilder.literal("join")
                                 .withHelpText("")
                                 .withTooltip("")
@@ -110,18 +115,17 @@ public class TourCommandHandler extends AbstractCommandHandler {
                                 .withHelpText("")
                                 .withTooltip("")
                                 .requires(sender -> (PluginData.hasPermission((TourCommandSender) sender, Permission.HOST) && PluginData.isHost((TourCommandSender) sender)))
-                                    .then(HelpfulRequiredArgumentBuilder.argument("playername",new CommandPlayerArgument())
-                                        .executes(context -> doCommand(context.getSource(),"cohost",context.getArgument("playername",String.class)))))
+                                    .then(HelpfulLiteralBuilder.literal("add")
+                                        .then(HelpfulRequiredArgumentBuilder.argument("playername",new CommandPlayerArgument())
+                                            .executes(context -> doCommand(context.getSource(),"cohostAdd",context.getArgument("playername",String.class)))))
+                                    .then(HelpfulLiteralBuilder.literal("remove")
+                                        .then(HelpfulRequiredArgumentBuilder.argument("playername",new CommandPlayerArgument())
+                                            .executes(context -> doCommand(context.getSource(),"cohostRemove",context.getArgument("playername",String.class))))))
                 .then(HelpfulLiteralBuilder.literal("glow")
                                 .withHelpText("")
                                 .withTooltip("")
                                 .requires(sender -> (PluginData.hasPermission((TourCommandSender) sender, Permission.HOST) && PluginData.isHost((TourCommandSender) sender)))
-                                    .executes(context -> doCommand(context.getSource(),"glow",null)))
-                .then(HelpfulLiteralBuilder.literal("check")
-                                .withHelpText("")
-                                .withTooltip("")
-                                .requires(sender -> PluginData.hasPermission((TourCommandSender) sender,Permission.USER))
-                                    .executes(context -> doCommand(context.getSource(),"check",null)));
+                                    .executes(context -> doCommand(context.getSource(),"glow",null)));
         return helpfulLiteralBuilder;
     }
 
@@ -179,9 +183,13 @@ public class TourCommandHandler extends AbstractCommandHandler {
                 tour = PluginData.getTour((TourCommandSender) sender);
                 tour.setHost(ProxyServer.getInstance().getPlayer(arg));
                 break;
-            case "cohost":
+            case "cohostAdd":
                 tour = PluginData.getTour((TourCommandSender) sender);
                 tour.setCoHost(ProxyServer.getInstance().getPlayer(arg));
+                break;
+            case "cohostRemove":
+                tour = PluginData.getTour((TourCommandSender) sender);
+                tour.removeCoHost(ProxyServer.getInstance().getPlayer(arg));
                 break;
             case "glow":
                 tour = PluginData.getTour((TourCommandSender) sender);

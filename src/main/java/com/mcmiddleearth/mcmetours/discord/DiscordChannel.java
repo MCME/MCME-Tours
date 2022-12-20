@@ -6,7 +6,7 @@ package com.mcmiddleearth.mcmetours.discord;
 public enum DiscordChannel {
 
     ALERTS ("global"),
-    GUIDECHAT ("guidechat");
+    GUIDECHAT ("tourRequest");
 
     private final String discordChannel;
 

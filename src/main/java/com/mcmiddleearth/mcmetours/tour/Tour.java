@@ -58,6 +58,7 @@ public class Tour {
         }
         players.remove(player);
         tourChat.remove(player);
+        coHost.remove(player);
         glowHandle(player,false);
         notifyTour(player.getName()+" left the tour.");
         PluginData.getMessageUtil().sendInfoMessage(player, "You left the tour.");
@@ -162,15 +163,33 @@ public class Tour {
     }
 
     public void setHost(ProxiedPlayer host){
-        this.host = host;
-        discordHandler.setSender(host);
-        notifyTour(host.getName()+" is the new host of the tour.");
+        if(!this.host.equals(host)){
+            this.host = host;
+            discordHandler.setSender(host);
+            notifyTour(host.getName()+" is the new host of the tour.");
+        }else
+            PluginData.getMessageUtil().sendErrorMessage(this.host,"You are already the host of this tour.");
     }
 
     public void setCoHost(ProxiedPlayer coHost){
-        glowHandle(coHost,glow);
-        this.coHost.add(coHost);
-        notifyTour(coHost.getName()+" is now a co host of the tour.");
+        if(!this.coHost.contains(coHost)){
+            glowHandle(coHost,glow);
+            this.coHost.add(coHost);
+            notifyTour(coHost.getName()+" is now a co host of the tour.");
+        }else
+            PluginData.getMessageUtil().sendErrorMessage(host,coHost.getName()+" is already a Co-Host.");
+    }
+
+    public void removeCoHost(ProxiedPlayer coHost){
+        if(host.equals(coHost)){
+            PluginData.getMessageUtil().sendErrorMessage(host,"You can´t remove yourself.");
+            return;
+        }
+        if(this.coHost.remove(coHost)){
+            PluginData.getMessageUtil().sendInfoMessage(host,coHost.getName()+" was removed as Co-Host.");
+            PluginData.getMessageUtil().sendInfoMessage(coHost,"You were removed as Co-Host.");
+        }else
+            PluginData.getMessageUtil().sendErrorMessage(host, coHost.getName()+" is not a Co-Host of this tour.");
     }
 
     public void tourList(){

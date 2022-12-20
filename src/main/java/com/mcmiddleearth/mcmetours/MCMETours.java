@@ -50,6 +50,10 @@ public final class MCMETours extends Plugin {
        correct discord channels
        tour check command       x
         shows running tours and which guides/badgeholders are online        x
+      tour hat message
+      remove cohosts
+      check if someone is already cohost        x
+      check if host is already host             x
      */
 
     private static MCMETours instance;
