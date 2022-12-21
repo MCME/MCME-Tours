@@ -43,7 +43,6 @@ public class Tour {
         coHost.add(host);
         this.name = name;
         discordHandler = new TourDiscordHandler(host,name);
-        cleanup.cancel();
         PluginData.getMessageUtil().sendInfoMessage(host,"You started a tour. To put up a description do "+Style.STRESSED+"/tour info <description>"+Style.INFO+".");
         PluginData.getMessageUtil().sendInfoMessage(host,"To announce the tour ingame and in discord do "+Style.STRESSED+"/tour announce <role>"+Style.INFO+".");
     }

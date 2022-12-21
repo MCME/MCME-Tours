@@ -3,7 +3,9 @@ package com.mcmiddleearth.mcmetours.util;
 import com.mcmiddleearth.command.McmeCommandSender;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.ProxyServer;
+import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
+import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 
 /**
@@ -34,6 +36,12 @@ public class MessageUtil {
 
     public void sendInfoMessage(McmeCommandSender sender, String message){
         sender.sendMessage(new ComponentBuilder(PREFIX+message).color(Style.INFO).create());
+    }
+
+    public void sendClickableInfoMessage(CommandSender sender, String message, String clickable){
+        TextComponent text = new TextComponent(message);
+        text.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND,clickable));
+        sender.sendMessage(text);
     }
 
 }
