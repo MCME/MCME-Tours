@@ -20,6 +20,11 @@ public class PlayerListener implements Listener {
     public void playerJoin(PostLoginEvent event){
         if(PluginData.tourRunning()){
             PluginData.getMessageUtil().sendInfoMessage(event.getPlayer(),"A tour is currently running. Do "+Style.HIGHLIGHT+"/tour check "+ Style.INFO+" for more information.");
+            for(String tourName: PluginData.getTours()){
+                Tour tour = PluginData.getTour(tourName);
+                if(event.getPlayer().getName().equalsIgnoreCase(tour.getHost().getName()))
+                    tour.returnedHost(event.getPlayer());
+            }
         }
     }
 
@@ -35,7 +40,11 @@ public class PlayerListener implements Listener {
     public void playerLeave(PlayerDisconnectEvent event){
         if(PluginData.isInTour(new TourCommandSender(event.getPlayer()))){
             Tour tour = PluginData.getTour(new TourCommandSender(event.getPlayer()));
-            tour.removePlayer(event.getPlayer());
+            if(event.getPlayer().equals(tour.getHost())){
+                tour.selfDestruction();
+            }else{
+                tour.removePlayer(event.getPlayer());
+            }
             TourCommandSender.removeMcmePlayer(event.getPlayer());
         }
     }

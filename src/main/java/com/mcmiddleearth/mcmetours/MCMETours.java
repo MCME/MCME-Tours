@@ -6,6 +6,7 @@ import com.mcmiddleearth.mcmetours.command.ToursPluginCommand;
 import com.mcmiddleearth.mcmetours.command.handler.TourCommandHandler;
 import com.mcmiddleearth.mcmetours.command.handler.TtpCommandHandler;
 import com.mcmiddleearth.mcmetours.command.handler.TtpaCommandHandler;
+import com.mcmiddleearth.mcmetours.tour.Tour;
 import com.mcmiddleearth.mcmetours.util.PluginData;
 import com.mcmiddleearth.mcmetours.listener.ChatListener;
 import com.mcmiddleearth.mcmetours.listener.PlayerListener;
@@ -79,6 +80,11 @@ public final class MCMETours extends Plugin {
 
     @Override
     public void onDisable() {
+        for(String tourName: PluginData.getTours()){
+            Tour tour = PluginData.getTour(tourName);
+            if(tour.getTask())
+                tour.getCleanup().cancel();
+        }
         PluginData.clearTours();
     }
 

@@ -2,6 +2,7 @@ package com.mcmiddleearth.mcmetours.tour;
 
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
+import com.mcmiddleearth.mcmetours.MCMETours;
 import com.mcmiddleearth.mcmetours.util.ChatRanks;
 import com.mcmiddleearth.mcmetours.util.Permission;
 import com.mcmiddleearth.mcmetours.util.PluginData;
@@ -12,8 +13,10 @@ import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
+import net.md_5.bungee.api.scheduler.ScheduledTask;
 
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 /**
@@ -30,6 +33,8 @@ public class Tour {
     private boolean glow = false;
     private final String name;
     private boolean announced = false;
+    private ScheduledTask cleanup;
+    private boolean task = false;
 
     public Tour(ProxiedPlayer host, String name){
         this.host = host;
@@ -38,8 +43,18 @@ public class Tour {
         coHost.add(host);
         this.name = name;
         discordHandler = new TourDiscordHandler(host,name);
+        cleanup.cancel();
         PluginData.getMessageUtil().sendInfoMessage(host,"You started a tour. To put up a description do "+Style.STRESSED+"/tour info <description>"+Style.INFO+".");
         PluginData.getMessageUtil().sendInfoMessage(host,"To announce the tour ingame and in discord do "+Style.STRESSED+"/tour announce <role>"+Style.INFO+".");
+    }
+
+    public void selfDestruction(){
+        notifyTour("The host was disconnected from the server. This tour will destroy itself in 60 seconds.");
+        task = true;
+        cleanup = ProxyServer.getInstance().getScheduler().schedule(MCMETours.getInstance(),() -> {
+            if(!host.isConnected())
+                endTour();
+                }, 60, TimeUnit.SECONDS);
     }
 
     public void addPlayer(ProxiedPlayer player){
@@ -166,9 +181,22 @@ public class Tour {
         if(!this.host.equals(host)){
             this.host = host;
             discordHandler.setSender(host);
+            coHost.add(host);
             notifyTour(host.getName()+" is the new host of the tour.");
+            glowHandle(host,glow);
         }else
             PluginData.getMessageUtil().sendErrorMessage(this.host,"You are already the host of this tour.");
+    }
+
+    public void returnedHost(ProxiedPlayer returnedHost){
+        this.host = returnedHost;
+        discordHandler.setSender(returnedHost);
+        coHost.add(returnedHost);
+        players.add(returnedHost);
+        tourChat.add(returnedHost);
+        cleanup.cancel();
+        task = false;
+        notifyTour("The host has returned! Destruction prevented.");
     }
 
     public void setCoHost(ProxiedPlayer coHost){
@@ -253,6 +281,8 @@ public class Tour {
         ProxyServer.getInstance().getServerInfo(target.getServer().getInfo().getName()).sendData(Channel.MAIN, out.toByteArray(),true);
     }
 
+    public Boolean getTask(){return task;}
+    public ScheduledTask getCleanup(){return cleanup;}
     public String getName() {return name;}
     public List<ProxiedPlayer> getCoHost(){return coHost;}
     public ProxiedPlayer getHost() {return host;}

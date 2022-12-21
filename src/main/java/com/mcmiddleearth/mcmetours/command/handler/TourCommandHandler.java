@@ -43,7 +43,7 @@ public class TourCommandHandler extends AbstractCommandHandler {
                 .then(HelpfulLiteralBuilder.literal("check")
                                 .withHelpText("")
                                 .withTooltip("")
-                                .requires(sender -> PluginData.hasPermission((TourCommandSender) sender,Permission.USER))
+                                .requires(sender -> (PluginData.hasPermission((TourCommandSender) sender,Permission.USER) && !PluginData.isInTour((TourCommandSender) sender)))
                                     .executes(context -> doCommand(context.getSource(),"check",null)))
                 .then(HelpfulLiteralBuilder.literal("join")
                                 .withHelpText("")
