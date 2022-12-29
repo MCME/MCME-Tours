@@ -81,7 +81,7 @@ public class TourCommandHandler extends AbstractCommandHandler {
                 .then(HelpfulLiteralBuilder.literal("refreshments")
                                 .withHelpText("")
                                 .withTooltip("")
-                                .requires(sender -> (PluginData.hasPermission((TourCommandSender) sender, Permission.HOST) && PluginData.isCoHost((TourCommandSender) sender)))
+                                .requires(sender ->  PluginData.isCoHost((TourCommandSender) sender))
                                     .executes(context -> doCommand(context.getSource(),"refreshments",null)))
                 .then(HelpfulLiteralBuilder.literal("list")
                                 .withHelpText("")

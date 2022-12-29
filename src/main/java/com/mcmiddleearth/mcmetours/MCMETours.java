@@ -22,48 +22,11 @@ public final class MCMETours extends Plugin {
 
     /*
     TODO:
-      Commands:
-       tour help, working with /tour but need to write the texts
-       tour hat     x
-       tour refreshments        x
-      OnTabComplete     x
-      DiscordMessage for tour   x
-        needs to be tested      x
-      Suggestions to implement:
-        info command like /tour info and then you can see that somehow  -> over Discord     x
-        /tour announce or broadcast for discord x
-        discord message for /tour request       x
-        /tour host to set a new host        x
-          maybe even co-hosts to set multiple hosts less perms -> still needs a "mother host"       x
-        glow effect for host and co-hosts       x
-      Bukkit Part for refreshments and hat and probably glow    x
-      For Tour join: only show with Arguments who really has a tour     x
-      Invalid synntax for cohost and host command   x
+      tour help, working with /tour but need to write the texts
       Cleanup when host leaves? should tour end directly or what???
-      tour check        x
-      tour start <name> insteead of playername as name  x
-      New Suggestions:
-       name a tour (something specific) x
-       /tour request <what is requested>    x
-       /tour check (maybe) ??       kinda    x
-       when joining /discord message        x
-       Permission for world tp (adventurers arent allowed in FB)        x
-       correct discord channels
-       tour check command       x
-        shows running tours and which guides/badgeholders are online        x
-      tour hat message
-      remove cohosts
-      check if someone is already cohost        x
-      check if host is already host             x
-      Bugs:
-       seems to be connected to the TourCommandSender need to look at that      x
-        Kicked when doing /ttpa in moria
-        tour refreshments doesnt work
-        error when doing /ttpa on main
-       hightlight about section in announcement     x
-       when switching host remove cohost from other one     x
-       cohost ttpa should teleport to sender not host   x
-       when setting host check if persin already cohost     x
+      correct discord channels
+      ttpa kicks me from server: You logged in from another location
+       after tour restart worked fine. pretty weird
      */
 
     private static MCMETours instance;
@@ -75,16 +38,9 @@ public final class MCMETours extends Plugin {
         ProxyServer.getInstance().getPluginManager().registerListener(this,new ChatListener());
         ProxyServer.getInstance().getPluginManager().registerListener(this,new PlayerListener());
 
-
-        //commands.add(new ToursPluginCommand(commandDispatcher,new TtpaCommandHandler("ttpa",commandDispatcher),"ttpa"));
-        //commands.add(new ToursPluginCommand(commandDispatcher,new TtpCommandHandler("ttp",commandDispatcher),"ttp"));
-        //commands.add(new ToursPluginCommand(commandDispatcher,new TourCommandHandler("tour",commandDispatcher),"tour"));
-
         ProxyServer.getInstance().getPluginManager().registerCommand(this,new ToursPluginCommand(new TtpaCommandHandler("ttpa"),"ttpa"));
         ProxyServer.getInstance().getPluginManager().registerCommand(this,new ToursPluginCommand(new TtpCommandHandler("ttp"),"ttp"));
         ProxyServer.getInstance().getPluginManager().registerCommand(this,new ToursPluginCommand(new TourCommandHandler("tour"),"tour"));
-
-        //commands.forEach(command -> server.getPluginManager().registerCommand(this,command));
     }
 
     @Override

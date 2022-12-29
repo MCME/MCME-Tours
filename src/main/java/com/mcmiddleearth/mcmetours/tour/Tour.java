@@ -48,7 +48,7 @@ public class Tour {
     }
 
     public void selfDestruction(){
-        notifyTour("The host was disconnected from the server. This tour will destroy itself in 60 seconds.");
+        notifyTour("Self-destruction activated! This tour will destroy itself in 60 seconds, if the host doesn´t come back.");
         task = true;
         cleanup = ProxyServer.getInstance().getScheduler().schedule(MCMETours.getInstance(),() -> {
             if(!host.isConnected())
@@ -245,7 +245,8 @@ public class Tour {
                 PluginData.getMessageUtil().sendBroadcastMessage(host.getName()+" is hosting a tour. Do "+Style.STRESSED+"/tour join "+ name+Style.INFO+ " to join the tour. Do "
                         +Style.HIGHLIGHT_STRESSED+"/discord"+Style.INFO+" to more information.");
             else
-                PluginData.getMessageUtil().sendBroadcastMessage(host.getName()+" is hosting a tour. Do "+Style.STRESSED+"/tour join "+ name+Style.INFO+ " to join the tour. "+Style.HIGHLIGHT+"About: "+info);
+                PluginData.getMessageUtil().sendBroadcastMessage(host.getName()+" is hosting a tour. Do "+Style.STRESSED+"/tour join "+ name+Style.INFO+ " to join the tour. "
+                        +Style.HIGHLIGHT+"About: "+info);
             discordHandler.AnnnounceTour(info,discordrole);
             announced = true;
         } else

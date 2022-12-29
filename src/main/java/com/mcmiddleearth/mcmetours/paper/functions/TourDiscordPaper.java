@@ -40,9 +40,9 @@ public class TourDiscordPaper {
     public static void RequestTour(boolean messageBool , String messageRequest, String senderName){
         String message;
         if(messageBool){
-            message = senderName+" has requested a tour. There are currently no badge-holders online to help them. Description: "+messageRequest;
+            message = ":MCMEGoose: "+senderName+" has requested a tour. Description: "+messageRequest;
         }else{
-            message = senderName+" has requested a tour. There are currently no badge-holders online to help them.";
+            message = ":MCMEGoose: "+senderName+" has requested a tour.";
         }
         sendDiscord(DiscordChannel.GUIDECHAT.getDiscordChannel(), message);
     }
