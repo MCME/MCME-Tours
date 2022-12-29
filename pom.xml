@@ -56,40 +56,22 @@
 
     <repositories>
         <repository>
-            <id>sonatype</id>
-            <url>https://oss.sonatype.org/content/groups/public/</url>
+            <id>dv8tion</id>
+            <name>m2-dv8tion</name>
+            <url>https://m2.dv8tion.net/releases</url>
         </repository>
         <repository>
-            <id>my-local-repo2</id>
-            <url>file://${pom.basedir}/DiscordSRV-Build-1.26.0.jar</url>
+            <id>Scarsz-Nexus</id>
+            <url>https://nexus.scarsz.me/content/groups/public/</url>
+        </repository>
+        <repository>
+            <id>sonatype</id>
+            <url>https://oss.sonatype.org/content/groups/public/</url>
         </repository>
         <repository>
             <id>papermc</id>
             <url>https://papermc.io/repo/repository/maven-public/</url>
         </repository>
-        <!--
-        <repository>
-            <id>my-local-repo</id>
-            <url>file://${pom.basedir}/MCME-Connect-1.5.5.jar</url>
-        </repository>
-        <repository>
-            <id>my-local-repo3</id>
-            <url>file://${pom.basedir}/PluginUtils-1.4.3.jar</url>
-        </repository>
-               <repository>
-                   <id>minecraft-libraries</id>
-                   <name>Minecraft Libraries</name>
-                   <url>https://libraries.minecraft.net</url>
-               </repository>
-
-               <repository>
-                   <id>my-local-repo4</id>
-                   <url>file://${pom.basedir}/MCME-CommandParser-1.0.jar</url>
-               </repository>
-
-             -->
-
-
     </repositories>
 
     <dependencies>
@@ -107,45 +89,15 @@
         </dependency>
         <dependency>
             <groupId>com.discordsrv</groupId>
-            <artifactId>DiscordSRV</artifactId>
-            <scope>system</scope>
-            <systemPath>${pom.basedir}/DiscordSRV-Build-1.26.0.jar</systemPath>
+            <artifactId>discordsrv</artifactId>
             <version>1.26.0</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.mcmiddleearth</groupId>
             <artifactId>MCME-CommandParser</artifactId>
-            <version>1.0</version>
+            <version>1.0.2</version>
         </dependency>
 
-        <!--
-        <dependency>
-            <groupId>com.mcmiddleearth</groupId>
-            <artifactId>MCME-Connect</artifactId>
-            <scope>system</scope>
-            <systemPath>${pom.basedir}/MCME-Connect-1.5.5.jar</systemPath>
-            <version>1.5.5</version>
-        </dependency>
-        <dependency>
-            <groupId>com.mcmiddleearth</groupId>
-            <artifactId>MCME-CommandParser</artifactId>
-            <scope>system</scope>
-            <systemPath>${pom.basedir}/MCME-CommandParser-1.0.jar</systemPath>
-            <version>1.0</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.mcmiddleearth</groupId>
-            <artifactId>PluginUtils</artifactId>
-            <scope>system</scope>
-            <systemPath>${pom.basedir}/PluginUtils-1.4.3.jar</systemPath>
-            <version>1.4.3</version>
-        </dependency>
-        <dependency>
-            <groupId>com.mojang</groupId>
-            <artifactId>brigadier</artifactId>
-            <version>1.0.17</version>
-        </dependency>
-                 -->
     </dependencies>
 </project>
