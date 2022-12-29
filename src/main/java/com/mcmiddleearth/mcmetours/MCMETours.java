@@ -55,6 +55,15 @@ public final class MCMETours extends Plugin {
       remove cohosts
       check if someone is already cohost        x
       check if host is already host             x
+      Bugs:
+       seems to be connected to the TourCommandSender need to look at that      x
+        Kicked when doing /ttpa in moria
+        tour refreshments doesnt work
+        error when doing /ttpa on main
+       hightlight about section in announcement     x
+       when switching host remove cohost from other one     x
+       cohost ttpa should teleport to sender not host   x
+       when setting host check if persin already cohost     x
      */
 
     private static MCMETours instance;

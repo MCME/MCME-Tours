@@ -38,7 +38,7 @@ public class TtpCommandHandler extends AbstractCommandHandler {
         Tour tour = PluginData.getTour((TourCommandSender) sender);
         if(tour != null){
             if(PluginData.isHost((TourCommandSender) sender)){
-                tour.teleportPlayer(ProxyServer.getInstance().getPlayer(player));
+                tour.teleportPlayer(ProxyServer.getInstance().getPlayer(player),(ProxiedPlayer) ((TourCommandSender) sender).getCommandSender());
             }else{
                 tour.TeleportToHost((ProxiedPlayer) ((TourCommandSender) sender).getCommandSender());
             }

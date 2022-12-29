@@ -45,7 +45,7 @@ public class PlayerListener implements Listener {
             }else{
                 tour.removePlayer(event.getPlayer());
             }
-            TourCommandSender.removeMcmePlayer(event.getPlayer());
         }
+        TourCommandSender.removeMcmePlayer(event.getPlayer());
     }
 }

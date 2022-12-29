@@ -96,7 +96,7 @@ public class Tour {
         PluginData.getMessageUtil().sendInfoMessage(player,"You were teleport to "+host.getName()+".");
     }
 
-    public void teleportPlayer(ProxiedPlayer player){
+    public void teleportPlayer(ProxiedPlayer player,ProxiedPlayer host){
         if(players.contains(player)){
             //TpHandler.handle(player.getName(),host.getServer().getInfo().getName(),host.getName());
             teleportHandle(player,host);
@@ -107,7 +107,7 @@ public class Tour {
         }
     }
 
-    public void teleportAll(){
+    public void teleportAll(ProxiedPlayer host){
         for(ProxiedPlayer player: players){
             if(player != host){
                 //TpHandler.handle(player.getName(),host.getServer().getInfo().getName(),host.getName());
@@ -178,9 +178,12 @@ public class Tour {
 
     public void setHost(ProxiedPlayer host){
         if(!this.host.equals(host)){
+            coHost.remove(this.host);
+            glowHandle(this.host,false);
             this.host = host;
             discordHandler.setSender(host);
-            coHost.add(host);
+            if(!coHost.contains(host))
+                coHost.add(host);
             notifyTour(host.getName()+" is the new host of the tour.");
             glowHandle(host,glow);
         }else
@@ -242,7 +245,7 @@ public class Tour {
                 PluginData.getMessageUtil().sendBroadcastMessage(host.getName()+" is hosting a tour. Do "+Style.STRESSED+"/tour join "+ name+Style.INFO+ " to join the tour. Do "
                         +Style.HIGHLIGHT_STRESSED+"/discord"+Style.INFO+" to more information.");
             else
-                PluginData.getMessageUtil().sendBroadcastMessage(host.getName()+" is hosting a tour. Do "+Style.STRESSED+"/tour join "+ name+Style.INFO+ " to join the tour. About: "+info);
+                PluginData.getMessageUtil().sendBroadcastMessage(host.getName()+" is hosting a tour. Do "+Style.STRESSED+"/tour join "+ name+Style.INFO+ " to join the tour. "+Style.HIGHLIGHT+"About: "+info);
             discordHandler.AnnnounceTour(info,discordrole);
             announced = true;
         } else

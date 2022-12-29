@@ -7,6 +7,7 @@ import com.mcmiddleearth.mcmetours.command.TourCommandSender;
 import com.mcmiddleearth.mcmetours.util.Permission;
 import com.mcmiddleearth.mcmetours.util.PluginData;
 import com.mcmiddleearth.mcmetours.tour.Tour;
+import net.md_5.bungee.api.connection.ProxiedPlayer;
 
 /**
  * @author Jubo
@@ -30,7 +31,7 @@ public class TtpaCommandHandler extends AbstractCommandHandler{
     private int teleportAll(McmeCommandSender sender){
         Tour tour = PluginData.getTour((TourCommandSender) sender);
         if(tour != null){
-            tour.teleportAll();
+            tour.teleportAll((ProxiedPlayer) ((TourCommandSender) sender).getCommandSender());
         }
         return 0;
     }
