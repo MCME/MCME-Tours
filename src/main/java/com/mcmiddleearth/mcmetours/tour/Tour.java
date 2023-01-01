@@ -284,6 +284,7 @@ public class Tour {
         ProxyServer.getInstance().getServerInfo(target.getServer().getInfo().getName()).sendData(Channel.MAIN, out.toByteArray(),true);
     }
 
+    public String getInfo(){return info;}
     public Boolean getTask(){return task;}
     public ScheduledTask getCleanup(){return cleanup;}
     public String getName() {return name;}

@@ -15,10 +15,15 @@ public class TourCheck {
         if(!PluginData.tourRunning()) {
             PluginData.getMessageUtil().sendInfoMessage(sender, "There is currently no tour running.");
         }else{
+            String message = "";
             PluginData.getMessageUtil().sendInfoMessage(sender,"Running tours (click to join):");
             for(String tour : PluginData.getTours()){
-                PluginData.getMessageUtil().sendClickableInfoMessage(((TourCommandSender)sender).getCommandSender(),Style.HIGHLIGHT+PluginData.getTour(tour).getHost().getName()
-                        +Style.INFO+": Do "+ Style.STRESSED+"/tour join "+tour+Style.INFO+" to join this tour.","/tour join "+tour);
+                message = Style.HIGHLIGHT+PluginData.getTour(tour).getHost().getName()
+                        +Style.INFO+": Do "+ Style.STRESSED+"/tour join "+tour+Style.INFO+" to join this tour.";
+                if(PluginData.getTour(tour).getInfo() != null){
+                    message = message + "About: "+ PluginData.getTour(tour).getInfo();
+                }
+                PluginData.getMessageUtil().sendClickableInfoMessage(((TourCommandSender)sender).getCommandSender(),message,"/tour join "+tour);
             }
         }
     }
