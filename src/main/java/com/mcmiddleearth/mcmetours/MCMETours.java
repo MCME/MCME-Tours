@@ -3,6 +3,7 @@ package com.mcmiddleearth.mcmetours;
 import com.mcmiddleearth.command.McmeCommandSender;
 import com.mcmiddleearth.mcmetours.command.TourCommandSender;
 import com.mcmiddleearth.mcmetours.command.ToursPluginCommand;
+import com.mcmiddleearth.mcmetours.command.handler.TcComandHandler;
 import com.mcmiddleearth.mcmetours.command.handler.TourCommandHandler;
 import com.mcmiddleearth.mcmetours.command.handler.TtpCommandHandler;
 import com.mcmiddleearth.mcmetours.command.handler.TtpaCommandHandler;
@@ -27,6 +28,7 @@ public final class MCMETours extends Plugin {
       correct discord channels
       ttpa kicks me from server: You logged in from another location
        after tour restart worked fine. pretty weird
+      /tc to write in tour chat when not in tour chat
      */
 
     private static MCMETours instance;
@@ -41,6 +43,7 @@ public final class MCMETours extends Plugin {
         ProxyServer.getInstance().getPluginManager().registerCommand(this,new ToursPluginCommand(new TtpaCommandHandler("ttpa"),"ttpa"));
         ProxyServer.getInstance().getPluginManager().registerCommand(this,new ToursPluginCommand(new TtpCommandHandler("ttp"),"ttp"));
         ProxyServer.getInstance().getPluginManager().registerCommand(this,new ToursPluginCommand(new TourCommandHandler("tour"),"tour"));
+        ProxyServer.getInstance().getPluginManager().registerCommand(this,new ToursPluginCommand(new TcComandHandler("tc"),"tc"));
     }
 
     @Override
