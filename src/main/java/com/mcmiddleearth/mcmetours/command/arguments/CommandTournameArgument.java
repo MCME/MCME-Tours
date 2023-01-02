@@ -27,8 +27,5 @@ public class CommandTournameArgument extends AbstractPlayerArgumentType {
     @Override
     protected Collection<String> getPlayerSuggestions() {
         return PluginData.getTours().stream().collect(Collectors.toSet());
-        //return ProxyServer.getInstance().getPlayers().stream().map(ProxiedPlayer::getName).collect(Collectors.toSet());
     }
-
-
 }

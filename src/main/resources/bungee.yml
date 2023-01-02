@@ -16,6 +16,9 @@ commands:
   ttpa:
     description: host can teleport whole tour to them
     usage: /ttpa
+  tc:
+    description: lets you type in tour chat
+    usage: /tc
 
 permissions:
   Tours.admin:

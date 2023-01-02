@@ -48,7 +48,7 @@ public class Tour {
     }
 
     public void selfDestruction(){
-        notifyTour("The host was disconnected from the server. This tour will destroy itself in 60 seconds.");
+        notifyTour("Self-destruction activated! This tour will destroy itself in 60 seconds, if the host doesn´t come back.");
         task = true;
         cleanup = ProxyServer.getInstance().getScheduler().schedule(MCMETours.getInstance(),() -> {
             if(!host.isConnected())
@@ -59,7 +59,6 @@ public class Tour {
     public void addPlayer(ProxiedPlayer player){
         players.add(player);
         tourChat.add(player);
-        //TpHandler.handle(player.getName(),host.getServer().getInfo().getName(),host.getName());
         teleportHandle(player,host);
         notifyTour("Everyboy welcome "+Style.HIGHLIGHT+player.getName()+Style.INFO+" to the tour!");
         PluginData.getMessageUtil().sendInfoMessage(player,"Welcome to the tour. For the best experience, join "+ Style.HIGHLIGHT_STRESSED+host.getName()+Style.INFO+" in Discord!");
@@ -91,14 +90,12 @@ public class Tour {
     }
 
     public void TeleportToHost(ProxiedPlayer player){
-        //TpHandler.handle(player.getName(),host.getServer().getInfo().getName(),host.getName());
         teleportHandle(player,host);
         PluginData.getMessageUtil().sendInfoMessage(player,"You were teleport to "+host.getName()+".");
     }
 
     public void teleportPlayer(ProxiedPlayer player,ProxiedPlayer host){
         if(players.contains(player)){
-            //TpHandler.handle(player.getName(),host.getServer().getInfo().getName(),host.getName());
             teleportHandle(player,host);
             PluginData.getMessageUtil().sendInfoMessage(player,host.getName()+" teleported you to them.");
             PluginData.getMessageUtil().sendInfoMessage(host,"You teleported "+player.getName()+" to yourself.");
@@ -110,7 +107,6 @@ public class Tour {
     public void teleportAll(ProxiedPlayer host){
         for(ProxiedPlayer player: players){
             if(player != host){
-                //TpHandler.handle(player.getName(),host.getServer().getInfo().getName(),host.getName());
                 teleportHandle(player,host);
                 PluginData.getMessageUtil().sendInfoMessage(player,host.getName()+" teleported you to them.");
             }
@@ -222,10 +218,15 @@ public class Tour {
             PluginData.getMessageUtil().sendErrorMessage(host, coHost.getName()+" is not a Co-Host of this tour.");
     }
 
-    public void tourList(){
-        Set<String> list;
-        list = players.stream().map(ProxiedPlayer::getName).collect(Collectors.toSet());
-        PluginData.getMessageUtil().sendInfoMessage(host,ChatColor.WHITE+list.toString());
+    public void tourList(ProxiedPlayer sender){
+        Set<String> list_participants;
+        Set<String> list_cohosts;
+        String host = this.host.getName();
+        list_participants = players.stream().map(ProxiedPlayer::getName).collect(Collectors.toSet());
+        list_cohosts = coHost.stream().map(ProxiedPlayer::getName).collect(Collectors.toSet());
+        PluginData.getMessageUtil().sendInfoMessage(sender,ChatColor.WHITE+"Host: "+host);
+        PluginData.getMessageUtil().sendInfoMessage(sender,ChatColor.WHITE+"Co-Hosts: "+list_cohosts.toString());
+        PluginData.getMessageUtil().sendInfoMessage(sender,ChatColor.WHITE+"Participants: "+list_participants.toString());
     }
 
     private void notifyTour(String text){
@@ -245,7 +246,8 @@ public class Tour {
                 PluginData.getMessageUtil().sendBroadcastMessage(host.getName()+" is hosting a tour. Do "+Style.STRESSED+"/tour join "+ name+Style.INFO+ " to join the tour. Do "
                         +Style.HIGHLIGHT_STRESSED+"/discord"+Style.INFO+" to more information.");
             else
-                PluginData.getMessageUtil().sendBroadcastMessage(host.getName()+" is hosting a tour. Do "+Style.STRESSED+"/tour join "+ name+Style.INFO+ " to join the tour. "+Style.HIGHLIGHT+"About: "+info);
+                PluginData.getMessageUtil().sendBroadcastMessage(host.getName()+" is hosting a tour. Do "+Style.STRESSED+"/tour join "+ name+Style.INFO+ " to join the tour. "
+                        +Style.HIGHLIGHT+"About: "+info);
             discordHandler.AnnnounceTour(info,discordrole);
             announced = true;
         } else
@@ -283,6 +285,7 @@ public class Tour {
         ProxyServer.getInstance().getServerInfo(target.getServer().getInfo().getName()).sendData(Channel.MAIN, out.toByteArray(),true);
     }
 
+    public String getInfo(){return info;}
     public Boolean getTask(){return task;}
     public ScheduledTask getCleanup(){return cleanup;}
     public String getName() {return name;}

@@ -1,12 +1,10 @@
 package com.mcmiddleearth.mcmetours.paper.functions;
 
 import com.mcmiddleearth.mcmetours.discord.DiscordChannel;
-import com.mcmiddleearth.mcmetours.paper.Channel;
 import github.scarsz.discordsrv.DiscordSRV;
 import github.scarsz.discordsrv.dependencies.jda.api.entities.Guild;
 import github.scarsz.discordsrv.dependencies.jda.api.entities.TextChannel;
 import github.scarsz.discordsrv.util.DiscordUtil;
-import org.bukkit.Bukkit;
 
 /**
  * @author Jubo
@@ -40,9 +38,9 @@ public class TourDiscordPaper {
     public static void RequestTour(boolean messageBool , String messageRequest, String senderName){
         String message;
         if(messageBool){
-            message = senderName+" has requested a tour. There are currently no badge-holders online to help them. Description: "+messageRequest;
+            message = ":MCMEGoose: "+senderName+" has requested a tour. Topic: "+messageRequest;
         }else{
-            message = senderName+" has requested a tour. There are currently no badge-holders online to help them.";
+            message = ":MCMEGoose: "+senderName+" has requested a tour.";
         }
         sendDiscord(DiscordChannel.GUIDECHAT.getDiscordChannel(), message);
     }

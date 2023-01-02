@@ -63,16 +63,6 @@ public class PluginData {
                 return true;
             }
         }
-        //PluginData.getMessageUtil().sendErrorMessage(sender,"You are currently not in a tour.");
-        return false;
-    }
-
-    public static boolean isInTour(ProxiedPlayer player){
-        for(Tour tour: tours){
-            if(tour.getPlayers().contains(player)){
-                return true;
-            }
-        }
         return false;
     }
 
@@ -93,7 +83,6 @@ public class PluginData {
                 return true;
             }
         }
-        //PluginData.getMessageUtil().sendErrorMessage(sender,"You are not the host of this tour.");
         return false;
     }
 
@@ -125,7 +114,6 @@ public class PluginData {
 
     public static boolean hasPermission(TourCommandSender player, Permission perm) {
         ProxiedPlayer Proxyplayer = (ProxiedPlayer) player.getCommandSender();
-        //Proxyplayer.sendMessage(new ComponentBuilder("Test5").color(ChatColor.BLUE).create());
         return Proxyplayer.hasPermission(perm.getPermissionNode());
     }
 }
