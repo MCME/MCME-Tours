@@ -40,7 +40,7 @@ public class TourDiscordPaper {
     public static void RequestTour(boolean messageBool , String messageRequest, String senderName){
         String message;
         if(messageBool){
-            message = ":MCMEGoose: "+senderName+" has requested a tour. Description: "+messageRequest;
+            message = ":MCMEGoose: "+senderName+" has requested a tour. Topic: "+messageRequest;
         }else{
             message = ":MCMEGoose: "+senderName+" has requested a tour.";
         }
