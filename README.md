@@ -1,5 +1,4 @@
 # MCME-Tours
-## WIP
 
 Tour management plugin.<br/>
 <i>Allows a Tour-Badge holder or a guide to create a temporary group that other players can join.<br/>
