@@ -1,6 +1,6 @@
 package com.mcmiddleearth.mcmetours.paper.functions;
 
-import com.mcmiddleearth.mcmetours.discord.DiscordChannel;
+import com.mcmiddleearth.mcmetours.paper.ToursPaperPlugin;
 import github.scarsz.discordsrv.DiscordSRV;
 import github.scarsz.discordsrv.dependencies.jda.api.entities.Guild;
 import github.scarsz.discordsrv.dependencies.jda.api.entities.TextChannel;
@@ -27,12 +27,12 @@ public class TourDiscordPaper {
                 + "```css\n/tour join " + tourName + "```";
         if(info)
             message = message + "__**Tour Description:**__ "+tourInfo;
-        sendDiscord(DiscordChannel.ALERTS.getDiscordChannel(), message);
+        sendDiscord(ToursPaperPlugin.getAnnouncementChannel(), message);
     }
 
     public static void EndTour(String senderName){
         String message = ":MCME: __**Info:**__ "+ senderName+"´s tour has ended.";
-        sendDiscord(DiscordChannel.ALERTS.getDiscordChannel(), message);
+        sendDiscord(ToursPaperPlugin.getAnnouncementChannel(), message);
     }
 
     public static void RequestTour(boolean messageBool , String messageRequest, String senderName){
@@ -42,7 +42,7 @@ public class TourDiscordPaper {
         }else{
             message = ":MCMEGoose: "+senderName+" has requested a tour.";
         }
-        sendDiscord(DiscordChannel.GUIDECHAT.getDiscordChannel(), message);
+        sendDiscord(ToursPaperPlugin.getRequestChannel(), message);
     }
 
     private static void sendDiscord(String channel, String message){

@@ -42,8 +42,9 @@ public class PluginData {
     }
 
     public static boolean tourRunning(){
-        if(tours.size() >= 1){
-            return true;
+        for(Tour tour : tours){
+            if(tour.isAnnounced())
+                return true;
         }
         return false;
     }

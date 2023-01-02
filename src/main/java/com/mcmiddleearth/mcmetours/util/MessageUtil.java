@@ -44,4 +44,5 @@ public class MessageUtil {
         sender.sendMessage(text);
     }
 
+    public String getPrefix(){return PREFIX;}
 }
