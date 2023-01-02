@@ -16,6 +16,7 @@ public class ToursPaperPlugin extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        saveDefaultConfig();
         instance = this;
         Bukkit.getServer().getMessenger().registerIncomingPluginChannel(this,Channel.MAIN,new TourPluginListener());
         loadConfig();
