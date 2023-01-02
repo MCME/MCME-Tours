@@ -17,7 +17,7 @@ All users with '<b>Tours.user</b>' permission node can:
 - '<b>/ttp</b>' teleports the user to their tour guide.
 - '<b>/tour chat</b>' switches the tour-chat on and off.
 - '<b>/tour check</b>' checks if a tour is currently running.
-- - '<b>/tc</b>' lets you write in tour-chat, when tour-chat is switched off.
+- '<b>/tc</b>' lets you write in tour-chat, when tour-chat is switched off.
 
 Users with the '<b>Tours.ranger</b>' permission node can:
 - '<b>/tour start</b>' creates new tour, names it after user, and announces it.
