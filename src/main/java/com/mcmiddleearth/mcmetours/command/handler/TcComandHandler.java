@@ -12,6 +12,9 @@ import net.md_5.bungee.api.connection.ProxiedPlayer;
 
 import static com.mojang.brigadier.arguments.StringArgumentType.greedyString;
 
+/**
+ * @author Jubo
+ */
 public class TcComandHandler extends AbstractCommandHandler {
 
     public TcComandHandler(String name){super(name);}

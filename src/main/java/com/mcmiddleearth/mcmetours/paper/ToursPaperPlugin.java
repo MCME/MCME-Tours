@@ -2,8 +2,6 @@ package com.mcmiddleearth.mcmetours.paper;
 
 import com.mcmiddleearth.mcmetours.paper.listener.TourPluginListener;
 import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
-import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**

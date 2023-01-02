@@ -1,12 +1,10 @@
 package com.mcmiddleearth.mcmetours.paper.functions;
 
 import com.mcmiddleearth.mcmetours.discord.DiscordChannel;
-import com.mcmiddleearth.mcmetours.paper.Channel;
 import github.scarsz.discordsrv.DiscordSRV;
 import github.scarsz.discordsrv.dependencies.jda.api.entities.Guild;
 import github.scarsz.discordsrv.dependencies.jda.api.entities.TextChannel;
 import github.scarsz.discordsrv.util.DiscordUtil;
-import org.bukkit.Bukkit;
 
 /**
  * @author Jubo

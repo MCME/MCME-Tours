@@ -23,12 +23,9 @@ public final class MCMETours extends Plugin {
 
     /*
     TODO:
-      tour help, working with /tour but need to write the texts
-      Cleanup when host leaves? should tour end directly or what???
       correct discord channels
       ttpa kicks me from server: You logged in from another location
-       after tour restart worked fine. pretty weird
-      /tc to write in tour chat when not in tour chat
+       -> after tour restart worked fine. pretty weird
      */
 
     private static MCMETours instance;

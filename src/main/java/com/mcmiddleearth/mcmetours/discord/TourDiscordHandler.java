@@ -62,12 +62,10 @@ public class TourDiscordHandler {
         handle(sender,out);
     }
 
-    // Will be used when host can be set (not yet decided if implemented) (otherwise will be forgotten)
     public void setSender(ProxiedPlayer sender){
         this.sender = sender;
     }
 
-    // Placeholder for later MCME-Connect implementation
     private void handle(ProxiedPlayer sender, ByteArrayDataOutput out){
         ProxyServer.getInstance().getServerInfo(sender.getServer().getInfo().getName()).sendData(Channel.MAIN,out.toByteArray(),true);
     }

@@ -59,7 +59,6 @@ public class Tour {
     public void addPlayer(ProxiedPlayer player){
         players.add(player);
         tourChat.add(player);
-        //TpHandler.handle(player.getName(),host.getServer().getInfo().getName(),host.getName());
         teleportHandle(player,host);
         notifyTour("Everyboy welcome "+Style.HIGHLIGHT+player.getName()+Style.INFO+" to the tour!");
         PluginData.getMessageUtil().sendInfoMessage(player,"Welcome to the tour. For the best experience, join "+ Style.HIGHLIGHT_STRESSED+host.getName()+Style.INFO+" in Discord!");
@@ -91,14 +90,12 @@ public class Tour {
     }
 
     public void TeleportToHost(ProxiedPlayer player){
-        //TpHandler.handle(player.getName(),host.getServer().getInfo().getName(),host.getName());
         teleportHandle(player,host);
         PluginData.getMessageUtil().sendInfoMessage(player,"You were teleport to "+host.getName()+".");
     }
 
     public void teleportPlayer(ProxiedPlayer player,ProxiedPlayer host){
         if(players.contains(player)){
-            //TpHandler.handle(player.getName(),host.getServer().getInfo().getName(),host.getName());
             teleportHandle(player,host);
             PluginData.getMessageUtil().sendInfoMessage(player,host.getName()+" teleported you to them.");
             PluginData.getMessageUtil().sendInfoMessage(host,"You teleported "+player.getName()+" to yourself.");
@@ -110,7 +107,6 @@ public class Tour {
     public void teleportAll(ProxiedPlayer host){
         for(ProxiedPlayer player: players){
             if(player != host){
-                //TpHandler.handle(player.getName(),host.getServer().getInfo().getName(),host.getName());
                 teleportHandle(player,host);
                 PluginData.getMessageUtil().sendInfoMessage(player,host.getName()+" teleported you to them.");
             }
@@ -222,7 +218,6 @@ public class Tour {
             PluginData.getMessageUtil().sendErrorMessage(host, coHost.getName()+" is not a Co-Host of this tour.");
     }
 
-    // add cohosts and specific who is also participants
     public void tourList(ProxiedPlayer sender){
         Set<String> list_participants;
         Set<String> list_cohosts;

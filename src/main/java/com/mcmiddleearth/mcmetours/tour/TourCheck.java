@@ -4,7 +4,6 @@ import com.mcmiddleearth.command.McmeCommandSender;
 import com.mcmiddleearth.mcmetours.command.TourCommandSender;
 import com.mcmiddleearth.mcmetours.util.PluginData;
 import com.mcmiddleearth.mcmetours.util.Style;
-import net.md_5.bungee.api.CommandSender;
 
 /**
  * @author Jubo
@@ -15,7 +14,7 @@ public class TourCheck {
         if(!PluginData.tourRunning()) {
             PluginData.getMessageUtil().sendInfoMessage(sender, "There is currently no tour running.");
         }else{
-            String message = "";
+            String message;
             PluginData.getMessageUtil().sendInfoMessage(sender,"Running tours (click to join):");
             for(String tour : PluginData.getTours()){
                 message = Style.HIGHLIGHT+PluginData.getTour(tour).getHost().getName()

@@ -36,7 +36,8 @@ public class TourCommandHandler extends AbstractCommandHandler {
                 .requires(sender -> (sender instanceof TourCommandSender))
                 .then(HelpfulLiteralBuilder.literal("request")
                                 .withHelpText("Submit a request for a tour.")
-                                .withTooltip(Style.HIGHLIGHT+"/tour request <topic>"+ Style.HIGHLIGHT_STRESSED+": Sends a tour request to all guides and people with tour-badge on the server and the discord. The topic is optional and the request can be send without.")
+                                .withTooltip(Style.HIGHLIGHT+"/tour request <topic>"+ Style.HIGHLIGHT_STRESSED
+                                        +": Sends a tour request to all guides and people with tour-badge on the server and the discord. The topic is optional and the request can be send without.")
                                 .requires(sender -> (PluginData.hasPermission((TourCommandSender) sender, Permission.USER) && !PluginData.isInTour((TourCommandSender) sender)))
                                     .executes(context -> doCommand(context.getSource(),"request", null))
                                         .then(HelpfulRequiredArgumentBuilder.argument("topic",greedyString())
@@ -47,7 +48,8 @@ public class TourCommandHandler extends AbstractCommandHandler {
                                     .executes(context -> doCommand(context.getSource(),"check",null)))
                 .then(HelpfulLiteralBuilder.literal("join")
                                 .withHelpText("Join one of the running tours.")
-                                .withTooltip(Style.HIGHLIGHT+"/tour join <name of tour>"+Style.HIGHLIGHT_STRESSED+": Joins the specific tour you want to join.")
+                                .withTooltip(Style.HIGHLIGHT+"/tour join <name of tour>"+Style.HIGHLIGHT_STRESSED
+                                        +": Joins the specific tour you want to join.")
                                 .requires(sender -> (PluginData.hasPermission((TourCommandSender) sender, Permission.USER) && PluginData.tourRunning() && !PluginData.isInTour((TourCommandSender) sender)))
                                     .then(HelpfulRequiredArgumentBuilder.argument("tourname",new CommandTournameArgument())
                                                 .executes(context -> doCommand(context.getSource(),"join",context.getArgument("tourname",String.class)))))
@@ -57,7 +59,8 @@ public class TourCommandHandler extends AbstractCommandHandler {
                                     .executes(context -> doCommand(context.getSource(),"leave", null)))
                 .then(HelpfulLiteralBuilder.literal("start")
                                 .withHelpText("Start a new tour.")
-                                .withTooltip(Style.HIGHLIGHT+"/tour start <name of tour>"+Style.HIGHLIGHT_STRESSED+": Starts a tour with a set name. The name can only be one word.")
+                                .withTooltip(Style.HIGHLIGHT+"/tour start <name of tour>"+Style.HIGHLIGHT_STRESSED
+                                        +": Starts a tour with a set name. The name can only be one word.")
                                 .requires(sender -> (PluginData.hasPermission((TourCommandSender) sender, Permission.HOST) && !PluginData.isInTour((TourCommandSender) sender)))
                                     .then(HelpfulRequiredArgumentBuilder.argument("tourname",word())
                                         .executes(context -> doCommand(context.getSource(),"start",context.getArgument("tourname",String.class)))))
@@ -67,7 +70,8 @@ public class TourCommandHandler extends AbstractCommandHandler {
                                     .executes(context -> doCommand(context.getSource(),"end",null)))
                 .then(HelpfulLiteralBuilder.literal("hat")
                                 .withHelpText("Set an item as your hat.")
-                                .withTooltip(Style.HIGHLIGHT+"/tour hat"+Style.HIGHLIGHT_STRESSED+": Sets the item in your main hand as your hat. It can be used outside of tours.")
+                                .withTooltip(Style.HIGHLIGHT+"/tour hat"+Style.HIGHLIGHT_STRESSED
+                                        +": Sets the item in your main hand as your hat. It can be used outside of tours.")
                                 .requires(sender -> PluginData.hasPermission((TourCommandSender) sender, Permission.HOST))
                                     .executes(context -> doCommand(context.getSource(),"hat",null)))
                 .then(HelpfulLiteralBuilder.literal("kick")
@@ -86,30 +90,35 @@ public class TourCommandHandler extends AbstractCommandHandler {
                                     .executes(context -> doCommand(context.getSource(),"list",null)))
                 .then(HelpfulLiteralBuilder.literal("chat")
                                 .withHelpText("Switch the tour-chat on and off.")
-                                .withTooltip(Style.HIGHLIGHT+"/tour chat"+Style.HIGHLIGHT_STRESSED+": Switches the tour-chat on and off. Its on by default. And you can type with /g <text> in normal chat when in tour-chat.")
+                                .withTooltip(Style.HIGHLIGHT+"/tour chat"+Style.HIGHLIGHT_STRESSED
+                                        +": Switches the tour-chat on and off. Its on by default. And you can type with /g <text> in normal chat when in tour-chat.")
                                 .requires(sender -> (PluginData.hasPermission((TourCommandSender) sender, Permission.USER) && PluginData.isInTour((TourCommandSender) sender)))
                                     .executes(context -> doCommand(context.getSource(),"chat",null)))
                 .then(HelpfulLiteralBuilder.literal("info")
                                 .withHelpText("Set information about your tour.")
-                                .withTooltip(Style.HIGHLIGHT+"/tour info <infotext>"+Style.HIGHLIGHT_STRESSED+": Lets you set an infotext for the tour. Which will then be broadcasted on discord and seen when doing /tour check.")
+                                .withTooltip(Style.HIGHLIGHT+"/tour info <infotext>"+Style.HIGHLIGHT_STRESSED
+                                        +": Lets you set an infotext for the tour. Which will then be broadcasted on discord and seen when doing /tour check.")
                                 .requires(sender -> (PluginData.hasPermission((TourCommandSender) sender, Permission.HOST) && PluginData.isHost((TourCommandSender) sender)))
                                     .then(HelpfulRequiredArgumentBuilder.argument("description",greedyString())
                                         .executes(context -> doCommand(context.getSource(),"info",context.getArgument("description",String.class)))))
                 .then(HelpfulLiteralBuilder.literal("announce")
                                 .withHelpText("Announce your tour.")
-                                .withTooltip(Style.HIGHLIGHT+"/tour announce <discordroles>"+Style.HIGHLIGHT_STRESSED+": Announces the tour ingame and on discord. Roles need to be seperated by a comma without a space.")
+                                .withTooltip(Style.HIGHLIGHT+"/tour announce <discordroles>"+Style.HIGHLIGHT_STRESSED
+                                        +": Announces the tour ingame and on discord. Roles need to be seperated by a comma without a space.")
                                 .requires(sender -> (PluginData.hasPermission((TourCommandSender) sender, Permission.HOST) && PluginData.isHost((TourCommandSender) sender)))
                                     .then(HelpfulRequiredArgumentBuilder.argument("discordroles",greedyString())
                                         .executes(context -> doCommand(context.getSource(),"announce",context.getArgument("discordroles",String.class)))))
                 .then(HelpfulLiteralBuilder.literal("host")
                                 .withHelpText("Set another player as the host of your tour.")
-                                .withTooltip(Style.HIGHLIGHT+"/tour host <playername>"+Style.HIGHLIGHT_STRESSED+": Changes the host from you to another Guide or tour-badge holder.")
+                                .withTooltip(Style.HIGHLIGHT+"/tour host <playername>"+Style.HIGHLIGHT_STRESSED
+                                        +": Changes the host from you to another Guide or tour-badge holder.")
                                 .requires(sender -> (PluginData.hasPermission((TourCommandSender) sender, Permission.HOST) && PluginData.isHost((TourCommandSender) sender)))
                                     .then(HelpfulRequiredArgumentBuilder.argument("playername",new CommandPermissionArgument())
                                         .executes(context -> doCommand(context.getSource(),"host",context.getArgument("playername",String.class)))))
                 .then(HelpfulLiteralBuilder.literal("cohost")
                                 .withHelpText("Set another player as a cohost of your tour.")
-                                .withTooltip(Style.HIGHLIGHT+"/tour cohost add <playername>"+Style.HIGHLIGHT_STRESSED+": Adds a cohost to your tour. /tour cohost remove <playername>: Removes a cohost from your tour. A co-host is a host with less permissions, who can use /ttpa and /tour refreshments.")
+                                .withTooltip(Style.HIGHLIGHT+"/tour cohost add <playername>"+Style.HIGHLIGHT_STRESSED
+                                        +": Adds a cohost to your tour. /tour cohost remove <playername>: Removes a cohost from your tour. A co-host is a host with less permissions, who can use /ttpa and /tour refreshments.")
                                 .requires(sender -> (PluginData.hasPermission((TourCommandSender) sender, Permission.HOST) && PluginData.isHost((TourCommandSender) sender)))
                                     .then(HelpfulLiteralBuilder.literal("add")
                                         .then(HelpfulRequiredArgumentBuilder.argument("playername",new CommandPlayerArgument())
@@ -119,7 +128,8 @@ public class TourCommandHandler extends AbstractCommandHandler {
                                             .executes(context -> doCommand(context.getSource(),"cohostRemove",context.getArgument("playername",String.class))))))
                 .then(HelpfulLiteralBuilder.literal("glow")
                                 .withHelpText("Let the cohosts and the host glow.")
-                                .withTooltip(Style.HIGHLIGHT+"/tour glow"+Style.HIGHLIGHT_STRESSED+": Toggles the host and co-host glow. Toggle it OFF before switching world.")
+                                .withTooltip(Style.HIGHLIGHT+"/tour glow"+Style.HIGHLIGHT_STRESSED
+                                        +": Toggles the host and co-host glow. Toggle it OFF before switching world.")
                                 .requires(sender -> (PluginData.hasPermission((TourCommandSender) sender, Permission.HOST) && PluginData.isHost((TourCommandSender) sender)))
                                     .executes(context -> doCommand(context.getSource(),"glow",null)));
         return helpfulLiteralBuilder;

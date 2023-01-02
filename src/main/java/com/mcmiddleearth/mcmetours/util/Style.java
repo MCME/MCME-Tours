@@ -16,6 +16,4 @@ public class Style {
     public static final ChatColor BOLD = ChatColor.BOLD;
     public static final ChatColor CURSIVE = ChatColor.ITALIC;
     public static final ChatColor EMPHASIZE = ChatColor.UNDERLINE;
-    public static final ChatColor CROSSOUT = ChatColor.STRIKETHROUGH;
-    public static final ChatColor TEST = ChatColor.MAGIC;
 }
