@@ -222,10 +222,16 @@ public class Tour {
             PluginData.getMessageUtil().sendErrorMessage(host, coHost.getName()+" is not a Co-Host of this tour.");
     }
 
-    public void tourList(){
-        Set<String> list;
-        list = players.stream().map(ProxiedPlayer::getName).collect(Collectors.toSet());
-        PluginData.getMessageUtil().sendInfoMessage(host,ChatColor.WHITE+list.toString());
+    // add cohosts and specific who is also participants
+    public void tourList(ProxiedPlayer sender){
+        Set<String> list_participants;
+        Set<String> list_cohosts;
+        String host = this.host.getName();
+        list_participants = players.stream().map(ProxiedPlayer::getName).collect(Collectors.toSet());
+        list_cohosts = coHost.stream().map(ProxiedPlayer::getName).collect(Collectors.toSet());
+        PluginData.getMessageUtil().sendInfoMessage(sender,ChatColor.WHITE+"Host: "+host);
+        PluginData.getMessageUtil().sendInfoMessage(sender,ChatColor.WHITE+"Co-Hosts: "+list_cohosts.toString());
+        PluginData.getMessageUtil().sendInfoMessage(sender,ChatColor.WHITE+"Participants: "+list_participants.toString());
     }
 
     private void notifyTour(String text){
