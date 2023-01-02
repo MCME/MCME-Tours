@@ -21,13 +21,6 @@ import net.md_5.bungee.api.plugin.Plugin;
  */
 public final class MCMETours extends Plugin {
 
-    /*
-    TODO:
-      correct discord channels
-      ttpa kicks me from server: You logged in from another location
-       -> after tour restart worked fine. pretty weird
-     */
-
     private static MCMETours instance;
 
     @Override

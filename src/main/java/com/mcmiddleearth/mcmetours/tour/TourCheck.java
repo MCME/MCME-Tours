@@ -16,13 +16,15 @@ public class TourCheck {
         }else{
             String message;
             PluginData.getMessageUtil().sendInfoMessage(sender,"Running tours (click to join):");
-            for(String tour : PluginData.getTours()){
-                message = Style.HIGHLIGHT+PluginData.getTour(tour).getHost().getName()
-                        +Style.INFO+": Do "+ Style.STRESSED+"/tour join "+tour+Style.INFO+" to join this tour.";
-                if(PluginData.getTour(tour).getInfo() != null){
-                    message = message + "About: "+ PluginData.getTour(tour).getInfo();
+            for(String tour : PluginData.getTours()) {
+                if (PluginData.getTour(tour).isAnnounced()) {
+                    message = Style.HIGHLIGHT + PluginData.getTour(tour).getHost().getName()
+                            + Style.INFO + ": Do " + Style.STRESSED + "/tour join " + tour + Style.INFO + " to join this tour.";
+                    if (PluginData.getTour(tour).getInfo() != null) {
+                        message = message + "About: " + PluginData.getTour(tour).getInfo();
+                    }
+                    PluginData.getMessageUtil().sendClickableInfoMessage(((TourCommandSender) sender).getCommandSender(), message, "/tour join " + tour);
                 }
-                PluginData.getMessageUtil().sendClickableInfoMessage(((TourCommandSender)sender).getCommandSender(),message,"/tour join "+tour);
             }
         }
     }
