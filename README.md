@@ -40,6 +40,3 @@ http://www.gnu.org/copyleft/gpl.html<br/>
 <br/>
 <i>In the spirit of good-faith that this source has been made available, the author requests accreditation for works, in the form of the follow tag, to be appended to any class that contains his/her original code:<br/>
 (This request is an optional, additional courtesy)</i><br/>
-/**<br/>
-\* @author Jubo<br/>
-\*/<br/>
