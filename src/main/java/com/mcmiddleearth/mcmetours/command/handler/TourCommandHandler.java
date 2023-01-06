@@ -148,7 +148,7 @@ public class TourCommandHandler extends AbstractCommandHandler {
                 tour.addPlayer(player);
                 break;
             case "leave":
-                if(PluginData.isInTour((TourCommandSender) sender)){
+                if(!PluginData.isInTour((TourCommandSender) sender)){
                     PluginData.getMessageUtil().sendNotPossible(sender);
                     break;
                 }
@@ -187,7 +187,7 @@ public class TourCommandHandler extends AbstractCommandHandler {
                 tour.giveRefreshments();
                 break;
             case "list":
-                if(PluginData.isInTour((TourCommandSender) sender)){
+                if(!PluginData.isInTour((TourCommandSender) sender)){
                     PluginData.getMessageUtil().sendNotPossible(sender);
                     break;
                 }
@@ -195,7 +195,7 @@ public class TourCommandHandler extends AbstractCommandHandler {
                 tour.tourList((ProxiedPlayer) ((TourCommandSender) sender).getCommandSender());
                 break;
             case "chat":
-                if(PluginData.isInTour((TourCommandSender) sender)){
+                if(!PluginData.isInTour((TourCommandSender) sender)){
                     PluginData.getMessageUtil().sendNotPossible(sender);
                     break;
                 }
