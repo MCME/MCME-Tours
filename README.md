@@ -17,12 +17,12 @@ All users with '<b>Tours.user</b>' permission node can:
 - '<b>/ttp</b>' teleports the user to their tour guide.
 - '<b>/tour chat</b>' switches the tour-chat on and off.
 - '<b>/tour check</b>' checks if a tour is currently running.
+- '<b>/tour list</b>' lists all users in the tour group and shows who is host/cohost.
 - '<b>/tc</b>' lets you write in tour-chat, when tour-chat is switched off.
 
 Users with the '<b>Tours.ranger</b>' permission node can:
 - '<b>/tour start</b>' creates new tour, names it after user, and announces it.
 - '<b>/tour stop</b>' stops user's current tour and removes all group members.
-- '<b>/tour list</b>' lists all users in the tour group.
 - '<b>/tour hat</b>' allows the tour guide to wear their currently held block as a hat.
 - '<b>/ttp \<player\></b>' teleports \<player\> to user. \<player\> must be part of tour group.
 - '<b>/ttpa</b>' teleports all players in tour group to user.
