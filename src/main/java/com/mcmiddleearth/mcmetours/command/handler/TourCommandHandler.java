@@ -50,12 +50,12 @@ public class TourCommandHandler extends AbstractCommandHandler {
                                 .withHelpText("Join one of the running tours.")
                                 .withTooltip(Style.HIGHLIGHT+"/tour join <name of tour>"+Style.HIGHLIGHT_STRESSED
                                         +": Joins the specific tour you want to join.")
-                                .requires(sender -> (PluginData.hasPermission((TourCommandSender) sender, Permission.USER) && PluginData.tourRunning() && !PluginData.isInTour((TourCommandSender) sender)))
+                                .requires(sender -> (PluginData.hasPermission((TourCommandSender) sender, Permission.USER) && !PluginData.isInTour((TourCommandSender) sender)))
                                     .then(HelpfulRequiredArgumentBuilder.argument("tourname",new CommandTournameArgument())
                                                 .executes(context -> doCommand(context.getSource(),"join",context.getArgument("tourname",String.class)))))
                 .then(HelpfulLiteralBuilder.literal("leave")
                                 .withHelpText("Leave the currently joined tour.")
-                                .requires(sender -> (PluginData.hasPermission((TourCommandSender) sender, Permission.USER) && PluginData.isInTour((TourCommandSender) sender)))
+                                .requires(sender -> (PluginData.hasPermission((TourCommandSender) sender, Permission.USER)))
                                     .executes(context -> doCommand(context.getSource(),"leave", null)))
                 .then(HelpfulLiteralBuilder.literal("start")
                                 .withHelpText("Start a new tour.")
@@ -66,7 +66,7 @@ public class TourCommandHandler extends AbstractCommandHandler {
                                         .executes(context -> doCommand(context.getSource(),"start",context.getArgument("tourname",String.class)))))
                 .then(HelpfulLiteralBuilder.literal("end")
                                 .withHelpText("End your current tour.")
-                                .requires(sender -> (PluginData.hasPermission((TourCommandSender) sender, Permission.HOST) && PluginData.isHost((TourCommandSender) sender)))
+                                .requires(sender -> (PluginData.hasPermission((TourCommandSender) sender, Permission.HOST)))
                                     .executes(context -> doCommand(context.getSource(),"end",null)))
                 .then(HelpfulLiteralBuilder.literal("hat")
                                 .withHelpText("Set an item as your hat.")
@@ -76,49 +76,49 @@ public class TourCommandHandler extends AbstractCommandHandler {
                                     .executes(context -> doCommand(context.getSource(),"hat",null)))
                 .then(HelpfulLiteralBuilder.literal("kick")
                                 .withHelpText("Kick a player from your tour.")
-                                .requires(sender -> (PluginData.hasPermission((TourCommandSender) sender, Permission.HOST) && PluginData.isHost((TourCommandSender) sender)))
+                                .requires(sender -> (PluginData.hasPermission((TourCommandSender) sender, Permission.HOST)))
                                     .then(HelpfulRequiredArgumentBuilder.argument("playername",new CommandPlayerArgument())
                                             .executes(context -> doCommand(context.getSource(),"kick",context.getArgument("playername",String.class)))))
                 .then(HelpfulLiteralBuilder.literal("refreshments")
                                 .withHelpText("Give all participants refreshments.")
                                 .withTooltip(Style.HIGHLIGHT+"/tour refreshments"+Style.HIGHLIGHT_STRESSED+": Gives all tourists tea and cookies.")
-                                .requires(sender ->  PluginData.isCoHost((TourCommandSender) sender))
+                                .requires(sender ->  (PluginData.hasPermission((TourCommandSender) sender, Permission.USER)))
                                     .executes(context -> doCommand(context.getSource(),"refreshments",null)))
                 .then(HelpfulLiteralBuilder.literal("list")
                                 .withHelpText("List all participants of your tour.")
-                                .requires(sender -> (PluginData.hasPermission((TourCommandSender) sender, Permission.USER) && PluginData.isInTour((TourCommandSender) sender)))
+                                .requires(sender -> (PluginData.hasPermission((TourCommandSender) sender, Permission.USER)))
                                     .executes(context -> doCommand(context.getSource(),"list",null)))
                 .then(HelpfulLiteralBuilder.literal("chat")
                                 .withHelpText("Switch the tour-chat on and off.")
                                 .withTooltip(Style.HIGHLIGHT+"/tour chat"+Style.HIGHLIGHT_STRESSED
                                         +": Switches the tour-chat on and off. Its on by default. And you can type with /g <text> in normal chat when in tour-chat.")
-                                .requires(sender -> (PluginData.hasPermission((TourCommandSender) sender, Permission.USER) && PluginData.isInTour((TourCommandSender) sender)))
+                                .requires(sender -> (PluginData.hasPermission((TourCommandSender) sender, Permission.USER)))
                                     .executes(context -> doCommand(context.getSource(),"chat",null)))
                 .then(HelpfulLiteralBuilder.literal("info")
                                 .withHelpText("Set information about your tour.")
                                 .withTooltip(Style.HIGHLIGHT+"/tour info <infotext>"+Style.HIGHLIGHT_STRESSED
                                         +": Lets you set an infotext for the tour. Which will then be broadcasted on discord and seen when doing /tour check.")
-                                .requires(sender -> (PluginData.hasPermission((TourCommandSender) sender, Permission.HOST) && PluginData.isHost((TourCommandSender) sender)))
+                                .requires(sender -> (PluginData.hasPermission((TourCommandSender) sender, Permission.HOST)))
                                     .then(HelpfulRequiredArgumentBuilder.argument("description",greedyString())
                                         .executes(context -> doCommand(context.getSource(),"info",context.getArgument("description",String.class)))))
                 .then(HelpfulLiteralBuilder.literal("announce")
                                 .withHelpText("Announce your tour.")
                                 .withTooltip(Style.HIGHLIGHT+"/tour announce <discordroles>"+Style.HIGHLIGHT_STRESSED
                                         +": Announces the tour ingame and on discord. Roles need to be seperated by a comma without a space.")
-                                .requires(sender -> (PluginData.hasPermission((TourCommandSender) sender, Permission.HOST) && PluginData.isHost((TourCommandSender) sender)))
+                                .requires(sender -> (PluginData.hasPermission((TourCommandSender) sender, Permission.HOST)))
                                     .then(HelpfulRequiredArgumentBuilder.argument("discordroles",greedyString())
                                         .executes(context -> doCommand(context.getSource(),"announce",context.getArgument("discordroles",String.class)))))
                 .then(HelpfulLiteralBuilder.literal("host")
                                 .withHelpText("Set another player as the host of your tour.")
                                 .withTooltip(Style.HIGHLIGHT+"/tour host <playername>"+Style.HIGHLIGHT_STRESSED
                                         +": Changes the host from you to another Guide or tour-badge holder.")
-                                .requires(sender -> (PluginData.hasPermission((TourCommandSender) sender, Permission.HOST) && PluginData.isHost((TourCommandSender) sender)))
+                                .requires(sender -> (PluginData.hasPermission((TourCommandSender) sender, Permission.HOST)))
                                     .then(HelpfulRequiredArgumentBuilder.argument("playername",new CommandPermissionArgument())
                                         .executes(context -> doCommand(context.getSource(),"host",context.getArgument("playername",String.class)))))
                 .then(HelpfulLiteralBuilder.literal("cohost")
                                 .withTooltip(Style.HIGHLIGHT+"/tour cohost add <playername>"+Style.HIGHLIGHT_STRESSED
                                         +": Adds a cohost to your tour. /tour cohost remove <playername>: Removes a cohost from your tour. A co-host is a host with less permissions, who can use /ttpa and /tour refreshments.")
-                                .requires(sender -> (PluginData.hasPermission((TourCommandSender) sender, Permission.HOST) && PluginData.isHost((TourCommandSender) sender)))
+                                .requires(sender -> (PluginData.hasPermission((TourCommandSender) sender, Permission.HOST)))
                                 .then(HelpfulLiteralBuilder.literal("remove")
                                         .withHelpText("Removes a player as a cohost of your tour.")
                                         .then(HelpfulRequiredArgumentBuilder.argument("playername",new CommandPlayerArgument())
@@ -131,7 +131,7 @@ public class TourCommandHandler extends AbstractCommandHandler {
                                 .withHelpText("Let the cohosts and the host glow.")
                                 .withTooltip(Style.HIGHLIGHT+"/tour glow"+Style.HIGHLIGHT_STRESSED
                                         +": Toggles the host and co-host glow. Toggle it OFF before switching world.")
-                                .requires(sender -> (PluginData.hasPermission((TourCommandSender) sender, Permission.HOST) && PluginData.isHost((TourCommandSender) sender)))
+                                .requires(sender -> (PluginData.hasPermission((TourCommandSender) sender, Permission.HOST)))
                                     .executes(context -> doCommand(context.getSource(),"glow",null)));
         return helpfulLiteralBuilder;
     }
@@ -148,6 +148,10 @@ public class TourCommandHandler extends AbstractCommandHandler {
                 tour.addPlayer(player);
                 break;
             case "leave":
+                if(!PluginData.isInTour((TourCommandSender) sender)){
+                    PluginData.getMessageUtil().sendNotPossible(sender);
+                    break;
+                }
                 tour = PluginData.getTour((TourCommandSender) sender);
                 tour.removePlayer((ProxiedPlayer) ((TourCommandSender) sender).getCommandSender());
                 break;
@@ -156,6 +160,10 @@ public class TourCommandHandler extends AbstractCommandHandler {
                 PluginData.addTour(tour);
                 break;
             case "end":
+                if(!PluginData.isHost((TourCommandSender) sender)){
+                    PluginData.getMessageUtil().sendNotPossible(sender);
+                    break;
+                }
                 tour = PluginData.getTour((TourCommandSender) sender);
                 tour.endTour();
                 break;
@@ -163,42 +171,82 @@ public class TourCommandHandler extends AbstractCommandHandler {
                 TourHat.handle(player.getName(), player.getServer().getInfo().getName());
                 break;
             case "kick":
+                if(!PluginData.isHost((TourCommandSender) sender)){
+                    PluginData.getMessageUtil().sendNotPossible(sender);
+                    break;
+                }
                 tour = PluginData.getTour((TourCommandSender) sender);
                 tour.kickPlayer(ProxyServer.getInstance().getPlayer(arg));
                 break;
             case "refreshments":
+                if(!PluginData.isCoHost((TourCommandSender) sender)){
+                    PluginData.getMessageUtil().sendNotPossible(sender);
+                    break;
+                }
                 tour = PluginData.getTour((TourCommandSender) sender);
                 tour.giveRefreshments();
                 break;
             case "list":
+                if(!PluginData.isInTour((TourCommandSender) sender)){
+                    PluginData.getMessageUtil().sendNotPossible(sender);
+                    break;
+                }
                 tour = PluginData.getTour((TourCommandSender) sender);
                 tour.tourList((ProxiedPlayer) ((TourCommandSender) sender).getCommandSender());
                 break;
             case "chat":
+                if(!PluginData.isInTour((TourCommandSender) sender)){
+                    PluginData.getMessageUtil().sendNotPossible(sender);
+                    break;
+                }
                 tour = PluginData.getTour((TourCommandSender) sender);
                 tour.activateTourChat((ProxiedPlayer) ((TourCommandSender)sender).getCommandSender());
                 break;
             case "info":
+                if(!PluginData.isHost((TourCommandSender) sender)){
+                    PluginData.getMessageUtil().sendNotPossible(sender);
+                    break;
+                }
                 tour = PluginData.getTour((TourCommandSender) sender);
                 tour.setInfoText(arg);
                 break;
             case "announce":
+                if(!PluginData.isHost((TourCommandSender) sender)){
+                    PluginData.getMessageUtil().sendNotPossible(sender);
+                    break;
+                }
                 tour = PluginData.getTour((TourCommandSender) sender);
                 tour.sendDAnnouncement(arg);
                 break;
             case "host":
+                if(!PluginData.isHost((TourCommandSender) sender)){
+                    PluginData.getMessageUtil().sendNotPossible(sender);
+                    break;
+                }
                 tour = PluginData.getTour((TourCommandSender) sender);
                 tour.setHost(ProxyServer.getInstance().getPlayer(arg));
                 break;
             case "cohostAdd":
+                if(!PluginData.isHost((TourCommandSender) sender)){
+                    PluginData.getMessageUtil().sendNotPossible(sender);
+                    break;
+                }
                 tour = PluginData.getTour((TourCommandSender) sender);
                 tour.setCoHost(ProxyServer.getInstance().getPlayer(arg));
                 break;
             case "cohostRemove":
+                if(!PluginData.isHost((TourCommandSender) sender)){
+                    PluginData.getMessageUtil().sendNotPossible(sender);
+                    break;
+                }
                 tour = PluginData.getTour((TourCommandSender) sender);
                 tour.removeCoHost(ProxyServer.getInstance().getPlayer(arg));
                 break;
             case "glow":
+                if(!PluginData.isHost((TourCommandSender) sender)){
+                    PluginData.getMessageUtil().sendNotPossible(sender);
+                    break;
+                }
                 tour = PluginData.getTour((TourCommandSender) sender);
                 tour.switchGlow();
                 break;

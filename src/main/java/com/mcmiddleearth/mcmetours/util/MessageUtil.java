@@ -34,6 +34,10 @@ public class MessageUtil {
         sender.sendMessage(new ComponentBuilder(PREFIX+message).color(Style.ERROR).create());
     }
 
+    public void sendNotPossible(McmeCommandSender sender){
+        sender.sendMessage(new ComponentBuilder(PREFIX+"This is currently not possible.").color(Style.ERROR).create());
+    }
+
     public void sendInfoMessage(McmeCommandSender sender, String message){
         sender.sendMessage(new ComponentBuilder(PREFIX+message).color(Style.INFO).create());
     }
