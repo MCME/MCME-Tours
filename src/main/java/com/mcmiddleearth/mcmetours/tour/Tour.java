@@ -85,7 +85,8 @@ public class Tour {
         for(ProxiedPlayer player : coHost){
             glowHandle(player,false);
         }
-        discordHandler.endTour();
+        if(announced)
+            discordHandler.endTour();
         coHost.clear();
     }
 
