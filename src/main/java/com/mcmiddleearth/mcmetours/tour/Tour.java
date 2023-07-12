@@ -60,7 +60,7 @@ public class Tour {
         players.add(player);
         tourChat.add(player);
         teleportHandle(player,host);
-        notifyTour("Everybdoy welcome "+Style.HIGHLIGHT+player.getName()+Style.INFO+" to the tour!");
+        notifyTour("Everybody welcome "+Style.HIGHLIGHT+player.getName()+Style.INFO+" to the tour!");
         PluginData.getMessageUtil().sendInfoMessage(player,"Welcome to the tour. For the best experience, join "+ Style.HIGHLIGHT_STRESSED+host.getName()+Style.INFO+" in Discord!");
     }
 
