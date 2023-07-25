@@ -35,6 +35,7 @@ public class Tour {
     private boolean announced = false;
     private ScheduledTask cleanup;
     private boolean task = false;
+    private ChatColor MessageColor = ChatColor.WHITE;
 
     public Tour(ProxiedPlayer host, String name){
         this.host = host;
@@ -129,11 +130,11 @@ public class Tour {
         String ChatMessage;
         for(ProxiedPlayer receiver : players){
             if(coHost.contains(player)){
-                ChatMessage = ChatRanks.HOST.getChatPrefix() + player.getName() + ChatColor.WHITE + ": "  + message;
+                ChatMessage = ChatRanks.HOST.getChatPrefix() + player.getName() + MessageColor + ": "  + message;
             }else if(player.hasPermission(Permission.HOST.getPermissionNode())){
-                ChatMessage = ChatRanks.BADGEHOLDER.getChatPrefix() + player.getName() + ChatColor.WHITE + ": " + message;
+                ChatMessage = ChatRanks.BADGEHOLDER.getChatPrefix() + player.getName() + MessageColor + ": " + message;
             }else{
-                ChatMessage = ChatRanks.PARTICIPANT.getChatPrefix() + player.getName() + ChatColor.WHITE + ": " + message;
+                ChatMessage = ChatRanks.PARTICIPANT.getChatPrefix() + player.getName() + MessageColor + ": " + message;
             }
             receiver.sendMessage(new ComponentBuilder(ChatMessage).create());
         }

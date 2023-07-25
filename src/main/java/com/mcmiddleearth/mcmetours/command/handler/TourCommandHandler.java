@@ -68,6 +68,10 @@ public class TourCommandHandler extends AbstractCommandHandler {
                                 .withHelpText("End your current tour.")
                                 .requires(sender -> (PluginData.hasPermission((TourCommandSender) sender, Permission.HOST)))
                                     .executes(context -> doCommand(context.getSource(),"end",null)))
+                .then(HelpfulLiteralBuilder.literal("stop")
+                        .withHelpText("Stop your current tour.")
+                        .requires(sender -> (PluginData.hasPermission((TourCommandSender) sender, Permission.HOST)))
+                        .executes(context -> doCommand(context.getSource(),"end",null)))
                 .then(HelpfulLiteralBuilder.literal("hat")
                                 .withHelpText("Set an item as your hat.")
                                 .withTooltip(Style.HIGHLIGHT+"/tour hat"+Style.HIGHLIGHT_STRESSED
