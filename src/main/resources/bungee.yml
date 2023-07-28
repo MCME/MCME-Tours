@@ -3,7 +3,7 @@ version: '${project.version}'
 main: com.mcmiddleearth.mcmetours.MCMETours
 description: Tour Plugin for MCME with Bungee Support
 author: Jubo
-api-version: 1.18
+api-version: 1.19
 
 
 commands:

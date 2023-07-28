@@ -203,8 +203,11 @@ public class TourCommandHandler extends AbstractCommandHandler {
                     PluginData.getMessageUtil().sendNotPossible(sender);
                     break;
                 }
+                /*
                 tour = PluginData.getTour((TourCommandSender) sender);
                 tour.activateTourChat((ProxiedPlayer) ((TourCommandSender)sender).getCommandSender());
+                */
+                PluginData.getMessageUtil().sendErrorMessage(sender,"This command is deactivated due to an bungee issue. Please use /g <message> or /l <message> to write outside of tour chat.");
                 break;
             case "info":
                 if(!PluginData.isHost((TourCommandSender) sender)){

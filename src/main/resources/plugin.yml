@@ -2,7 +2,7 @@ name: '${project.artifactId}'
 main: com.mcmiddleearth.mcmetours.paper.ToursPaperPlugin
 version: '${project.version}'
 author: Jubo
-api-version: 1.18
+api-version: 1.19
 softdepend: [DiscordSRV]
 
 permissions:
