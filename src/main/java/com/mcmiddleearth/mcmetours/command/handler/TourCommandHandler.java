@@ -68,6 +68,10 @@ public class TourCommandHandler extends AbstractCommandHandler {
                                 .withHelpText("End your current tour.")
                                 .requires(sender -> (PluginData.hasPermission((TourCommandSender) sender, Permission.HOST)))
                                     .executes(context -> doCommand(context.getSource(),"end",null)))
+                .then(HelpfulLiteralBuilder.literal("stop")
+                        .withHelpText("Stop your current tour.")
+                        .requires(sender -> (PluginData.hasPermission((TourCommandSender) sender, Permission.HOST)))
+                        .executes(context -> doCommand(context.getSource(),"end",null)))
                 .then(HelpfulLiteralBuilder.literal("hat")
                                 .withHelpText("Set an item as your hat.")
                                 .withTooltip(Style.HIGHLIGHT+"/tour hat"+Style.HIGHLIGHT_STRESSED
@@ -199,8 +203,11 @@ public class TourCommandHandler extends AbstractCommandHandler {
                     PluginData.getMessageUtil().sendNotPossible(sender);
                     break;
                 }
+                /*
                 tour = PluginData.getTour((TourCommandSender) sender);
                 tour.activateTourChat((ProxiedPlayer) ((TourCommandSender)sender).getCommandSender());
+                */
+                PluginData.getMessageUtil().sendErrorMessage(sender,"This command is deactivated due to a bungee issue. Please use /g <message> or /l <message> to write outside of tour chat.");
                 break;
             case "info":
                 if(!PluginData.isHost((TourCommandSender) sender)){

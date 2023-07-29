@@ -35,6 +35,7 @@ public class Tour {
     private boolean announced = false;
     private ScheduledTask cleanup;
     private boolean task = false;
+    private ChatColor MessageColor = ChatColor.WHITE;
 
     public Tour(ProxiedPlayer host, String name){
         this.host = host;
@@ -60,7 +61,7 @@ public class Tour {
         players.add(player);
         tourChat.add(player);
         teleportHandle(player,host);
-        notifyTour("Everyboy welcome "+Style.HIGHLIGHT+player.getName()+Style.INFO+" to the tour!");
+        notifyTour("Everybody welcome "+Style.HIGHLIGHT+player.getName()+Style.INFO+" to the tour!");
         PluginData.getMessageUtil().sendInfoMessage(player,"Welcome to the tour. For the best experience, join "+ Style.HIGHLIGHT_STRESSED+host.getName()+Style.INFO+" in Discord!");
     }
 
@@ -85,7 +86,8 @@ public class Tour {
         for(ProxiedPlayer player : coHost){
             glowHandle(player,false);
         }
-        discordHandler.endTour();
+        if(announced)
+            discordHandler.endTour();
         coHost.clear();
     }
 
@@ -128,11 +130,11 @@ public class Tour {
         String ChatMessage;
         for(ProxiedPlayer receiver : players){
             if(coHost.contains(player)){
-                ChatMessage = ChatRanks.HOST.getChatPrefix() + player.getName() + ChatColor.WHITE + ": "  + message;
+                ChatMessage = ChatRanks.HOST.getChatPrefix() + player.getName() + MessageColor + ": "  + message;
             }else if(player.hasPermission(Permission.HOST.getPermissionNode())){
-                ChatMessage = ChatRanks.BADGEHOLDER.getChatPrefix() + player.getName() + ChatColor.WHITE + ": " + message;
+                ChatMessage = ChatRanks.BADGEHOLDER.getChatPrefix() + player.getName() + MessageColor + ": " + message;
             }else{
-                ChatMessage = ChatRanks.PARTICIPANT.getChatPrefix() + player.getName() + ChatColor.WHITE + ": " + message;
+                ChatMessage = ChatRanks.PARTICIPANT.getChatPrefix() + player.getName() + MessageColor + ": " + message;
             }
             receiver.sendMessage(new ComponentBuilder(ChatMessage).create());
         }

@@ -8,7 +8,7 @@ import net.md_5.bungee.api.ChatColor;
 public enum ChatRanks {
 
     HOST (ChatColor.DARK_AQUA+"<Tour Host> "),
-    PARTICIPANT (ChatColor.GRAY+"<Participant> "),
+    PARTICIPANT (ChatColor.GOLD+"<Participant> "),
     BADGEHOLDER (ChatColor.BLUE+"<Participant> ");
 
     private final String chatPrefix;
