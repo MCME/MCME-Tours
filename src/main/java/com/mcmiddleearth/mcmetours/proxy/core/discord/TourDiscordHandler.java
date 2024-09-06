@@ -1,0 +1,73 @@
+package com.mcmiddleearth.mcmetours.proxy.core.discord;
+
+import com.google.common.io.ByteArrayDataOutput;
+import com.google.common.io.ByteStreams;
+import com.mcmiddleearth.base.core.player.McmeProxyPlayer;
+import com.mcmiddleearth.mcmetours.paper.Channel;
+import com.mcmiddleearth.mcmetours.proxy.core.McmeTours;
+
+/**
+ * @author Jubo
+ */
+public class TourDiscordHandler {
+
+    private McmeProxyPlayer sender;
+    private final String name;
+
+
+    public TourDiscordHandler(McmeProxyPlayer host, String name){
+        sender = host;
+        this.name = name;
+    }
+
+    public void AnnnounceTour(String info,String discordrole){
+        ByteArrayDataOutput out = ByteStreams.newDataOutput();
+        out.writeUTF(Channel.DISCORD);
+        out.writeUTF(DiscordMessageType.ANNOUNCEMENT);
+        out.writeUTF(sender.getName());
+        out.writeUTF(name);
+        out.writeUTF(discordrole);
+        if(info == null){
+            out.writeBoolean(false);
+            out.writeUTF("");
+        }
+        else{
+            out.writeBoolean(true);
+            out.writeUTF(info);
+        }
+        handle(sender,out);
+    }
+
+    public void endTour(){
+        ByteArrayDataOutput out = ByteStreams.newDataOutput();
+        out.writeUTF(Channel.DISCORD);
+        out.writeUTF(DiscordMessageType.END);
+        out.writeUTF(sender.getName());
+        handle(sender,out);
+    }
+
+    public void requestTour(String messageRequest){
+        ByteArrayDataOutput out = ByteStreams.newDataOutput();
+        out.writeUTF(Channel.DISCORD);
+        out.writeUTF(DiscordMessageType.REQUEST);
+        if(messageRequest == null){
+            out.writeBoolean(false);
+            out.writeUTF("");
+        }
+        else{
+            out.writeBoolean(true);
+            out.writeUTF(messageRequest);
+        }
+        out.writeUTF(sender.getName());
+        handle(sender,out);
+    }
+
+    public void setSender(McmeProxyPlayer sender){
+        this.sender = sender;
+    }
+
+    private void handle(McmeProxyPlayer sender, ByteArrayDataOutput out){
+        McmeTours.getProxy().getServerInfo(sender.getServerInfo().getName())
+                 .sendPluginMessage(Channel.MAIN,out.toByteArray(),true);
+    }
+}

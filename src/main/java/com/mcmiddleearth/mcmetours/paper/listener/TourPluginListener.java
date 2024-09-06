@@ -2,7 +2,7 @@ package com.mcmiddleearth.mcmetours.paper.listener;
 
 import com.google.common.io.ByteArrayDataInput;
 import com.google.common.io.ByteStreams;
-import com.mcmiddleearth.mcmetours.discord.DiscordMessageType;
+import com.mcmiddleearth.mcmetours.proxy.core.discord.DiscordMessageType;
 import com.mcmiddleearth.mcmetours.paper.Channel;
 import com.mcmiddleearth.mcmetours.paper.ToursPaperPlugin;
 import com.mcmiddleearth.mcmetours.paper.functions.*;
