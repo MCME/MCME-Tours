@@ -93,7 +93,7 @@ public class Tour {
 
     public void TeleportToHost(ProxiedPlayer player){
         teleportHandle(player,host);
-        PluginData.getMessageUtil().sendInfoMessage(player,"You were teleport to "+host.getName()+".");
+        PluginData.getMessageUtil().sendInfoMessage(player,"You were teleported to "+host.getName()+".");
     }
 
     public void teleportPlayer(ProxiedPlayer player,ProxiedPlayer host){
