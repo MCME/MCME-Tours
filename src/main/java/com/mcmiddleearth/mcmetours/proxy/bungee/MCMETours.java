@@ -2,7 +2,7 @@ package com.mcmiddleearth.mcmetours.proxy.bungee;
 
 import com.mcmiddleearth.command.McmeCommandSender;
 import com.mcmiddleearth.mcmetours.proxy.core.command.TourCommandSender;
-import com.mcmiddleearth.mcmetours.proxy.core.command.ToursPluginCommand;
+import com.mcmiddleearth.mcmetours.proxy.bungee.command.ToursPluginCommand;
 import com.mcmiddleearth.mcmetours.proxy.core.command.handler.TcComandHandler;
 import com.mcmiddleearth.mcmetours.proxy.core.command.handler.TourCommandHandler;
 import com.mcmiddleearth.mcmetours.proxy.core.command.handler.TtpCommandHandler;

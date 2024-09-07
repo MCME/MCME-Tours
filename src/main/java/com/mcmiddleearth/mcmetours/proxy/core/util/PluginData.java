@@ -17,7 +17,7 @@ public class PluginData {
     private final static MessageUtil messageUtil = new MessageUtil();
 
     public static Tour getTour(TourCommandSender sender){
-        McmeProxyPlayer player = (ProxiedPlayer) sender.getCommandSender();
+        McmeProxyPlayer player = (McmeProxyPlayer) sender.getCommandSender();
         for(Tour tour: tours){
             if(tour.getPlayers().contains(player))
                 return tour;
@@ -58,7 +58,7 @@ public class PluginData {
     }
 
     public static boolean isInTour(TourCommandSender sender){
-        McmeProxyPlayer player = (ProxiedPlayer) sender.getCommandSender();
+        McmeProxyPlayer player = (McmeProxyPlayer) sender.getCommandSender();
         for(Tour tour: tours){
             if(tour.getPlayers().contains(player)){
                 return true;
@@ -68,7 +68,7 @@ public class PluginData {
     }
 
     public static boolean isCoHost(TourCommandSender sender){
-        McmeProxyPlayer player = (ProxiedPlayer) sender.getCommandSender();
+        McmeProxyPlayer player = (McmeProxyPlayer) sender.getCommandSender();
         for(Tour tour : tours){
             if(tour.getCoHost().contains(player)){
                 return true;
@@ -78,7 +78,7 @@ public class PluginData {
     }
 
     public static boolean isHost(TourCommandSender sender){
-        McmeProxyPlayer player = (ProxiedPlayer) sender.getCommandSender();
+        McmeProxyPlayer player = (McmeProxyPlayer) sender.getCommandSender();
         for(Tour tour: tours){
             if(tour.getHost() == player){
                 return true;
@@ -114,7 +114,7 @@ public class PluginData {
     }
 
     public static boolean hasPermission(TourCommandSender player, Permission perm) {
-        McmeProxyPlayer Proxyplayer = (ProxiedPlayer) player.getCommandSender();
-        return Proxyplayer.hasPermission(perm.getPermissionNode());
+        McmeProxyPlayer proxyPlayer = (McmeProxyPlayer) player.getCommandSender();
+        return proxyPlayer.hasPermission(perm.getPermissionNode());
     }
 }

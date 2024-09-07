@@ -1,12 +1,11 @@
 package com.mcmiddleearth.mcmetours.proxy.core.util;
 
-import com.mcmiddleearth.command.McmeCommandSender;
+import com.mcmiddleearth.base.core.command.McmeCommandSender;
+import com.mcmiddleearth.mcmetours.proxy.core.McmeTours;
 import net.md_5.bungee.api.CommandSender;
-import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.TextComponent;
-import net.md_5.bungee.api.connection.ProxiedPlayer;
 
 /**
  * @author Jubo
@@ -25,21 +24,25 @@ public class MessageUtil {
     }
 
     public void sendBroadcastMessage(String message){
-        for(ProxiedPlayer player: ProxyServer.getInstance().getPlayers()){
+        McmeTours.getProxy().broadcast(McmeTours.getPlugin().createInfoMessage().add(message));
+        /*for(ProxiedPlayer player: ProxyServer.getInstance().getPlayers()){
             player.sendMessage(new ComponentBuilder(PREFIX+message).color(Style.INFO).create());
-        }
+        }*/
     }
 
     public void sendErrorMessage(McmeCommandSender sender, String message){
-        sender.sendMessage(new ComponentBuilder(PREFIX+message).color(Style.ERROR).create());
+        sender.sendMessage(McmeTours.errorMessage().add(message));
+        //sender.sendMessage(new ComponentBuilder(PREFIX+message).color(Style.ERROR).create());
     }
 
     public void sendNotPossible(McmeCommandSender sender){
-        sender.sendMessage(new ComponentBuilder(PREFIX+"This is currently not possible.").color(Style.ERROR).create());
+        sender.sendMessage(McmeTours.errorMessage("This is currently not possible."));
+        //sender.sendMessage(new ComponentBuilder(PREFIX+"This is currently not possible.").color(Style.ERROR).create());
     }
 
     public void sendInfoMessage(McmeCommandSender sender, String message){
-        sender.sendMessage(new ComponentBuilder(PREFIX+message).color(Style.INFO).create());
+        sender.sendMessage(McmeTours.infoMessage(message));
+        //sender.sendMessage(new ComponentBuilder(PREFIX+message).color(Style.INFO).create());
     }
 
     public void sendClickableInfoMessage(CommandSender sender, String message, String clickable){

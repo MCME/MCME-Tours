@@ -3,7 +3,6 @@ package com.mcmiddleearth.mcmetours.proxy.bungee.listener;
 import com.mcmiddleearth.mcmetours.proxy.core.command.TourCommandSender;
 import com.mcmiddleearth.mcmetours.proxy.core.util.PluginData;
 import com.mcmiddleearth.mcmetours.proxy.core.tour.Tour;
-import com.mcmiddleearth.mcmetours.proxy.core.util.Style;
 import net.md_5.bungee.api.event.PlayerDisconnectEvent;
 import net.md_5.bungee.api.event.PostLoginEvent;
 import net.md_5.bungee.api.event.ServerSwitchEvent;

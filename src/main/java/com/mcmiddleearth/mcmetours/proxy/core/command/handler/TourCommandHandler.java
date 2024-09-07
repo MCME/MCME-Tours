@@ -15,8 +15,6 @@ import com.mcmiddleearth.mcmetours.proxy.core.tour.Tour;
 import com.mcmiddleearth.mcmetours.proxy.core.tour.TourHat;
 import com.mcmiddleearth.mcmetours.proxy.core.tour.TourRequest;
 import com.mcmiddleearth.mcmetours.proxy.core.util.Style;
-import net.md_5.bungee.api.ProxyServer;
-import net.md_5.bungee.api.connection.ProxiedPlayer;
 
 import static com.mojang.brigadier.arguments.StringArgumentType.greedyString;
 import static com.mojang.brigadier.arguments.StringArgumentType.word;

@@ -1,4 +1,4 @@
-package com.mcmiddleearth.mcmetours.proxy.core.command;
+package com.mcmiddleearth.mcmetours.proxy.bungee.command;
 
 import com.mcmiddleearth.command.AbstractCommandHandler;
 import com.mcmiddleearth.command.McmeCommandSender;

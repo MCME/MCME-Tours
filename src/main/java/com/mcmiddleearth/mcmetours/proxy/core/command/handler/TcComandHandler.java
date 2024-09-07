@@ -8,7 +8,6 @@ import com.mcmiddleearth.mcmetours.proxy.core.command.TourCommandSender;
 import com.mcmiddleearth.mcmetours.proxy.core.tour.Tour;
 import com.mcmiddleearth.mcmetours.proxy.core.util.Permission;
 import com.mcmiddleearth.mcmetours.proxy.core.util.PluginData;
-import net.md_5.bungee.api.connection.ProxiedPlayer;
 
 import static com.mojang.brigadier.arguments.StringArgumentType.greedyString;
 

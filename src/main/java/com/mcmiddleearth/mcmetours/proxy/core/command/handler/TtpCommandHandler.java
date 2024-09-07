@@ -9,8 +9,6 @@ import com.mcmiddleearth.mcmetours.proxy.core.command.arguments.CommandPlayerArg
 import com.mcmiddleearth.mcmetours.proxy.core.util.Permission;
 import com.mcmiddleearth.mcmetours.proxy.core.util.PluginData;
 import com.mcmiddleearth.mcmetours.proxy.core.tour.Tour;
-import net.md_5.bungee.api.ProxyServer;
-import net.md_5.bungee.api.connection.ProxiedPlayer;
 
 /**
  * @author Jubo

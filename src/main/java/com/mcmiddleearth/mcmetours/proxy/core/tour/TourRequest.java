@@ -7,7 +7,6 @@ import com.mcmiddleearth.mcmetours.proxy.core.command.TourCommandSender;
 import com.mcmiddleearth.mcmetours.proxy.core.util.Permission;
 import com.mcmiddleearth.mcmetours.proxy.core.util.PluginData;
 import com.mcmiddleearth.mcmetours.proxy.core.discord.TourDiscordHandler;
-import com.mcmiddleearth.mcmetours.proxy.core.util.Style;
 
 /**
  * @author Jubo

@@ -1,23 +1,29 @@
 package com.mcmiddleearth.mcmetours.proxy.core.util;
 
-import net.md_5.bungee.api.ChatColor;
+import com.mcmiddleearth.base.core.message.MessageColor;
 
 /**
  * @author Jubo
  */
 public enum ChatRanks {
 
-    HOST (ChatColor.DARK_AQUA+"<Tour Host> "),
-    PARTICIPANT (ChatColor.GOLD+"<Participant> "),
-    BADGEHOLDER (ChatColor.BLUE+"<Participant> ");
+    HOST (MessageColor.DARK_AQUA, "<Tour Host> "),
+    PARTICIPANT (MessageColor.GOLD, "<Participant> "),
+    BADGEHOLDER (MessageColor.BLUE, "<Participant> ");
 
     private final String chatPrefix;
+    private final MessageColor chatColor;
 
-    ChatRanks(String chatPrefix){
+    ChatRanks(MessageColor chatColor, String chatPrefix){
+        this.chatColor = chatColor;
         this.chatPrefix = chatPrefix;
     }
 
     public String getChatPrefix(){
         return chatPrefix;
+    }
+
+    public MessageColor getChatColor() {
+        return chatColor;
     }
 }

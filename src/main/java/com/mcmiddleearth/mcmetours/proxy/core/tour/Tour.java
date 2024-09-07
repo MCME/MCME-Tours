@@ -3,18 +3,20 @@ package com.mcmiddleearth.mcmetours.proxy.core.tour;
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
 import com.mcmiddleearth.base.core.player.McmeProxyPlayer;
-import com.mcmiddleearth.mcmetours.proxy.bungee.MCMETours;
+import com.mcmiddleearth.base.core.taskScheduling.Task;
+import com.mcmiddleearth.mcmetours.paper.Channel;
+import com.mcmiddleearth.mcmetours.proxy.core.McmeTours;
+import com.mcmiddleearth.mcmetours.proxy.core.discord.TourDiscordHandler;
 import com.mcmiddleearth.mcmetours.proxy.core.util.ChatRanks;
 import com.mcmiddleearth.mcmetours.proxy.core.util.Permission;
 import com.mcmiddleearth.mcmetours.proxy.core.util.PluginData;
 import com.mcmiddleearth.mcmetours.proxy.core.util.Style;
-import com.mcmiddleearth.mcmetours.proxy.core.discord.TourDiscordHandler;
-import com.mcmiddleearth.mcmetours.paper.Channel;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.ComponentBuilder;
-import net.md_5.bungee.api.scheduler.ScheduledTask;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
@@ -32,7 +34,7 @@ public class Tour {
     private boolean glow = false;
     private final String name;
     private boolean announced = false;
-    private ScheduledTask cleanup;
+    private Task cleanup;
     private boolean task = false;
     private final ChatColor MessageColor = ChatColor.WHITE;
 
@@ -50,10 +52,11 @@ public class Tour {
     public void selfDestruction(){
         notifyTour("Self-destruction activated! This tour will destroy itself in 60 seconds, if the host doesn´t come back.");
         task = true;
-        cleanup = ProxyServer.getInstance().getScheduler().schedule(MCMETours.getInstance(),() -> {
+        cleanup = McmeTours.getPlugin().getTask(() -> {
             if(!host.isConnected())
                 endTour();
-                }, 60, TimeUnit.SECONDS);
+                });
+        cleanup.schedule(60, TimeUnit.SECONDS);
     }
 
     public void addPlayer(McmeProxyPlayer player){
@@ -126,16 +129,16 @@ public class Tour {
     }
 
     public void tourChat(McmeProxyPlayer player, String message){
-        String ChatMessage;
+        String chatMessage;
         for(McmeProxyPlayer receiver : players){
             if(coHost.contains(player)){
-                ChatMessage = ChatRanks.HOST.getChatPrefix() + player.getName() + MessageColor + ": "  + message;
+                chatMessage = ChatRanks.HOST.getChatPrefix() + player.getName() + MessageColor + ": "  + message;
             }else if(player.hasPermission(Permission.HOST.getPermissionNode())){
-                ChatMessage = ChatRanks.BADGEHOLDER.getChatPrefix() + player.getName() + MessageColor + ": " + message;
+                chatMessage = ChatRanks.BADGEHOLDER.getChatPrefix() + player.getName() + MessageColor + ": " + message;
             }else{
-                ChatMessage = ChatRanks.PARTICIPANT.getChatPrefix() + player.getName() + MessageColor + ": " + message;
+                chatMessage = ChatRanks.PARTICIPANT.getChatPrefix() + player.getName() + MessageColor + ": " + message;
             }
-            receiver.sendMessage(new ComponentBuilder(ChatMessage).create());
+            receiver.sendMessage(McmeTours.new ComponentBuilder(chatMessage).create());
         }
     }
 
@@ -150,7 +153,7 @@ public class Tour {
     }
 
     public void giveRefreshments(){
-        for(ProxiedPlayer player: players){
+        for(McmeProxyPlayer player: players){
             refreshmentsHandle(player);
             PluginData.getMessageUtil().sendInfoMessage(player,"You were given refreshments.");
         }
@@ -164,7 +167,7 @@ public class Tour {
             PluginData.getMessageUtil().sendInfoMessage(host,"You switched the glow effect off.");
             glow = false;
         }
-        for(ProxiedPlayer player: coHost){
+        for(McmeProxyPlayer player: coHost){
             glowHandle(player,glow);
         }
     }
@@ -260,7 +263,7 @@ public class Tour {
         out.writeUTF(Channel.GLOW);
         out.writeUTF(sender.getName());
         out.writeBoolean(bool);
-        ProxyServer.getInstance().getServerInfo(sender.getServer().getInfo().getName()).sendData(Channel.MAIN, out.toByteArray(),true);
+        ProxyServer.getInstance().getServerInfo(sender.getServerInfo().getName()).sendData(Channel.MAIN, out.toByteArray(),true);
     }
 
     private void refreshmentsHandle(McmeProxyPlayer sender){
@@ -271,25 +274,25 @@ public class Tour {
     }
 
     private void teleportHandle(McmeProxyPlayer sender, McmeProxyPlayer target){
-        if(!sender.hasPermission("mcmeconnect.world."+target.getServer().getInfo().getName())){
+        if(!sender.hasPermission("mcmeconnect.world."+target.getServerInfo().getName())){
             PluginData.getMessageUtil().sendErrorMessage(target,sender.getName()+" doesn´t have the permission to enter this world.");
             PluginData.getMessageUtil().sendErrorMessage(sender, "You don´t have the permission to enter this world.");
             return;
         }
-        if(!sender.getServer().getInfo().equals(target.getServer().getInfo())){
-            sender.connect(target.getServer().getInfo());
+        if(!sender.getServerInfo().getName().equals(target.getServerInfo().getName())){
+            sender.connect(target.getServerInfo(), (result,error)->{});
         }
         ByteArrayDataOutput out = ByteStreams.newDataOutput();
         out.writeUTF(Channel.TP);
         out.writeUTF(sender.getName());
         out.writeUTF(target.getName());
-        ProxyServer.getInstance().getServerInfo(target.getServer().getInfo().getName()).sendData(Channel.MAIN, out.toByteArray(),true);
+        target.sendDataToBackend(Channel.MAIN, out.toByteArray(),true);
     }
 
     public boolean isAnnounced(){return announced;}
     public String getInfo(){return info;}
     public Boolean getTask(){return task;}
-    public ScheduledTask getCleanup(){return cleanup;}
+    public Task getCleanup(){return cleanup;}
     public String getName() {return name;}
     public List<McmeProxyPlayer> getCoHost(){return coHost;}
     public McmeProxyPlayer getHost() {return host;}
