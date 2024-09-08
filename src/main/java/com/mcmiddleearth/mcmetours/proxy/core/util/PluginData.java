@@ -1,29 +1,20 @@
 package com.mcmiddleearth.mcmetours.proxy.core.util;
 
+import com.mcmiddleearth.base.core.command.McmeCommandSender;
 import com.mcmiddleearth.base.core.player.McmeProxyPlayer;
 import com.mcmiddleearth.mcmetours.proxy.core.McmeTours;
-import com.mcmiddleearth.mcmetours.proxy.core.command.TourCommandSender;
 import com.mcmiddleearth.mcmetours.proxy.core.tour.Tour;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author Jubo
+ * @author Jubo, Eriol_Eandur
  */
 public class PluginData {
 
     private static final List<Tour> tours = new ArrayList<>();
     private final static MessageUtil messageUtil = new MessageUtil();
-
-    public static Tour getTour(TourCommandSender sender){
-        McmeProxyPlayer player = (McmeProxyPlayer) sender.getCommandSender();
-        for(Tour tour: tours){
-            if(tour.getPlayers().contains(player))
-                return tour;
-        }
-        return null;
-    }
 
     public static Tour getTour(String name){
         for(Tour tour: tours){
@@ -57,8 +48,7 @@ public class PluginData {
         tours.remove(tour);
     }
 
-    public static boolean isInTour(TourCommandSender sender){
-        McmeProxyPlayer player = (McmeProxyPlayer) sender.getCommandSender();
+    public static boolean isInTour(McmeProxyPlayer player){
         for(Tour tour: tours){
             if(tour.getPlayers().contains(player)){
                 return true;
@@ -67,8 +57,7 @@ public class PluginData {
         return false;
     }
 
-    public static boolean isCoHost(TourCommandSender sender){
-        McmeProxyPlayer player = (McmeProxyPlayer) sender.getCommandSender();
+    public static boolean isCoHost(McmeProxyPlayer player){
         for(Tour tour : tours){
             if(tour.getCoHost().contains(player)){
                 return true;
@@ -77,8 +66,7 @@ public class PluginData {
         return false;
     }
 
-    public static boolean isHost(TourCommandSender sender){
-        McmeProxyPlayer player = (McmeProxyPlayer) sender.getCommandSender();
+    public static boolean isHost(McmeProxyPlayer player){
         for(Tour tour: tours){
             if(tour.getHost() == player){
                 return true;
@@ -113,8 +101,7 @@ public class PluginData {
         return messageUtil;
     }
 
-    public static boolean hasPermission(TourCommandSender player, Permission perm) {
-        McmeProxyPlayer proxyPlayer = (McmeProxyPlayer) player.getCommandSender();
-        return proxyPlayer.hasPermission(perm.getPermissionNode());
+    public static boolean hasPermission(McmeCommandSender sender, Permission perm) {
+        return sender.hasPermission(perm.getPermissionNode());
     }
 }

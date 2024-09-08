@@ -6,6 +6,9 @@ import com.mcmiddleearth.base.core.message.MessageDecoration;
 import com.mcmiddleearth.base.core.plugin.McmeProxyPlugin;
 import com.mcmiddleearth.base.core.server.McmeProxy;
 
+/**
+ * @author Eriol_Eandur
+ */
 public class McmeTours {
 
     private static McmeProxyPlugin plugin;

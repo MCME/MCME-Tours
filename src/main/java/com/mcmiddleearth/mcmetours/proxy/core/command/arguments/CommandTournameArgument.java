@@ -1,6 +1,6 @@
 package com.mcmiddleearth.mcmetours.proxy.core.command.arguments;
 
-import com.mcmiddleearth.command.argument.AbstractPlayerArgumentType;
+import com.mcmiddleearth.base.core.command.argument.AbstractPlayerArgumentType;
 import com.mcmiddleearth.mcmetours.proxy.core.util.PluginData;
 import com.mojang.brigadier.LiteralMessage;
 import com.mojang.brigadier.StringReader;
@@ -11,7 +11,7 @@ import java.util.Collection;
 import java.util.HashSet;
 
 /**
- * @author Jubo
+ * @author Jubo, Eriol_Eandur
  */
 public class CommandTournameArgument extends AbstractPlayerArgumentType {
     @Override

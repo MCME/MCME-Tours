@@ -1,16 +1,16 @@
 package com.mcmiddleearth.mcmetours.proxy.bungee.command;
 
-import com.mcmiddleearth.command.AbstractCommandHandler;
-import com.mcmiddleearth.command.McmeCommandSender;
-import com.mcmiddleearth.command.SimpleTabCompleteRequest;
-import com.mcmiddleearth.command.TabCompleteRequest;
-import com.mcmiddleearth.mcmetours.proxy.bungee.MCMETours;
+import com.mcmiddleearth.base.core.command.handler.AbstractCommandHandler;
+import com.mcmiddleearth.base.core.command.McmeCommandSender;
+import com.mcmiddleearth.base.core.command.SimpleTabCompleteRequest;
+import com.mcmiddleearth.base.core.command.TabCompleteRequest;
+import com.mcmiddleearth.mcmetours.proxy.bungee.McmeToursBungeePlugin;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.plugin.Command;
 import net.md_5.bungee.api.plugin.TabExecutor;
 
 /**
- * @author Jubo
+ * @author Jubo, Eriol_Eandur
  */
 public class ToursPluginCommand extends Command implements TabExecutor {
 
@@ -26,13 +26,13 @@ public class ToursPluginCommand extends Command implements TabExecutor {
 
     @Override
     public void execute(CommandSender sender, String[] args) {
-        McmeCommandSender wrappedSender = MCMETours.wrapCommandSender(sender);
+        McmeCommandSender wrappedSender = McmeToursBungeePlugin.wrapCommandSender(sender);
         handler.execute(wrappedSender,args);
     }
 
     @Override
     public Iterable<String> onTabComplete(CommandSender sender, String[] args) {
-        TabCompleteRequest request = new SimpleTabCompleteRequest(MCMETours.wrapCommandSender(sender),String.format("/%s %s",name,String.join(" ",args)));
+        TabCompleteRequest request = new SimpleTabCompleteRequest(McmeToursBungeePlugin.wrapCommandSender(sender),String.format("/%s %s",name,String.join(" ",args)));
         handler.onTabComplete(request);
         return request.getSuggestions();
     }

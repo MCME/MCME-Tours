@@ -3,7 +3,7 @@ package com.mcmiddleearth.mcmetours.proxy.core.util;
 import com.mcmiddleearth.base.core.message.MessageColor;
 
 /**
- * @author Jubo
+ * @author Jubo, Eriol_Eandur
  */
 public enum ChatRanks {
 

@@ -2,6 +2,7 @@ package com.mcmiddleearth.mcmetours.proxy.core.tour;
 
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
+import com.mcmiddleearth.base.core.message.*;
 import com.mcmiddleearth.base.core.player.McmeProxyPlayer;
 import com.mcmiddleearth.base.core.taskScheduling.Task;
 import com.mcmiddleearth.mcmetours.paper.Channel;
@@ -10,9 +11,6 @@ import com.mcmiddleearth.mcmetours.proxy.core.discord.TourDiscordHandler;
 import com.mcmiddleearth.mcmetours.proxy.core.util.ChatRanks;
 import com.mcmiddleearth.mcmetours.proxy.core.util.Permission;
 import com.mcmiddleearth.mcmetours.proxy.core.util.PluginData;
-import com.mcmiddleearth.mcmetours.proxy.core.util.Style;
-import net.md_5.bungee.api.ChatColor;
-import net.md_5.bungee.api.chat.ComponentBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +19,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 /**
- * @author Jubo
+ * @author Jubo, Eriol_Eandur
  */
 public class Tour {
 
@@ -36,7 +34,7 @@ public class Tour {
     private boolean announced = false;
     private Task cleanup;
     private boolean task = false;
-    private final ChatColor MessageColor = ChatColor.WHITE;
+    private final MessageColor messageColor = MessageColor.WHITE;
 
     public Tour(McmeProxyPlayer host, String name){
         this.host = host;
@@ -45,12 +43,19 @@ public class Tour {
         coHost.add(host);
         this.name = name;
         discordHandler = new TourDiscordHandler(host,name);
-        PluginData.getMessageUtil().sendInfoMessage(host,"You started a tour. To put up a description do "+Style.STRESSED+"/tour info <description>"+Style.INFO+".");
-        PluginData.getMessageUtil().sendInfoMessage(host,"To announce the tour ingame and in discord do "+Style.STRESSED+"/tour announce <role>"+Style.INFO+".");
+        host.sendMessage(McmeTours.infoMessage("You started a tour. To put up a description do ")
+                .add(McmeTours.getPlugin().createMessage()
+                        .add("/tour info <description>",McmeColors.INFO_STRESSED)
+                        .addClick(new MessageClickEvent(MessageClickEvent.Action.SUGGEST_COMMAND,"/tour info ")))
+                .add(". To announce the tour ingame and in discord do ")
+                .add(McmeTours.getPlugin().createMessage()
+                        .add("/tour announce <role>",McmeColors.INFO_STRESSED)
+                        .addClick(new MessageClickEvent(MessageClickEvent.Action.SUGGEST_COMMAND, "/tour announce ")))
+                .add("."));
     }
 
     public void selfDestruction(){
-        notifyTour("Self-destruction activated! This tour will destroy itself in 60 seconds, if the host doesn´t come back.");
+        notifyTour(McmeTours.infoMessage("Self-destruction activated! This tour will destroy itself in 60 seconds, if the host doesn't come back."));
         task = true;
         cleanup = McmeTours.getPlugin().getTask(() -> {
             if(!host.isConnected())
@@ -63,8 +68,12 @@ public class Tour {
         players.add(player);
         tourChat.add(player);
         teleportHandle(player,host);
-        notifyTour("Everybody welcome "+Style.HIGHLIGHT+player.getName()+Style.INFO+" to the tour!");
-        PluginData.getMessageUtil().sendInfoMessage(player,"Welcome to the tour. For the best experience, join "+ Style.HIGHLIGHT_STRESSED+host.getName()+Style.INFO+" in Discord!");
+        notifyTour(McmeTours.infoMessage("Everybody welcome ")
+                .add(player.getName(),McmeColors.INFO_STRESSED)
+                .add(" to the tour!"));
+        player.sendMessage(McmeTours.infoMessage("Welcome to the tour. For the best experience, join ")
+                .add(host.getName(),McmeColors.INFO_STRESSED)
+                .add(" in Discord!"));
     }
 
     public void removePlayer(McmeProxyPlayer player){
@@ -76,12 +85,12 @@ public class Tour {
         tourChat.remove(player);
         coHost.remove(player);
         glowHandle(player,false);
-        notifyTour(player.getName()+" left the tour.");
+        notifyTour(McmeTours.infoMessage(player.getName()+" left the tour."));
         PluginData.getMessageUtil().sendInfoMessage(player, "You left the tour.");
     }
 
     public void endTour(){
-        notifyTour("The tour has ended.");
+        notifyTour(McmeTours.infoMessage("The tour has ended."));
         players.clear();
         tourChat.clear();
         PluginData.removeTour(this);
@@ -129,16 +138,17 @@ public class Tour {
     }
 
     public void tourChat(McmeProxyPlayer player, String message){
-        String chatMessage;
+        Message chatMessage = McmeTours.getPlugin().createMessage(new MessageStyle(messageColor));
+        if(coHost.contains(player)){
+            chatMessage.add(ChatRanks.HOST.getChatPrefix()+ player.getName(),ChatRanks.HOST.getChatColor());
+        }else if(player.hasPermission(Permission.HOST.getPermissionNode())){
+            chatMessage.add(ChatRanks.BADGEHOLDER.getChatPrefix() + player.getName(),ChatRanks.BADGEHOLDER.getChatColor());
+        }else{
+            chatMessage.add(ChatRanks.PARTICIPANT.getChatPrefix() + player.getName(),ChatRanks.PARTICIPANT.getChatColor());
+        }
+        chatMessage.add(": " + message, messageColor);
         for(McmeProxyPlayer receiver : players){
-            if(coHost.contains(player)){
-                chatMessage = ChatRanks.HOST.getChatPrefix() + player.getName() + MessageColor + ": "  + message;
-            }else if(player.hasPermission(Permission.HOST.getPermissionNode())){
-                chatMessage = ChatRanks.BADGEHOLDER.getChatPrefix() + player.getName() + MessageColor + ": " + message;
-            }else{
-                chatMessage = ChatRanks.PARTICIPANT.getChatPrefix() + player.getName() + MessageColor + ": " + message;
-            }
-            receiver.sendMessage(McmeTours.new ComponentBuilder(chatMessage).create());
+            receiver.sendMessage(chatMessage);
         }
     }
 
@@ -184,7 +194,7 @@ public class Tour {
             discordHandler.setSender(host);
             if(!coHost.contains(host))
                 coHost.add(host);
-            notifyTour(host.getName()+" is the new host of the tour.");
+            notifyTour(McmeTours.infoMessage(host.getName()+" is the new host of the tour."));
             glowHandle(host,glow);
         }else
             PluginData.getMessageUtil().sendErrorMessage(this.host,"You are already the host of this tour.");
@@ -198,14 +208,14 @@ public class Tour {
         tourChat.add(returnedHost);
         cleanup.cancel();
         task = false;
-        notifyTour("The host has returned! Destruction prevented.");
+        notifyTour(McmeTours.infoMessage("The host has returned! Destruction prevented."));
     }
 
     public void setCoHost(McmeProxyPlayer coHost){
         if(!this.coHost.contains(coHost)){
             glowHandle(coHost,glow);
             this.coHost.add(coHost);
-            notifyTour(coHost.getName()+" is now a co host of the tour.");
+            notifyTour(McmeTours.infoMessage(" is now a co host of the tour."));
         }else
             PluginData.getMessageUtil().sendErrorMessage(host,coHost.getName()+" is already a Co-Host.");
     }
@@ -228,14 +238,14 @@ public class Tour {
         String host = this.host.getName();
         list_participants = players.stream().map(McmeProxyPlayer::getName).collect(Collectors.toSet());
         list_cohosts = coHost.stream().map(McmeProxyPlayer::getName).collect(Collectors.toSet());
-        PluginData.getMessageUtil().sendInfoMessage(sender,ChatColor.WHITE+"Host: "+host);
-        PluginData.getMessageUtil().sendInfoMessage(sender,ChatColor.WHITE+"Co-Hosts: "+list_cohosts);
-        PluginData.getMessageUtil().sendInfoMessage(sender,ChatColor.WHITE+"Participants: "+list_participants);
+        sender.sendMessage(McmeTours.infoMessage().add("Host: "+host,MessageColor.WHITE));
+        sender.sendMessage(McmeTours.infoMessage().add("Co-Hosts: "+list_cohosts,MessageColor.WHITE));
+        sender.sendMessage(McmeTours.infoMessage().add("Participants: "+list_participants,MessageColor.WHITE));
     }
 
-    private void notifyTour(String text){
+    private void notifyTour(Message message){
         for(McmeProxyPlayer player: players){
-            PluginData.getMessageUtil().sendInfoMessage(player,text);
+            player.sendMessage(message);
         }
     }
 
@@ -246,33 +256,46 @@ public class Tour {
 
     public void sendDAnnouncement(String discordrole){
         if(!announced){
-            if(info == null)
-                PluginData.getMessageUtil().sendBroadcastMessage(host.getName()+" is hosting a tour. Do "+Style.STRESSED+"/tour join "+ name+Style.INFO+ " to join the tour. Do "
-                        +Style.HIGHLIGHT_STRESSED+"/discord"+Style.INFO+" to more information.");
-            else
-                PluginData.getMessageUtil().sendBroadcastMessage(host.getName()+" is hosting a tour. Do "+Style.STRESSED+"/tour join "+ name+Style.INFO+ " to join the tour. "
-                        +Style.HIGHLIGHT+"About: "+info);
+            Message message = McmeTours.getPlugin().createInfoMessage().add(host.getName()+" is hosting a tour. Do ")
+                    .add(McmeTours.getPlugin().createMessage()
+                            .add("/tour join "+name, McmeColors.INFO_STRESSED)
+                            .addClick(new MessageClickEvent(MessageClickEvent.Action.RUN_COMMAND, "/tour join "+name)))
+                    .add(" to join the tour. ");
+            if(info == null) {
+                message.add("Do ")
+                       .add(McmeTours.getPlugin().createMessage()
+                               .add("/discord",McmeColors.INFO_STRESSED)
+                               .addClick(new MessageClickEvent(MessageClickEvent.Action.RUN_COMMAND, "/discord"))
+                       .add(" to more information."));
+            } else {
+                message.add("About: " + info, McmeColors.INFO_STRESSED);
+            }
+            McmeTours.getProxy().broadcast(message);
             discordHandler.AnnnounceTour(info,discordrole);
             announced = true;
-        } else
-            PluginData.getMessageUtil().sendErrorMessage(host,"The tour was already announced.");
+        } else {
+            PluginData.getMessageUtil().sendErrorMessage(host, "The tour was already announced.");
+        }
     }
 
+    @SuppressWarnings("UnstableApiUsage")
     private void glowHandle(McmeProxyPlayer sender, boolean bool){
         ByteArrayDataOutput out = ByteStreams.newDataOutput();
         out.writeUTF(Channel.GLOW);
         out.writeUTF(sender.getName());
         out.writeBoolean(bool);
-        ProxyServer.getInstance().getServerInfo(sender.getServerInfo().getName()).sendData(Channel.MAIN, out.toByteArray(),true);
+        sender.sendDataToBackend(Channel.MAIN, out.toByteArray(),true);
     }
 
+    @SuppressWarnings("UnstableApiUsage")
     private void refreshmentsHandle(McmeProxyPlayer sender){
         ByteArrayDataOutput out = ByteStreams.newDataOutput();
         out.writeUTF(Channel.REFRESHMENTS);
         out.writeUTF(sender.getName());
-        ProxyServer.getInstance().getServerInfo(sender.getServer().getInfo().getName()).sendData(Channel.MAIN,out.toByteArray(),true);
+        sender.sendDataToBackend(Channel.MAIN,out.toByteArray(),true);
     }
 
+    @SuppressWarnings("UnstableApiUsage")
     private void teleportHandle(McmeProxyPlayer sender, McmeProxyPlayer target){
         if(!sender.hasPermission("mcmeconnect.world."+target.getServerInfo().getName())){
             PluginData.getMessageUtil().sendErrorMessage(target,sender.getName()+" doesn´t have the permission to enter this world.");

@@ -13,7 +13,7 @@
 
     <description>Tour Plugin for MCME with Bungee Support</description>
     <properties>
-        <java.version>1.8</java.version>
+        <java.version>17</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
@@ -92,11 +92,6 @@
             <artifactId>discordsrv</artifactId>
             <version>1.26.0</version>
             <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.mcmiddleearth</groupId>
-            <artifactId>MCME-CommandParser</artifactId>
-            <version>1.0.2</version>
         </dependency>
         <dependency>
             <groupId>com.mcmiddleearth</groupId>

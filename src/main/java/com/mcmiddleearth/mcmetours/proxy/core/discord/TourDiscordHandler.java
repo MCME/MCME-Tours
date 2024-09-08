@@ -7,7 +7,7 @@ import com.mcmiddleearth.mcmetours.paper.Channel;
 import com.mcmiddleearth.mcmetours.proxy.core.McmeTours;
 
 /**
- * @author Jubo
+ * @author Jubo, Eriol_Eandur
  */
 public class TourDiscordHandler {
 
@@ -20,6 +20,7 @@ public class TourDiscordHandler {
         this.name = name;
     }
 
+    @SuppressWarnings("UnstableApiUsage")
     public void AnnnounceTour(String info,String discordrole){
         ByteArrayDataOutput out = ByteStreams.newDataOutput();
         out.writeUTF(Channel.DISCORD);
@@ -38,6 +39,7 @@ public class TourDiscordHandler {
         handle(sender,out);
     }
 
+    @SuppressWarnings("UnstableApiUsage")
     public void endTour(){
         ByteArrayDataOutput out = ByteStreams.newDataOutput();
         out.writeUTF(Channel.DISCORD);
@@ -46,6 +48,7 @@ public class TourDiscordHandler {
         handle(sender,out);
     }
 
+    @SuppressWarnings("UnstableApiUsage")
     public void requestTour(String messageRequest){
         ByteArrayDataOutput out = ByteStreams.newDataOutput();
         out.writeUTF(Channel.DISCORD);

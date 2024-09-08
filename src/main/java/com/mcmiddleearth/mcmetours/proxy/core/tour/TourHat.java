@@ -7,10 +7,11 @@ import com.mcmiddleearth.mcmetours.proxy.core.McmeTours;
 import com.mcmiddleearth.mcmetours.proxy.core.util.PluginData;
 
 /**
- * @author Jubo
+ * @author Jubo, Eriol_Eandur
  */
 public class TourHat {
 
+    @SuppressWarnings("UnstableApiUsage")
     public static void handle(String sender, String server){
         PluginData.getMessageUtil().sendInfoMessage(McmeTours.getProxy().getPlayer(sender),"Tour-Hat set.");
         ByteArrayDataOutput out = ByteStreams.newDataOutput();

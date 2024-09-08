@@ -1,26 +1,34 @@
 package com.mcmiddleearth.mcmetours.proxy.core.util;
 
 import com.mcmiddleearth.base.core.command.McmeCommandSender;
+import com.mcmiddleearth.base.core.message.McmeColors;
+import com.mcmiddleearth.base.core.message.Message;
+import com.mcmiddleearth.base.core.message.MessageClickEvent;
+import com.mcmiddleearth.base.core.player.McmeProxyPlayer;
 import com.mcmiddleearth.mcmetours.proxy.core.McmeTours;
-import net.md_5.bungee.api.CommandSender;
-import net.md_5.bungee.api.chat.ClickEvent;
-import net.md_5.bungee.api.chat.ComponentBuilder;
-import net.md_5.bungee.api.chat.TextComponent;
 
 /**
- * @author Jubo
+ * @author Jubo, Eriol_Eandur
  */
 public class MessageUtil {
 
-    private final String PREFIX = "[MCME-Tours] ";
+    public static final String PREFIX = "[MCME-Tours] ";
 
-
-    public void sendErrorMessage(CommandSender sender, String message){
-        sender.sendMessage(new ComponentBuilder(PREFIX+message).color(Style.ERROR).create());
+    public static Message runningTourInfo() {
+        return McmeTours.getPlugin().createInfoMessage()
+                .add("A tour is currently running. ")
+                .add(McmeTours.getPlugin().createMessage()
+                        .add("Click here", McmeColors.INFO_STRESSED)
+                        .addClick(new MessageClickEvent(MessageClickEvent.Action.RUN_COMMAND, "/tour check")))
+                .add(" for more information.");
     }
 
-    public void sendInfoMessage(CommandSender sender, String message){
-        sender.sendMessage(new ComponentBuilder(PREFIX+message).color(Style.INFO).create());
+    public static Message tourRequest(McmeProxyPlayer player, String tourTheme) {
+        Message message = McmeTours.getPlugin().createInfoMessage().add(player.getName()+" has requested a tour!");
+        if(tourTheme != null){
+            message.add(" About: ").add(tourTheme,McmeColors.INFO_STRESSED);
+        }
+        return message;
     }
 
     public void sendBroadcastMessage(String message){
@@ -45,11 +53,4 @@ public class MessageUtil {
         //sender.sendMessage(new ComponentBuilder(PREFIX+message).color(Style.INFO).create());
     }
 
-    public void sendClickableInfoMessage(CommandSender sender, String message, String clickable){
-        TextComponent text = new TextComponent(message);
-        text.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND,clickable));
-        sender.sendMessage(text);
-    }
-
-    public String getPrefix(){return PREFIX;}
 }
