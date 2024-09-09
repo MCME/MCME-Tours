@@ -12,13 +12,13 @@ import net.md_5.bungee.api.plugin.TabExecutor;
 /**
  * @author Jubo, Eriol_Eandur
  */
-public class ToursPluginCommand extends Command implements TabExecutor {
+public class BungeeTourCommand extends Command implements TabExecutor {
 
 
     private final AbstractCommandHandler handler;
     private final String name;
 
-    public ToursPluginCommand(AbstractCommandHandler handler,String name) {
+    public BungeeTourCommand(AbstractCommandHandler handler, String name) {
         super(name);
         this.name = name;
         this.handler = handler;

@@ -1,6 +1,7 @@
 package com.mcmiddleearth.mcmetours.proxy.core.eventHandler;
 
 import com.mcmiddleearth.base.bungee.player.BungeeMcmePlayer;
+import com.mcmiddleearth.base.core.player.McmeProxyPlayer;
 import com.mcmiddleearth.mcmetours.proxy.core.tour.Tour;
 import com.mcmiddleearth.mcmetours.proxy.core.util.MessageUtil;
 import com.mcmiddleearth.mcmetours.proxy.core.util.PluginData;
@@ -10,7 +11,7 @@ import com.mcmiddleearth.mcmetours.proxy.core.util.PluginData;
  */
 public class ConnectionHandler {
 
-    public static void handlePlayerJoin(BungeeMcmePlayer player) {
+    public static void handlePlayerJoin(McmeProxyPlayer player) {
         if(PluginData.tourRunning()){
             player.sendMessage(MessageUtil.runningTourInfo());
             for(String tourName: PluginData.getTours()){
@@ -21,14 +22,14 @@ public class ConnectionHandler {
         }
     }
 
-    public static void handlePlayerSwitchServer(BungeeMcmePlayer player) {
+    public static void handlePlayerSwitchServer(McmeProxyPlayer player) {
         if(PluginData.isCoHost(player)){
             Tour tour = PluginData.getTour(player);
             if(tour!=null) tour.setGlow(player);
         }
     }
 
-    public static void handlePlayerLeave(BungeeMcmePlayer player) {
+    public static void handlePlayerLeave(McmeProxyPlayer player) {
         if(PluginData.isInTour(player)){
             Tour tour = PluginData.getTour(player);
             if(tour!=null) {
