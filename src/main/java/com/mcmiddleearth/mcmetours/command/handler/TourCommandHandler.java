@@ -1,5 +1,6 @@
 package com.mcmiddleearth.mcmetours.command.handler;
 
+import alexh.weak.ChildAbsence;
 import com.mcmiddleearth.command.AbstractCommandHandler;
 import com.mcmiddleearth.command.McmeCommandSender;
 import com.mcmiddleearth.command.builder.HelpfulLiteralBuilder;
@@ -15,8 +16,11 @@ import com.mcmiddleearth.mcmetours.tour.Tour;
 import com.mcmiddleearth.mcmetours.tour.TourHat;
 import com.mcmiddleearth.mcmetours.tour.TourRequest;
 import com.mcmiddleearth.mcmetours.util.Style;
+import com.mojang.brigadier.context.CommandContext;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
+
+import java.util.logging.Logger;
 
 import static com.mojang.brigadier.arguments.StringArgumentType.greedyString;
 import static com.mojang.brigadier.arguments.StringArgumentType.word;
@@ -34,6 +38,9 @@ public class TourCommandHandler extends AbstractCommandHandler {
     protected HelpfulLiteralBuilder createCommandTree(HelpfulLiteralBuilder helpfulLiteralBuilder) {
         helpfulLiteralBuilder
                 .requires(sender -> (sender instanceof TourCommandSender))
+                .then(HelpfulLiteralBuilder.literal("reload")
+                        .requires(sender -> PluginData.hasPermission((TourCommandSender) sender, Permission.ADMIN))
+                        .executes(this::reloadPlugin))
                 .then(HelpfulLiteralBuilder.literal("request")
                                 .withHelpText("Submit a request for a tour.")
                                 .withTooltip(Style.HIGHLIGHT+"/tour request <topic>"+ Style.HIGHLIGHT_STRESSED
@@ -138,6 +145,21 @@ public class TourCommandHandler extends AbstractCommandHandler {
                                 .requires(sender -> (PluginData.hasPermission((TourCommandSender) sender, Permission.HOST)))
                                     .executes(context -> doCommand(context.getSource(),"glow",null)));
         return helpfulLiteralBuilder;
+    }
+
+    private int reloadPlugin(CommandContext<McmeCommandSender> context) {
+        PluginData.getMessageUtil().sendInfoMessage(context.getSource(),"Ending all tours and reload Tours plugin.");
+        PluginData.getTours().forEach(tourName -> {
+            Tour tour = PluginData.getTour(tourName);
+            if(tour != null) {
+                try {
+                    tour.endTour();
+                } catch(NullPointerException ex) {
+                    Logger.getGlobal().warning("MCME-Tours: null during plugin reload.");
+                }
+            }
+        });
+        return 0;
     }
 
     private int doCommand(McmeCommandSender sender, String command, String arg){

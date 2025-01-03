@@ -13,7 +13,7 @@ import net.md_5.bungee.event.EventPriority;
  */
 public class ChatListener implements Listener {
 
-    @EventHandler(priority = EventPriority.NORMAL)
+    @EventHandler(priority = EventPriority.LOWEST)
     public void TourChat(ChatEvent event){
         ProxiedPlayer sender = (ProxiedPlayer) event.getSender();
         String message = event.getMessage();

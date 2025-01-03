@@ -17,6 +17,7 @@ import net.md_5.bungee.api.scheduler.ScheduledTask;
 
 import java.util.*;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 /**
@@ -66,26 +67,28 @@ public class Tour {
     }
 
     public void removePlayer(ProxiedPlayer player){
-        if(player == host){
-            endTour();
-            return;
-        }
         players.remove(player);
         tourChat.remove(player);
         coHost.remove(player);
         glowHandle(player,false);
-        notifyTour(player.getName()+" left the tour.");
+        if(player == host){
+            endTour();
+        } else {
+            notifyTour(player.getName()+" left the tour.");
+        }
         PluginData.getMessageUtil().sendInfoMessage(player, "You left the tour.");
     }
 
     public void endTour(){
-        notifyTour("The tour has ended.");
         players.clear();
         tourChat.clear();
         PluginData.removeTour(this);
         for(ProxiedPlayer player : coHost){
-            glowHandle(player,false);
+            if(player !=null && player.isConnected()) {
+                glowHandle(player, false);
+            }
         }
+        notifyTour("The tour has ended.");
         if(announced)
             discordHandler.endTour();
         coHost.clear();
@@ -233,7 +236,15 @@ public class Tour {
 
     private void notifyTour(String text){
         for(ProxiedPlayer player: players){
-            PluginData.getMessageUtil().sendInfoMessage(player,text);
+            if(player != null && player.isConnected()) {
+                PluginData.getMessageUtil().sendInfoMessage(player, text);
+            } else {
+                if(player == null) {
+                    Logger.getGlobal().warning("Null player in tour");
+                } else {
+                    Logger.getGlobal().warning("Player "+player.getName()+" is not online.");
+                }
+            }
         }
     }
 
