@@ -19,6 +19,8 @@ import com.mcmiddleearth.mcmetours.proxy.core.tour.Tour;
 import com.mcmiddleearth.mcmetours.proxy.core.tour.TourHat;
 import com.mcmiddleearth.mcmetours.proxy.core.tour.TourRequest;
 
+import java.util.logging.Logger;
+
 import static com.mojang.brigadier.arguments.StringArgumentType.greedyString;
 import static com.mojang.brigadier.arguments.StringArgumentType.word;
 
@@ -173,6 +175,10 @@ public class TourCommandHandler extends AbstractCommandHandler {
             } case "start" -> {
                 tour = new Tour(player, arg);
                 PluginData.addTour(tour);
+PluginData.getTours().forEach((name -> {
+    Logger.getGlobal().info("Tour: "+name);
+    Logger.getGlobal().info("Host: "+PluginData.getTour(name).getHost());
+}));
             }
             case "end" -> {
                 if (!PluginData.isHost(player)) {

@@ -77,7 +77,7 @@ public class Tour {
     }
 
     public void removePlayer(McmeProxyPlayer player){
-        if(player == host){
+        if(player.equals(host)){
             endTour();
             return;
         }
@@ -119,7 +119,7 @@ public class Tour {
 
     public void teleportAll(McmeProxyPlayer host){
         for(McmeProxyPlayer player: players){
-            if(player != host){
+            if(!player.equals(host)){
                 teleportHandle(player,host);
                 PluginData.getMessageUtil().sendInfoMessage(player,host.getName()+" teleported you to them.");
             }
@@ -153,7 +153,7 @@ public class Tour {
     }
 
     public void kickPlayer(McmeProxyPlayer player){
-        if(player != host){
+        if(!player.equals(host)){
             removePlayer(player);
             PluginData.getMessageUtil().sendErrorMessage(player,"You were kicked from the tour. Think about it!");
             PluginData.getMessageUtil().sendInfoMessage(host,"You kicked " + player.getName() + " from the tour.");

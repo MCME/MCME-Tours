@@ -13,6 +13,7 @@ import java.util.concurrent.CompletableFuture;
  * @author Eriol_Eandur
  */
 
+//todo: delete this class and use VelocityCommand class from Base plugin (maybe need to create that first).
 public class VelocityTourCommand implements SimpleCommand {
 
     private final String permission;
@@ -25,7 +26,7 @@ public class VelocityTourCommand implements SimpleCommand {
 
     @Override
     public void execute(Invocation invocation) {
-        handler.execute(new VelocityMcmeCommandSender(invocation.source()),invocation.arguments());
+        handler.handle(new VelocityMcmeCommandSender(invocation.source()),invocation.arguments());
     }
 
     @Override

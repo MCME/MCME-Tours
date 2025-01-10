@@ -2,9 +2,12 @@ package com.mcmiddleearth.mcmetours.proxy.core.discord;
 
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
+import com.mcmiddleearth.base.core.command.McmeCommandSender;
 import com.mcmiddleearth.base.core.player.McmeProxyPlayer;
+import com.mcmiddleearth.base.core.server.McmeServerInfo;
 import com.mcmiddleearth.mcmetours.paper.Channel;
 import com.mcmiddleearth.mcmetours.proxy.core.McmeTours;
+import net.md_5.bungee.api.CommandSender;
 
 /**
  * @author Jubo, Eriol_Eandur
@@ -70,7 +73,13 @@ public class TourDiscordHandler {
     }
 
     private void handle(McmeProxyPlayer sender, ByteArrayDataOutput out){
-        McmeTours.getProxy().getServerInfo(sender.getServerInfo().getName())
-                 .sendPluginMessage(Channel.MAIN,out.toByteArray(),true);
+        McmeServerInfo server = sender.getServerInfo();
+        if(server == null) {
+            server = McmeTours.getProxy().getAnyConnectedServerInfo();
+        }
+        if(server!=null) {
+            McmeTours.getProxy().getServerInfo(server.getName())
+                    .sendPluginMessage(Channel.MAIN, out.toByteArray(), true);
+        }
     }
 }

@@ -68,7 +68,7 @@ public class PluginData {
 
     public static boolean isHost(McmeProxyPlayer player){
         for(Tour tour: tours){
-            if(tour.getHost() == player){
+            if(tour.getHost().equals(player)){
                 return true;
             }
         }
