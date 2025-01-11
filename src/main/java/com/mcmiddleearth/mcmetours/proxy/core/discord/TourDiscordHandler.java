@@ -2,12 +2,10 @@ package com.mcmiddleearth.mcmetours.proxy.core.discord;
 
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
-import com.mcmiddleearth.base.core.command.McmeCommandSender;
 import com.mcmiddleearth.base.core.player.McmeProxyPlayer;
 import com.mcmiddleearth.base.core.server.McmeServerInfo;
 import com.mcmiddleearth.mcmetours.paper.Channel;
 import com.mcmiddleearth.mcmetours.proxy.core.McmeTours;
-import net.md_5.bungee.api.CommandSender;
 
 /**
  * @author Jubo, Eriol_Eandur
