@@ -41,8 +41,8 @@ public class McmeToursVelocityPlugin extends AbstractVelocityPlugin {
         McmeTours.setLogger(getMcmeLogger());
     }
 
-    @Subscribe
-    public void onProxyInitialization(ProxyInitializeEvent event) {
+    @Override
+    public void enable() {
         McmeTours.enable(this);
 
         getProxyServer().getEventManager().register(this, new ChatListener());
@@ -56,8 +56,8 @@ public class McmeToursVelocityPlugin extends AbstractVelocityPlugin {
         getMcmeProxy().getConsole().sendMessage(createMessage().add("Enabled on Velocity proxy!"));
     }
 
-    @Subscribe
-    public void onProxyShutdown(ProxyShutdownEvent event) {
+    @Override
+    public void disable() {
         McmeTours.disable();
     }
 

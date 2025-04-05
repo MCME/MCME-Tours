@@ -19,7 +19,7 @@ import net.md_5.bungee.api.ProxyServer;
 public final class McmeToursBungeePlugin extends AbstractBungeePlugin {
 
     @Override
-    public void onEnable() {
+    public void enable() {
         super.onEnable();
         ProxyServer.getInstance().getPluginManager().registerListener(this,new ChatListener());
         ProxyServer.getInstance().getPluginManager().registerListener(this,new PlayerListener());
@@ -41,7 +41,7 @@ public final class McmeToursBungeePlugin extends AbstractBungeePlugin {
     }
 
     @Override
-    public void onDisable() {
+    public void disable() {
         McmeTours.disable();
     }
 
