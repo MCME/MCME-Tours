@@ -25,16 +25,16 @@ public final class McmeToursBungeePlugin extends AbstractBungeePlugin {
         ProxyServer.getInstance().getPluginManager().registerListener(this,new PlayerListener());
 
         ProxyServer.getInstance().getPluginManager()
-                .registerCommand(this,new BungeeCommand(this,"ttpa",
+                .registerCommand(this,new BungeeCommand("ttpa",
                                                                 new TtpaCommandHandler("ttpa",this)));
         ProxyServer.getInstance().getPluginManager()
-                .registerCommand(this,new BungeeCommand(this,"ttp",
+                .registerCommand(this,new BungeeCommand("ttp",
                                                                 new TtpCommandHandler("ttp",this)));
         ProxyServer.getInstance().getPluginManager()
-                .registerCommand(this,new BungeeCommand(this,"tour",
+                .registerCommand(this,new BungeeCommand("tour",
                                                                 new TourCommandHandler("tour",this)));
         ProxyServer.getInstance().getPluginManager()
-                .registerCommand(this,new BungeeCommand(this,"tc",
+                .registerCommand(this,new BungeeCommand("tc",
                                                                 new TcComandHandler("tc",this)));
 
         McmeTours.enable(this);

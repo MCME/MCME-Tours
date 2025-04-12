@@ -1,25 +1,23 @@
 package com.mcmiddleearth.mcmetours.proxy.core.command.handler;
 
-import com.mcmiddleearth.base.core.command.handler.AbstractCommandHandler;
 import com.mcmiddleearth.base.core.command.McmeCommandSender;
 import com.mcmiddleearth.base.core.command.builder.HelpfulLiteralBuilder;
 import com.mcmiddleearth.base.core.command.builder.HelpfulRequiredArgumentBuilder;
+import com.mcmiddleearth.base.core.command.handler.AbstractCommandHandler;
 import com.mcmiddleearth.base.core.message.McmeColors;
 import com.mcmiddleearth.base.core.message.MessageStyle;
 import com.mcmiddleearth.base.core.player.McmeProxyPlayer;
 import com.mcmiddleearth.base.core.plugin.McmePlugin;
 import com.mcmiddleearth.mcmetours.proxy.core.McmeTours;
-import com.mcmiddleearth.mcmetours.proxy.core.command.arguments.CommandTournameArgument;
 import com.mcmiddleearth.mcmetours.proxy.core.command.arguments.CommandPermissionArgument;
 import com.mcmiddleearth.mcmetours.proxy.core.command.arguments.CommandPlayerArgument;
-import com.mcmiddleearth.mcmetours.proxy.core.tour.TourCheck;
-import com.mcmiddleearth.mcmetours.proxy.core.util.Permission;
-import com.mcmiddleearth.mcmetours.proxy.core.util.PluginData;
+import com.mcmiddleearth.mcmetours.proxy.core.command.arguments.CommandTournameArgument;
 import com.mcmiddleearth.mcmetours.proxy.core.tour.Tour;
+import com.mcmiddleearth.mcmetours.proxy.core.tour.TourCheck;
 import com.mcmiddleearth.mcmetours.proxy.core.tour.TourHat;
 import com.mcmiddleearth.mcmetours.proxy.core.tour.TourRequest;
-
-import java.util.logging.Logger;
+import com.mcmiddleearth.mcmetours.proxy.core.util.Permission;
+import com.mcmiddleearth.mcmetours.proxy.core.util.PluginData;
 
 import static com.mojang.brigadier.arguments.StringArgumentType.greedyString;
 import static com.mojang.brigadier.arguments.StringArgumentType.word;
@@ -35,8 +33,12 @@ public class TourCommandHandler extends AbstractCommandHandler {
 
     @Override
     protected HelpfulLiteralBuilder createCommandTree(HelpfulLiteralBuilder helpfulLiteralBuilder) {
+//McmeTours.getLogger().info("register tour command tree");
         helpfulLiteralBuilder
-                .requires(sender -> (sender instanceof McmeProxyPlayer))
+                .requires(sender -> {
+//McmeTours.getLogger().info(sender+ " " +(sender instanceof McmeProxyPlayer));
+                    return (sender instanceof McmeProxyPlayer);
+                })
                 .then(HelpfulLiteralBuilder.literal("request")
                                 .withHelpText("Submit a request for a tour.")
                                 .withTooltip(getPlugin().createMessage(new MessageStyle(McmeColors.TOOLTIP_STRESSED))
@@ -68,7 +70,10 @@ public class TourCommandHandler extends AbstractCommandHandler {
                                 .withTooltip(getPlugin().createMessage(new MessageStyle(McmeColors.TOOLTIP_STRESSED))
                                                 .add("/tour start <name of tour>",McmeColors.TOOLTIP)
                                                 .add(": Starts a tour with a set name. The name can only be one word."))
-                                .requires(sender -> (PluginData.hasPermission(sender, Permission.HOST) && !PluginData.isInTour((McmeProxyPlayer) sender)))
+                                .requires(sender -> {
+//McmeTours.getLogger().info("Permission check: "+(sender.hasPermission(Permission.HOST.getPermissionNode())));
+                                    return (PluginData.hasPermission(sender, Permission.HOST) && !PluginData.isInTour((McmeProxyPlayer) sender));
+                                })
                                     .then(HelpfulRequiredArgumentBuilder.argument("tourname",word())
                                         .executes(context -> doCommand(context.getSource(),"start",context.getArgument("tourname",String.class)))))
                 .then(HelpfulLiteralBuilder.literal("end")
@@ -174,6 +179,7 @@ public class TourCommandHandler extends AbstractCommandHandler {
                 if (tour != null) tour.removePlayer(player);
             } case "start" -> {
                 tour = new Tour(player, arg);
+McmeTours.getLogger().info("Starting tour with host: "+player.getName());
                 PluginData.addTour(tour);
             }
             case "end" -> {
