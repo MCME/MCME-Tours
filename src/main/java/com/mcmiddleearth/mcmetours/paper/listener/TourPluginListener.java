@@ -13,6 +13,9 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Consumer;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.UUID;
+import java.util.logging.Logger;
+
 /**
  * @author Jubo
  */
@@ -67,6 +70,11 @@ public class TourPluginListener implements PluginMessageListener {
                 runAfterArrival(sender, source -> {
                     TourTeleportPaper.teleportPlayer(source, Bukkit.getPlayer(target));
                 });
+                break;
+            case Channel.TOUR_CHAT:
+                String uuid = in.readUTF();
+                Logger.getGlobal().info("Adding to tour chat block: "+uuid);
+                ChatListener.addTourChatBlock(UUID.fromString(uuid));
                 break;
         }
     }

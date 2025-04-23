@@ -1,5 +1,6 @@
 package com.mcmiddleearth.mcmetours.paper;
 
+import com.mcmiddleearth.mcmetours.paper.listener.ChatListener;
 import com.mcmiddleearth.mcmetours.paper.listener.TourPluginListener;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
@@ -19,6 +20,7 @@ public class ToursPaperPlugin extends JavaPlugin {
         saveDefaultConfig();
         instance = this;
         Bukkit.getServer().getMessenger().registerIncomingPluginChannel(this,Channel.MAIN,new TourPluginListener());
+        Bukkit.getPluginManager().registerEvents(new ChatListener(), this);
         loadConfig();
     }
 

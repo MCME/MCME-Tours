@@ -12,4 +12,5 @@ public class Channel {
     public static final String GLOW = "glow";
     public static final String DISCORD = "discord";
     public static final String TP = "tp";
+    public static final String TOUR_CHAT = "tourchat";
 }
